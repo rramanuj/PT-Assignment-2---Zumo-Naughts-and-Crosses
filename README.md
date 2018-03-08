@@ -27,3 +27,10 @@ to-do list:
 		Tweet some shit about moves and winners, maybe see how this goes but prioritize other stuff if this is long?
 
 Don't know if you guys have any other ideas you wanna add in, but think this stuff covers everything. Probably need to build our GUI first so we have a way that we can start testing our code once it's written.
+
+METHODS:
+	Move checking algorithm (cases) - Sesh
+	Globals for coordinates & orientation, methods to update after move - Mark
+	Check if square has been marked
+	Check for other Zumo in square
+	Nudge other Zumo and switch sides
