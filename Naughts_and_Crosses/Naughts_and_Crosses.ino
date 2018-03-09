@@ -106,7 +106,11 @@ void move(int x, int y)
     turnY = "n";
   }
 
-  if (turnX != "") {
+  if (turnX == "") {
+    
+  } else if (turnY == "") {
+    
+  } else {
     
   }
   
