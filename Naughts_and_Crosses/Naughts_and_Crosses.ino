@@ -75,7 +75,15 @@ void setup() {
   const int numColumns = 3;
 
   int posRow = n1;
-  int pos Column = n2;
+  int posColumn = n2;
+
+  /*  prospective 2d array code ???? 
+   *  byte a[numRows][numColumns] = {
+   *    {11, 12, 13},
+   *    {21, 22, 23},
+   *    {31, 32, 33}
+   *  };
+   */
 
   Serial.begin(9600);
 }
