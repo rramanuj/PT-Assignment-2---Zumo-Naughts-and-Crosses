@@ -8,6 +8,9 @@
 #include <ZumoMotors.h>
 #include <QTRSensors.h>
 #include <ZumoReflectanceSensorArray.h>
+#include <NewPing.h>
+#include <ZumoMotors.h>
+
 using namespace std;
 
 // -- GLOBALS -- //
@@ -32,6 +35,12 @@ bool isNaught;
 #define OBJECT_NOT_DETECTED "No objects detected in room "
 #define INVALID_COMMAND "Invalid command! That command cannot be used at this time"
 
+
+char val;
+int ledPin = 13;
+boolean ledState = LOW; //initialises LED colour for each team/switch
+//boolean ledState = HIGH;
+
 //sensitivity to border
 #define QTR_THRESHOLD  300
 //speed
@@ -48,6 +57,9 @@ bool isNaught;
 //number of sensors on Zumo
 #define NUM_SENSORS 6
 
+//NewPing setup for reflectance array
+NewPing sonar (TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
+
 //initialise sensor object
 ZumoMotors motors;
 unsigned int sensor_values[NUM_SENSORS];
@@ -56,12 +68,35 @@ ZumoReflectanceSensorArray sensors(QTR_NO_EMITTER_PIN);
 
 void setup() {
   // put your setup code here, to run once:
+<<<<<<< HEAD
   Serial.begin(9600);
+=======
+  //motors.flipLeftMotor(true);
+  //motors.flipRightMotor(true);
+  reflectanceSensors.init();
+  reflectanceSensors.calibrate();
+>>>>>>> arduinostart
 
+  const int numRows = 3;
+  const int numColumns = 3;
+
+  int posRow = n1;
+  int posColumn = n2;
+
+  /*  prospective 2d array code ???? 
+   *  byte a[numRows][numColumns] = {
+   *    {11, 12, 13},
+   *    {21, 22, 23},
+   *    {31, 32, 33}
+   *  };
+   */
+
+  Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+<<<<<<< HEAD
  char inputChar;
  int x, y;
     while (inputChar != 'X') //this is to end the game
@@ -192,4 +227,10 @@ void rotate(int degrees) //rotate to an angle based on compass
   }
   motors.setSpeeds(0, 0);
   delay(400);
+=======
+  if (Serial.available() > 0 ) {
+    val = Serial.read();
+    Servo movingServo;
+  }
+>>>>>>> arduinostart
 }
