@@ -12,7 +12,7 @@ using namespace std;
 
 // -- GLOBALS -- //
 int crosses_x, crosses_y, naughts_x, naughts_y;
-
+bool isNaught;
 // -- CONSTANTS -- //
 //pin values
 #define LED_PIN 13
@@ -62,11 +62,38 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+ char inputChar;
+ int x, y;
+    while (inputChar != 'X') //this is to end the game
+    {
+      if ((Serial.available() > 0) && (Serial.available() < 3))
+      {
+        message = Serial.read();
+        y = Serial.read();
+        x = Serial.read();
+      }
 
+      switch (message)
+      {
+        case 'm': case 'M':
+        move(x, y); break;
+        // case 'a': case 'A': rotate(fmod(averageHeading() - 93, 360));lastMove = 1;break; //aprox left
+        // case 's': case 'S': digitalWrite(LED_PIN, HIGH); motors.setLeftSpeed(-REVERSE_SPEED); motors.setRightSpeed(-REVERSE_SPEED); delay(REVERSE_DURATION); break;
+        // case 'd': case 'D': rotate(fmod(averageHeading() + 93, 360));lastMove = 0;break; //approx right
+      }
 }
-
+void move(int x, int y)
+{
+  int movesX = 0, movesY = 0;
+  if (isNaught) {
+      movesX = (x - naughts_x);
+      movesY = (y - naughts_y);
+  } else {
+      movesX = (x - crosses_x);
+      movesY = (y - crosses_y);
+  }
+}
 void initialise_compass() {
-
   // The highest possible magnetic value to read in any direction is 2047
   // The lowest possible magnetic value to read in any direction is -2047
   LSM303::vector<int16_t> running_min = { 32767, 32767, 32767 }, running_max = { -32767, -32767, -32767 };
