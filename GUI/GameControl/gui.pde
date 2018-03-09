@@ -20,46 +20,117 @@ public void chkFirst_clicked1(GCheckbox source, GEvent event) { //_CODE_:chkFirs
 public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182:
   println(_ONE);
   println(_ONE);
+
+  n1 = 1;
+  n2 = 1;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn1_1:211182:
 
 public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107:
   println(_TWO);
   println(_TWO);
+
+  n1 = 2;
+  n2 = 2;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn2_2:245107:
 
 public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140:
   println(_TWO);
   println(_ONE);
+
+  n1 = 2;
+  n2 = 1;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn2_1:905140:
 
 public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172:
-  println(_THREE);
   println(_ONE);
+  println(_THREE);
+  n1 = 1;
+  n2 = 3;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn1_3:798172:
 
 public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950:
   println(_ONE);
   println(_TWO);
+
+  n1 = 1;
+  n2 = 2;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn1_2:745950:
 
 public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356:
   println(_TWO);
   println(_THREE);
+
+  n1 = 2;
+  n2 = 3;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn2_3:704356:
 
 public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460:
   println(_THREE);
   println(_THREE);
+
+  n1 = 3;
+  n2 = 3;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn3_3:284460:
 
 public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922:
   println(_THREE);
   println(_TWO);
+
+  n1 = 3;
+  n2 = 2;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn3_2:320922:
 
 public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294:
   println(_THREE);
   println(_ONE);
+
+  n1 = 3;
+  n2 = 1;
+
+  Serial currentPort = getCurrentPort();
+  currentPort.write(_MOVE);
+  currentPort.write(n1);
+  currentPort.write(n2);
 } //_CODE_:btn3_1:231294:
 
 public void txtOutput_change1(GTextArea source, GEvent event) { //_CODE_:txtOutput:438090:

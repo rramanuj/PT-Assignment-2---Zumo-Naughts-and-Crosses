@@ -12,6 +12,7 @@ using namespace std;
 
 // -- GLOBALS -- //
 int crosses_x, crosses_y, naughts_x, naughts_y;
+String crosses_direction, naughts_direction;
 bool isNaught;
 // -- CONSTANTS -- //
 //pin values
@@ -91,6 +92,22 @@ void move(int x, int y)
   } else {
       movesX = (x - crosses_x);
       movesY = (y - crosses_y);
+  }
+
+  String turnX = "", turnY = "";
+  if (movesX > 0) {
+    turnX = "w";
+  } else if (movesX < 0) {
+    turnX = "e";
+  }
+  if (movesY > 0) {
+    turnY = "s";
+  } else if (movesY < 0) {
+    turnY = "n";
+  }
+
+  if (turnX != "") {
+    
   }
 }
 void initialise_compass() {
