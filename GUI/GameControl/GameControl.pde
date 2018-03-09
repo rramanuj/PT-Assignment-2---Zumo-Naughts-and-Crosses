@@ -47,7 +47,7 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           com4Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino 'O' established!");
+          txtOutput.setText("Connection to Arduino " + getSliderSymbol() + " established!");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
@@ -59,7 +59,7 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           com5Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino 'X' established!");
+          txtOutput.setText("Connection to Arduino " + getSliderSymbol() + " established!");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
@@ -104,4 +104,14 @@ public void toggleSlider() {
     isFirstMove = false;
     sldrTurn.setEnabled(false);
   }
+}
+
+public char getSliderSymbol() {
+if (sldrTurn.getValueI() == 0) {
+    return 'O';
+  } else if (sldrTurn.getValueI() == 100) {
+    return 'X';
+  }
+  
+  return ' ';
 }
