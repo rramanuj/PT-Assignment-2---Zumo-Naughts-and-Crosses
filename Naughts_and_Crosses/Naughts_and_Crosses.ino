@@ -19,6 +19,7 @@ using namespace std;
 #define LED_PIN 13
 #define TRIGGER_PIN 2
 #define ECHO_PIN 6
+#define MAX_DISTANCE 4
 
 //possible commands received from GUI
 #define _ONE 1
@@ -68,30 +69,50 @@ void setup() {
   // put your setup code here, to run once:
   //motors.flipLeftMotor(true);
   //motors.flipRightMotor(true);
-  reflectanceSensors.init();
-  reflectanceSensors.calibrate();
+  sensors.init();
+  sensors.calibrate();
 
   const int numRows = 3;
   const int numColumns = 3;
 
-  int posRow = n1;
-  int posColumn = n2;
+  int posRow;
+  int posColumn;
 
-  /*  prospective 2d array code ???? 
-   *  byte a[numRows][numColumns] = {
-   *    {11, 12, 13},
-   *    {21, 22, 23},
-   *    {31, 32, 33}
-   *  };
-   */
+  /*  prospective 2d array code ????
+      byte a[numRows][numColumns] = {
+        1{1, 2, 3},
+        2{1, 2, 3},
+        3{1, 2, 3}
+      };
+  */
 
+  //need to sort some shit out here
+  //think we need a serial port for each Zumo and to call establishContact() for each one
+  //emailed Pete to see how we do this
   Serial.begin(9600);
+  establishContact();
+  establishContact();
+}
+
+void establishContact() {
+  while (Serial.available() <= 0) {
+    Serial.println("requestcontact");
+    delay(DELAY_CONTACT);
+  }
+  Serial.read();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  if (Serial.available() > 0 ) {
-    val = Serial.read();
-    Servo movingServo;
+  //some message sent through from GUI
+  if (Serial.available() > 0) {
+    //read in command
+    char command = (char) Serial.read();
+    
+    switch (command) {
+      case _MOVE:
+      
+      default:
+        Serial.println("Invalid command! The command '" + String(command) + "' cannot be used at this time."); break;
+    }
   }
 }

@@ -2,6 +2,7 @@
 import g4p_controls.*;
 import processing.serial.*;
 
+final char _MOVE = 'm';
 final int _ONE = 1;
 final int _TWO = 2;
 final int _THREE = 3;
@@ -47,7 +48,7 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           com4Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino " + getSliderSymbol() + " established!");
+          txtOutput.setText("Connection to Arduino established! (COM4)");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
@@ -59,7 +60,7 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           com5Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino " + getSliderSymbol() + " established!");
+          txtOutput.setText("Connection to Arduino established! (COM5)");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
