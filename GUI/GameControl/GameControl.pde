@@ -9,6 +9,8 @@ final int _THREE = 3;
 int n1 = 1;
 int n2 = 1;
 
+boolean isNaught = false;
+
 //Serial port for communication to/from Arduino
 private Serial com4, com5;
 private String message;
