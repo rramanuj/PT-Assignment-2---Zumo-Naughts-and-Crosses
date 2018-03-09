@@ -3,7 +3,7 @@ Naughts and Crosses game created using Zumo robots.
 
 to-do list:
 
-0. ADD JAMIE TO THE BASTARDIN' REPO!!!!!
+0. ADD JAMIE TO THE BASTARDIN' REPO!!!!! ---- Hi guys :3
 
 1. Build a GUI with...
 		a virtual N&C board (probably just 9 hard-coded buttons representing a square each, but maybe a 2d array of buttons? That way could expand to bigger sizes? I dunno)
