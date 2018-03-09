@@ -5,6 +5,8 @@ import processing.serial.*;
 final int _ONE = 1;
 final int _TWO = 2;
 final int _THREE = 3;
+int n1 = 1;
+int n2 = 1;
 
 //Serial port for communication to/from Arduino
 private Serial com4, com5;
