@@ -2,21 +2,15 @@
 import g4p_controls.*;
 import processing.serial.*;
 
-final char _MOVE = 'm';
 final int _ONE = 1;
 final int _TWO = 2;
 final int _THREE = 3;
-int n1 = 1;
-int n2 = 1;
-
-boolean isNaught = false;
 
 //Serial port for communication to/from Arduino
 private Serial com4, com5;
 private String message;
+private boolean x_Turn = true;
 private boolean com4Connected, com5Connected;
-private boolean isFirstMove = true;
-private boolean switched = false;
 
 public void setup() {
   size(480, 320, JAVA2D);
@@ -32,6 +26,14 @@ public void setup() {
 
 public void draw() {
   background(230);
+}
+
+Serial getCurrentPort() {
+  if (x_Turn) {
+    return com4;
+  } else {
+    return com5;
+  }
 }
 
 void serialEvent(Serial myPort) {
@@ -50,11 +52,10 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           com4Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino 'O' established!");
+          txtOutput.setText("Connection to Arduino 'X' established!");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        toggleSlider();
       }
     } else if (myPort == com5) {
       if (!com5Connected) { //executes on first message received
@@ -62,11 +63,10 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           com5Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino 'X' established!");
+          txtOutput.setText("Connection to Arduino 'O' established!");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        toggleSlider();
       }
     }
   }
@@ -75,28 +75,4 @@ void serialEvent(Serial myPort) {
 // Use this method to add additional statements
 // to customise the GUI controls
 public void customGUI() {
-}
-
-public Serial getCurrentPort() {
-  if (sldrTurn.getValueI() == 0) {
-    return com4;
-  } else if (sldrTurn.getValueI() == 100) {
-    return com5;
-  }
-  
-  //default
-  return null;
-}
-
-public void toggleSlider() {
-  if (sldrTurn.getValueI() == 0) {
-    sldrTurn.setValue(100);
-  } else if (sldrTurn.getValueI() == 100) {
-    sldrTurn.setValue(0);
-  }
-  
-  if (isFirstMove) {
-    isFirstMove = false;
-    sldrTurn.setEnabled(false);
-  }
 }

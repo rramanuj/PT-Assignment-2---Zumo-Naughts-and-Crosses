@@ -96,9 +96,9 @@ void move(int x, int y)
 
   String turnX = "", turnY = "";
   if (movesX > 0) {
-    turnX = "w";
-  } else if (movesX < 0) {
     turnX = "e";
+  } else if (movesX < 0) {
+    turnX = "w";
   }
   if (movesY > 0) {
     turnY = "s";
@@ -109,6 +109,7 @@ void move(int x, int y)
   if (turnX != "") {
     
   }
+  
 }
 void initialise_compass() {
   // The highest possible magnetic value to read in any direction is 2047
