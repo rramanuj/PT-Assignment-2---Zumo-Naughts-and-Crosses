@@ -76,9 +76,17 @@ public void customGUI() {
 
 public Serial getCurrentPort() {
   if (sldrTurn.getValueI() == 0) {
-    return com4;
+    if (!switched) {
+      return com4;
+    } else {
+      return com5;
+    }
   } else if (sldrTurn.getValueI() == 100) {
-    return com5;
+    if (!switched) {
+      return com5;
+    } else {
+      return com4;
+    }
   }
   
   //default
