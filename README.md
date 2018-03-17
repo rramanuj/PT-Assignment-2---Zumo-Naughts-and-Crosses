@@ -34,3 +34,5 @@ METHODS:
 	Check if square has been marked
 	Check for other Zumo in square
 	Nudge other Zumo and switch sides
+	
++ Delete the "Naughts__Crosses" folder that's the wrong ting, leave "Naughts_And_Crosses" in there
