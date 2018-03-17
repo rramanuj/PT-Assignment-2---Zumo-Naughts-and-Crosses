@@ -1,0 +1,60 @@
++ start with if statement fed from processing that decides which team (i.e which zumo)
+  is in play.
+
++ have previous player's turn (if not first go) recorded in system elsewhere, either
+  after go or recorded in gui where last turn took place. could use GUI to track this or
+  use logic elsewhere to track this (latter probably easiest)
+
++ case statement that records direction where zumo is currently facing (NSEW), given 
+  from last go.
+
++ player chooses go and based on coordinates of current zumo pos and where it needs 
+  to go, goes through list of if statements that decide decrements/turns etc
+
+eg. zumo has to go from top left to bottom right
+	
+if (zumo is facing west) {
+	if (pos = coord(1.1) {
+		switch (destination = [3.3]) { 
+			rotate 90 degrees;
+			rotate 90 degrees;
+			set decrement counter to 2;
+			execute(); (function to move zumo over lines and decrement until
+			counter runs out)
+			rotate 90 degrees right to face south;
+			set decrememt counter to 2;
+			execute();
+			//end of go
+		}
+	}
+}
+
++ within the execute() function, after each grey line is crossed, which will be read by
+  the sensors on the bottom, a room will be scanned by the ultrasonic scanner to check
+  for another zumo, if one is found then params and other stuff will be passed over, 
+  and the main if statement will start again but with updated coordinates to go from and
+  the original destination coordinate. If a black line is read the zumo stops straight
+  away and either changes direction to finish journey or it's destination is reached.
+  This then evokes a short reverse to make sure the zumo isn't stuck on the black line.
+
++ The definition between grey and black lines will be read by the bottom sensors on 
+  the zumo...
+
+if ((sensor.reading >= 0) && (sensor.reading <= 100)) {
+	print("black line");
+	decrement 1;	// ??????
+	shortReverse();
+} else if ((sensor.reading >= 101) && (sensor.reading <= 250)) {
+	print("grey line");
+	decrement 1;
+	scanRoom();
+	carryOnInnit();
+} else {
+	if (decrementCounter = 0) {
+		nudge to middle;
+	} else {
+		carry on forward;
+	}
+	// move forward to next line unless counter has decremented to zero, if so then
+	nudge to middle of square and record end of go...
+}

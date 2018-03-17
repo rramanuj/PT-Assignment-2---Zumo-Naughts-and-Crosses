@@ -58,18 +58,16 @@ ZumoReflectanceSensorArray sensors(QTR_NO_EMITTER_PIN);
 
 void setup() {
   // put your setup code here, to run once:
-<<<<<<< HEAD
   //motors.flipLeftMotor(true);
   //motors.flipRightMotor(true);
   sensors.init();
   sensors.calibrate();
-=======
+
   Serial.begin(9600);
->>>>>>> master
+
 
 }
 
-<<<<<<< HEAD
   int posRow;
   int posColumn;
 
@@ -95,7 +93,7 @@ void establishContact() {
     delay(DELAY_CONTACT);
   }
   Serial.read();
-=======
+//=======
 void loop() {
   // put your main code here, to run repeatedly:
   char inputChar;
@@ -141,11 +139,12 @@ void loop() {
       turnY = "n";
     }
 
-<<<<<<< HEAD
-    if (turnX == "") {
+//<<<<<<< HEAD
+//    if (turnX == "") {
+//
+//    } else if (turnY == "") {
+//=======
 
-    } else if (turnY == "") {
-=======
   if (turnX == "") {
     
   } else if (turnY == "") {
@@ -162,7 +161,7 @@ void initialise_compass() {
   LSM303::vector<int16_t> running_min = { 32767, 32767, 32767 }, running_max = { -32767, -32767, -32767 };
   unsigned char index;
 
-<<<<<<< HEAD
+
 void loop() {
   //some message sent through from GUI
   if (Serial.available() > 0) {
@@ -175,14 +174,14 @@ void loop() {
       default:
         Serial.println("Invalid command! The command '" + String(command) + "' cannot be used at this time."); break;
     }
-=======
+
   // Initiate the Wire library and join the I2C bus as a master
   Wire.begin();
->>>>>>> d4b0722a859b838ba57303ad23e30c8f89dd20b1
 
-    } else {
 
-    }
+    } /*else {
+
+    }*/
 
   }
   void initialise_compass() {
@@ -266,7 +265,6 @@ void loop() {
   //this was heavily inspired from the compass example
   void rotate(int degrees) //rotate to an angle based on compass
   {
-<<<<<<< HEAD
     int speed;
     float heading = averageHeading();
 
@@ -285,15 +283,4 @@ void loop() {
     }
     motors.setSpeeds(0, 0);
     delay(400);
-=======
-    heading = averageHeading();
-    relative = relativeHeading(heading, degrees);
-    speed = SPEED * relative / 180;
-    if (speed < 0)
-      speed -= TURN_BASE_SPEED;
-    else
-      speed += TURN_BASE_SPEED;
-    motors.setSpeeds(speed, -speed);
->>>>>>> master
->>>>>>> d4b0722a859b838ba57303ad23e30c8f89dd20b1
   }
