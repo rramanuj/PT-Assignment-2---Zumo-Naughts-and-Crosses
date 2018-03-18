@@ -24,10 +24,10 @@ public void setup() {
   customGUI();
   // Place your setup code here
 
-  com4 = new Serial(this, "COM4", 9600);
-  com5 = new Serial(this, "COM5", 9601);
+  com4 = new Serial(this, "/dev/cu.usbserial-DA01HMYL", 9600);
+  //com5 = new Serial(this, "COM5", 9601);
   com4.bufferUntil('\n');
-  com5.bufferUntil('\n');
+  //com5.bufferUntil('\n');
 }
 
 public void draw() {
@@ -56,7 +56,7 @@ void serialEvent(Serial myPort) {
         txtOutput.setText(message);
         toggleSlider();
       }
-    } else if (myPort == com5) {
+    } /*else if (myPort == com5) {
       if (!com5Connected) { //executes on first message received
         if (message.equals("requestcontact")) {
           myPort.clear();
@@ -67,8 +67,8 @@ void serialEvent(Serial myPort) {
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
         toggleSlider();
-      }
-    }
+      }*/
+    //}
   }
 }
 
@@ -77,7 +77,7 @@ void serialEvent(Serial myPort) {
 public void customGUI() {
 }
 
-public Serial getCurrentPort() {
+/*public Serial getCurrentPort() {
   if (sldrTurn.getValueI() == 0) {
     if (!switched) {
       return com4;
@@ -90,11 +90,12 @@ public Serial getCurrentPort() {
     } else {
       return com4;
     }
-  }
-  
+  }*/
+ 
+public Serial getCurrentPort() {
+  return com4; }
   //default
-  return null;
-}
+
 
 public void toggleSlider() {
   if (sldrTurn.getValueI() == 0) {
