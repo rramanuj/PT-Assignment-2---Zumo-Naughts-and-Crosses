@@ -3,6 +3,30 @@ import g4p_controls.*;
 import processing.serial.*;
 import javax.swing.JOptionPane;
 
+public class Mongo {
+
+    private String db;
+    private String coll;
+    private MongoCollection<Document> collection;
+    private MongoDatabase database;
+    private MongoClient mongoClient;
+    //private User user = new User();
+
+    public Mongo() {
+        mongoClient = new MongoClient("localhost", 27017);
+        database = mongoClient.getDatabase("naughts_and_crosses");
+    }
+
+    public void addUser(String username, String password, String type) {
+        collection = database.getCollection("users");
+        Document user = new Document("username", username)
+                .append("password", password)
+                .append("type", type)
+                .append("count", 1);
+        collection.insertOne(user);
+        System.out.println("Account registered");
+    }
+
 final char _MOVE = 'm';
 final float ONE_ONE = 1.1;
 final float ONE_TWO = 1.2;
@@ -127,4 +151,4 @@ if (sldrTurn.getValueI() == 0) {
   }
   
   return ' ';
-}
+}}
