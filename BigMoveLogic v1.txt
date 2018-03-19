@@ -1,3 +1,20 @@
+int turnSpeedHigh = 100;
+int turnSpeedMid = 90;
+int turnSpeedLow = 80;
+
+void rotateRight() {
+  rotate(fmod(averageHeading() + turnSpeedMid, 360));
+}
+
+void rotateLeft() {
+  rotate(fmod(averageHeading() - turnSpeedMid, 360));
+}
+
+void updatePosition(float pos) {
+  Serial.println("movecomplete");
+  Serial.println(String(pos));
+}
+
 void bigTing() {
   switch(direction) {
     case 'N': {

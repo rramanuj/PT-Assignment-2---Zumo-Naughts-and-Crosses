@@ -17,12 +17,45 @@ public class Mongo {
     database = mongoClient.getDatabase("naughts_and_crosses");
   }
 
-  public void addUser(String username) {
+  public ObjectId addUser(String username) {
     collection = database.getCollection("users");
     Document user = new Document("username", username)
       .append("count", 1);
     collection.insertOne(user);
     System.out.println("Account registered");
+
+    return (ObjectId) user.get("_id");
+  }
+
+  public ObjectId createGame(ObjectId player1, char symbol1, ObjectId player2, char symbol2) {
+    collection = database.getCollection("games");
+    Document game = new Document()
+      .append("player1", player1)
+      .append("player1symbol", symbol1)
+      .append("player2", player2)
+      .append("player2symbol", symbol2)
+      .append("completed", false)
+      .append("winner", null)
+      .append("count", 1);
+    collection.insertOne(game);
+    System.out.println("Game created");
+
+    return (ObjectId) game.get("_id");
+  }
+
+  public ObjectId addMove(ObjectId gameId, ObjectId playerId, float startPos, float endPos) {
+    collection = database.getCollection("moves");
+    Document move = new Document()
+      .append("game", gameId)
+      .append("player", playerId)
+      .append("startPos", startPos)
+      .append("endPos", endPos)
+      .append("moveOrder", moveNo++)
+      .append("count", 1);
+    collection.insertOne(move);
+    System.out.println("move logged");
+
+    return (ObjectId) move.get("_id");
   }
 }
 
@@ -45,8 +78,12 @@ private String message;
 private boolean com4Connected, com5Connected;
 private boolean isFirstMove = true;
 private boolean switched = false;
+private int moveNo = 0;
 
 private String player1Name, player2Name;
+private char player1Symbol, player2Symbol;
+private ObjectId player1Id, player2Id, gameId;
+private float player1LastKnownPos, player2LastKnownPos;
 
 public void setup() {
   size(480, 320, JAVA2D);
@@ -58,12 +95,12 @@ public void setup() {
   //com5 = new Serial(this, "COM5", 9601);
   com4.bufferUntil('\n');
   //com5.bufferUntil('\n');
-  
+
   Mongo mongo = new Mongo();
   player1Name = JOptionPane.showInputDialog("Player 1 Name: ");
-  mongo.addUser(player1Name);
+  player1Id = mongo.addUser(player1Name);
   player2Name = JOptionPane.showInputDialog("Player 2 Name: ");
-  mongo.addUser(player2Name);
+  player2Id = mongo.addUser(player2Name);
 }
 
 public void draw() {
@@ -90,21 +127,62 @@ void serialEvent(Serial myPort) {
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        toggleSlider();
-      }
-    } /*else if (myPort == com5) {
-     if (!com5Connected) { //executes on first message received
-     if (message.equals("requestcontact")) {
-     myPort.clear();
-     com5Connected = true;
-     myPort.write('t');
-     txtOutput.setText("Connection to Arduino established! (COM5)");
-     }
-     } else { //on all subsequent messages after contact established
-     txtOutput.setText(message);
-     toggleSlider();
-     }*/
-    //}
+        if (message.equals("movecomplete")) {
+          float updatedPos = 0;
+          while (myPort.available() < 0) {
+            delay(500);
+            System.out.println("awaiting coordinate");
+          }
+          updatedPos = Float.parseFloat(myPort.readString());
+
+          Mongo mongo = new Mongo();
+          if (isFirstMove) {
+            if (isNaught) {
+              player1Symbol = 'O';
+              player2Symbol = 'X';
+            } else {
+              player1Symbol = 'X';
+              player2Symbol = 'O';
+            }
+            gameId = mongo.createGame(player1Id, player1Symbol, player2Id, player2Symbol);
+          }
+
+          //record the moves on database
+          //need to get updated position back from Arduino
+          if (isNaught) {
+            if (player1Symbol == 'O') {
+              mongo.addMove(gameId, player1Id, player1LastKnownPos, updatedPos);
+              player1LastKnownPos = updatedPos;
+            } else {
+              mongo.addMove(gameId, player2Id, player2LastKnownPos, updatedPos);
+              player2LastKnownPos = updatedPos;
+            }
+          } else {
+            if (player1Symbol == 'X') {
+              mongo.addMove(gameId, player1Id, player1LastKnownPos, updatedPos);
+              player1LastKnownPos = updatedPos;
+            } else {
+              mongo.addMove(gameId, player2Id, player2LastKnownPos, updatedPos);
+              player1LastKnownPos = updatedPos;
+            }
+          }
+
+          toggleSlider();
+        }
+      } /*else if (myPort == com5) {
+       if (!com5Connected) { //executes on first message received
+       if (message.equals("requestcontact")) {
+       myPort.clear();
+       com5Connected = true;
+       myPort.write('t');
+       txtOutput.setText("Connection to Arduino established! (COM5)");
+       }
+       } else { //on all subsequent messages after contact established
+       txtOutput.setText(message);
+       toggleSlider();
+       }*/
+      //}
+    }
   }
 }
 
@@ -134,8 +212,10 @@ public Serial getCurrentPort() {
 
 public void toggleSlider() {
   if (sldrTurn.getValueI() == 0) {
+    isNaught = false;
     sldrTurn.setValue(100);
   } else if (sldrTurn.getValueI() == 100) {
+    isNaught = true;
     sldrTurn.setValue(0);
   }
 
