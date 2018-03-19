@@ -1,6 +1,4 @@
 #include <ZumoReflectanceSensorArray.h>
-
-
 #include <QTRSensors.h>
 #include <ZumoReflectanceSensorArray.h>
 #include <ZumoMotors.h>
@@ -12,13 +10,13 @@
 
 #include <Servo.h>
 /*
- * This example uses the ZumoMotors library to drive each motor on the Zumo
- * forward, then backward. The yellow user LED is on when a motor should be
- * running forward and off when a motor should be running backward. If a
- * motor on your Zumo has been flipped, you can correct its direction by
- * uncommenting the call to flipLeftMotor() or flipRightMotor() in the setup()
- * function.
- */
+   This example uses the ZumoMotors library to drive each motor on the Zumo
+   forward, then backward. The yellow user LED is on when a motor should be
+   running forward and off when a motor should be running backward. If a
+   motor on your Zumo has been flipped, you can correct its direction by
+   uncommenting the call to flipLeftMotor() or flipRightMotor() in the setup()
+   function.
+*/
 
 #define LED_PIN 13
 // this might need to be tuned for different lighting conditions, surfaces, etc.
@@ -42,7 +40,7 @@ void setup()
 {
   reflectanceSensors.init();
   reflectanceSensors.calibrate();
-  
+
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(9600);
   Serial.println("waiting...");
@@ -55,7 +53,7 @@ void loop()
 {
   reflectanceSensors.read(sensor_values);
   Serial.println(String(sensor_values[0]));
-  
+
   /*if (Serial.available()>0) {
         char motor = (char) Serial.read();
         int pin;
@@ -73,26 +71,26 @@ void loop()
 }
 
 void moveForward(int destination) {
- //destination refers to the amount of grey lines the zumo needs to cross before
- //it gets to its destination.
-int start = 0;
-while(start < destination){
-    if (line_detection() == "LINE") 
+  //destination refers to the amount of grey lines the zumo needs to cross before
+  //it gets to its destination.
+  int start = 0;
+  while (start < destination) {
+    if (line_detection() == "LINE")
     {
       start++; //increment the start variable after it crosses each line
     }
     motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
   }
-motors.setSpeeds(0, 0);
-motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
-delay(REVERSE_DURATION);
-motors.setSpeeds(0, 0);
+  motors.setSpeeds(0, 0);
+  motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
+  delay(REVERSE_DURATION);
+  motors.setSpeeds(0, 0);
 }
 
 String line_detection() {
-if (check_for_wall()){
-  return "LINE";
-}
+  if (check_for_wall()) {
+    return "LINE";
+  }
 
   /*  if (sensor_values[0] > QTR_THRESHOLD)
     {
@@ -114,33 +112,33 @@ if (check_for_wall()){
       motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
       return "R";
     }*/
-  
+
   return "N/A";
 }
 
 
-//if sensors other than the far left and right are above the threshold it would indicate we are on a wall. 
-  bool check_for_wall() {
+//if sensors other than the far left and right are above the threshold it would indicate we are on a wall.
+bool check_for_wall() {
   motors.setSpeeds(100, 100);
   reflectanceSensors.read(sensor_values);
   //it's a given one of these values are above the qtr threshold, but we need to check if it's just the left side, or the entire zumo
   if ((sensor_values[0] >= QTR_THRESHOLD) || (sensor_values[5]  >= QTR_THRESHOLD))
   {
     delay(100); //pause the zumo to read the values in again
-    reflectanceSensors.read(sensor_values); 
-   // if ((sensor_values[1] > QTR_THRESHOLD) || (sensor_values[2] > QTR_THRESHOLD) || (sensor_values[3] > QTR_THRESHOLD) || (sensor_values[4] > QTR_THRESHOLD))
-   // { //if any of the middle sensors are above the QTR, stop the zumo. 
-       motors.setSpeeds(150, 150);
-      delay(200);
-      return true;
+    reflectanceSensors.read(sensor_values);
+    // if ((sensor_values[1] > QTR_THRESHOLD) || (sensor_values[2] > QTR_THRESHOLD) || (sensor_values[3] > QTR_THRESHOLD) || (sensor_values[4] > QTR_THRESHOLD))
+    // { //if any of the middle sensors are above the QTR, stop the zumo.
+    motors.setSpeeds(150, 150);
+    delay(200);
+    return true;
     // }
   }
   return false;
 }
 
-void sensor_callibration() 
+void sensor_callibration()
 {
-  
+
   // Initialise the reflectance sensors module
   delay(500);
   pinMode(13, OUTPUT);
@@ -156,18 +154,18 @@ void sensor_callibration()
     Serial.println(sensor_values[2]);
     Serial.println(sensor_values[3]);
     Serial.println(sensor_values[4]);
-    Serial.println(sensor_values[5]);  
+    Serial.println(sensor_values[5]);
     //turn right
     motors.setSpeeds(500, -500);
     delay(2500);
-      Serial.println(sensor_values[1]);
+    Serial.println(sensor_values[1]);
     Serial.println(sensor_values[2]);
     Serial.println(sensor_values[3]);
     Serial.println(sensor_values[4]);
     Serial.println(sensor_values[5]);
-   
+
   }
   motors.setLeftSpeed(0); motors.setRightSpeed(0); delay(2);
-  digitalWrite(13, LOW);         // turn off LED to indicate we are through with calibration 
+  digitalWrite(13, LOW);         // turn off LED to indicate we are through with calibration
 }
 

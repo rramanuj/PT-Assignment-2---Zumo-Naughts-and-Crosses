@@ -3,11 +3,15 @@ import g4p_controls.*;
 import processing.serial.*;
 
 final char _MOVE = 'm';
-final int _ONE = 1;
-final int _TWO = 2;
-final int _THREE = 3;
-int n1 = 1;
-int n2 = 1;
+final float ONE_ONE = 1.1;
+final float ONE_TWO = 1.2;
+final float ONE_THREE = 1.3;
+final float TWO_ONE = 2.1;
+final float TWO_TWO = 2.2;
+final float TWO_THREE = 2.3;
+final float THREE_ONE = 3.1;
+final float THREE_TWO = 3.2;
+final float THREE_THREE = 3.3;
 
 boolean isNaught = false;
 
