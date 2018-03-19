@@ -5,27 +5,26 @@ import javax.swing.JOptionPane;
 
 public class Mongo {
 
-    private String db;
-    private String coll;
-    private MongoCollection<Document> collection;
-    private MongoDatabase database;
-    private MongoClient mongoClient;
-    //private User user = new User();
+  private String db;
+  private String coll;
+  private MongoCollection<Document> collection;
+  private MongoDatabase database;
+  private MongoClient mongoClient;
+  //private User user = new User();
 
-    public Mongo() {
-        mongoClient = new MongoClient("localhost", 27017);
-        database = mongoClient.getDatabase("naughts_and_crosses");
-    }
+  public Mongo() {
+    mongoClient = new MongoClient("localhost", 27017);
+    database = mongoClient.getDatabase("naughts_and_crosses");
+  }
 
-    public void addUser(String username, String password, String type) {
-        collection = database.getCollection("users");
-        Document user = new Document("username", username)
-                .append("password", password)
-                .append("type", type)
-                .append("count", 1);
-        collection.insertOne(user);
-        System.out.println("Account registered");
-    }
+  public void addUser(String username) {
+    collection = database.getCollection("users");
+    Document user = new Document("username", username)
+      .append("count", 1);
+    collection.insertOne(user);
+    System.out.println("Account registered");
+  }
+}
 
 final char _MOVE = 'm';
 final float ONE_ONE = 1.1;
@@ -60,8 +59,11 @@ public void setup() {
   com4.bufferUntil('\n');
   //com5.bufferUntil('\n');
   
+  Mongo mongo = new Mongo();
   player1Name = JOptionPane.showInputDialog("Player 1 Name: ");
+  mongo.addUser(player1Name);
   player2Name = JOptionPane.showInputDialog("Player 2 Name: ");
+  mongo.addUser(player2Name);
 }
 
 public void draw() {
@@ -91,17 +93,17 @@ void serialEvent(Serial myPort) {
         toggleSlider();
       }
     } /*else if (myPort == com5) {
-      if (!com5Connected) { //executes on first message received
-        if (message.equals("requestcontact")) {
-          myPort.clear();
-          com5Connected = true;
-          myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (COM5)");
-        }
-      } else { //on all subsequent messages after contact established
-        txtOutput.setText(message);
-        toggleSlider();
-      }*/
+     if (!com5Connected) { //executes on first message received
+     if (message.equals("requestcontact")) {
+     myPort.clear();
+     com5Connected = true;
+     myPort.write('t');
+     txtOutput.setText("Connection to Arduino established! (COM5)");
+     }
+     } else { //on all subsequent messages after contact established
+     txtOutput.setText(message);
+     toggleSlider();
+     }*/
     //}
   }
 }
@@ -112,20 +114,20 @@ public void customGUI() {
 }
 
 /*public Serial getCurrentPort() {
-  if (sldrTurn.getValueI() == 0) {
-    if (!switched) {
-      return com4;
-    } else {
-      return com5;
-    }
-  } else if (sldrTurn.getValueI() == 100) {
-    if (!switched) {
-      return com5;
-    } else {
-      return com4;
-    }
-  }*/
- 
+ if (sldrTurn.getValueI() == 0) {
+ if (!switched) {
+ return com4;
+ } else {
+ return com5;
+ }
+ } else if (sldrTurn.getValueI() == 100) {
+ if (!switched) {
+ return com5;
+ } else {
+ return com4;
+ }
+ }*/
+
 public Serial getCurrentPort() {
   return com4;
 }
@@ -136,7 +138,7 @@ public void toggleSlider() {
   } else if (sldrTurn.getValueI() == 100) {
     sldrTurn.setValue(0);
   }
-  
+
   if (isFirstMove) {
     isFirstMove = false;
     sldrTurn.setEnabled(false);
@@ -144,11 +146,11 @@ public void toggleSlider() {
 }
 
 public char getSliderSymbol() {
-if (sldrTurn.getValueI() == 0) {
+  if (sldrTurn.getValueI() == 0) {
     return 'O';
   } else if (sldrTurn.getValueI() == 100) {
     return 'X';
   }
-  
+
   return ' ';
-}}
+}
