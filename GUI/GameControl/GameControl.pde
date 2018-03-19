@@ -1,6 +1,7 @@
 // Need G4P library
 import g4p_controls.*;
 import processing.serial.*;
+import javax.swing.JOptionPane;
 
 final char _MOVE = 'm';
 final float ONE_ONE = 1.1;
@@ -22,16 +23,21 @@ private boolean com4Connected, com5Connected;
 private boolean isFirstMove = true;
 private boolean switched = false;
 
+private String player1Name, player2Name;
+
 public void setup() {
   size(480, 320, JAVA2D);
   createGUI();
   customGUI();
   // Place your setup code here
 
-  com4 = new Serial(this, "/dev/cu.usbserial-DA01HMYL", 9600);
+  com4 = new Serial(this, "COM6", 9600);
   //com5 = new Serial(this, "COM5", 9601);
   com4.bufferUntil('\n');
   //com5.bufferUntil('\n');
+  
+  player1Name = JOptionPane.showInputDialog("Player 1 Name: ");
+  player2Name = JOptionPane.showInputDialog("Player 2 Name: ");
 }
 
 public void draw() {
@@ -97,9 +103,8 @@ public void customGUI() {
   }*/
  
 public Serial getCurrentPort() {
-  return com4; }
-  //default
-
+  return com4;
+}
 
 public void toggleSlider() {
   if (sldrTurn.getValueI() == 0) {

@@ -77,11 +77,19 @@ public void txtOutput_change1(GTextArea source, GEvent event) { //_CODE_:txtOutp
 public void sldrTurn_change1(GSlider source, GEvent event) { //_CODE_:sldrTurn:219633:
   int sliderPos = source.getValueI();
   
-  if (sliderPos == 1) {
-    isNaught = false;
+  if (sliderPos < 50) {
+    sliderPos = 0;
   } else {
-    isNaught = true;
+    sliderPos = 100;
   }
+  
+  if (sliderPos == 0) {
+    isNaught = true;
+  } else {
+    isNaught = false;
+  }
+  
+  
 } //_CODE_:sldrTurn:219633:
 
 public void chkReached_clicked1(GCheckbox source, GEvent event) { //_CODE_:chkReached:830094:
