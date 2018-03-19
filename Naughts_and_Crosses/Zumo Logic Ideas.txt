@@ -58,3 +58,565 @@ if ((sensor.reading >= 0) && (sensor.reading <= 100)) {
 	// move forward to next line unless counter has decremented to zero, if so then
 	nudge to middle of square and record end of go...
 }
+
+case 'N': {
+      if (pos == 1.1) {
+        if(dest == 1.2) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          rotateRight();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          rotateRight();
+          rotateRight();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          rotateRight();
+          rotatRight();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateRight();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateRight();
+          rotateRight();
+          decCount = 2;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateRight();
+          roateRight();
+          decCount = 2;
+          execute();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 1.2) {
+        if(dest == 1.1) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          rotateLeft();
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 1.3) {
+        if(dest == 1.1) {
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 1.2) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 2.1) {
+        if(dest == 1.1) {
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.2) {
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateRight();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateRight();
+          rotateRight();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateRight();
+          rotateRight();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 2.2) {
+        if(dest == 1.1) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute()
+          //end of go          
+        }
+        if (dest == 1.2) {
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 2.3) {
+        if(dest == 1.1) {
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 1.2) {
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 3.1) {
+        if(dest == 1.1) {
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 1.2) {
+          decCount = 2;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          decCount = 2;
+          execute();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateRight();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 3.2) {
+        if(dest == 1.1) {
+          decCount = 2;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.2) {
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          decCount = 2;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          decCount = 1;
+          execute();
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.3) {
+          rotateRight();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+      }
+      if (pos == 3.3) {
+        if(dest == 1.1) {
+          decCount = 2;
+          execute();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 1.2) {
+          decCount = 2;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 1.3) {
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.1) {
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 2.2) {
+          decCount = 1;
+          execute();
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 2.3) {
+          decCount = 1;
+          execute();
+          //end of go
+        }
+        if (dest == 3.1) {
+          rotateLeft();
+          decCount = 2;
+          execute();
+          //end of go
+        }
+        if (dest == 3.2) {
+          rotateLeft();
+          decCount = 1;
+          execute();
+          //end of go
+        }
+      }
+    }
