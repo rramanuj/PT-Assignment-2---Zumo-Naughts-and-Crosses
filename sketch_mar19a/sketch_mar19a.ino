@@ -1,3 +1,28 @@
+int turnSpeedHigh = 100;
+int turnSpeedMid = 90;
+int turnSpeedLow = 80;
+
+void rotateRight() {
+  rotate(fmod(averageHeading() + turnSpeedMid, 360));
+}
+
+void rotateLeft() {
+  rotate(fmod(averageHeading() - turnSpeedMid, 360));
+}
+
+void updatePosition(float pos) {
+  Serial.println("movecomplete");
+  Serial.println(String(pos));
+}
+
+void execute(); {
+
+}
+
+void moveForward(int i) {
+
+}
+
 void bigTing() {
   switch(direction) {
     case 'N': {
@@ -33,7 +58,7 @@ void bigTing() {
         }
         if (dest == 2.3) {
           rotateRight();
-          rotatRight();
+          rotateRight();
           moveForward(1);
           execute();
           rotateLeft();
@@ -274,7 +299,7 @@ void bigTing() {
           execute();
           rotateRight();
           moveForward(1);
-          execute()
+          execute();
           motors.setSpeeds(0, 0);           
         }
         if (dest == 1.2) {
@@ -800,7 +825,7 @@ void bigTing() {
           execute();
           rotateRight();
           moveForward(1);
-          execute()
+          execute();
           motors.setSpeeds(0, 0);           
         }
         if (dest = 1.2) {
@@ -1240,7 +1265,7 @@ void bigTing() {
           moveForward(2);
           execute();
           rotateLeft();
-          deCount = 1;
+          decCount = 1;
           execute();
           motors.setSpeeds(0, 0); 
         }
@@ -1376,7 +1401,7 @@ void bigTing() {
           execute();
           rotateRight();
           moveForward(1);
-          execute()
+          execute();
           motors.setSpeeds(0, 0);           
         }
         if (dest == 1.2) {
@@ -1692,7 +1717,7 @@ void bigTing() {
         }
         if (dest == 1.3) {
           rotateRight();
-          rotateRgiht();
+          rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); 
@@ -1939,7 +1964,7 @@ void bigTing() {
           execute();
           rotateRight();
           moveForward(1);
-          execute()
+          execute();
           motors.setSpeeds(0, 0);           
         }
         if (dest == 1.2) {
