@@ -42,11 +42,24 @@ public class Mongo {
       .append("player2symbol", symbol2)
       .append("completed", false)
       .append("winner", null)
+      .append("numMoves", 0)
       .append("count", 1);
     collection.insertOne(game);
     System.out.println("Game created");
 
     return (ObjectId) game.get("_id");
+  }
+
+  public void updateGameWinner(ObjectId gameId, ObjectId winnerId) {
+    collection = database.getCollection("games");
+    Bson gameFilter = Filters.eq("_id", gameId);
+
+    collection.updateOne(gameFilter, 
+      new Document("$set", new Document()
+      .append("completed", true)
+      .append("winner", winnerId)
+      .append("numMoves", moveNo)
+      ));
   }
 
   public ObjectId addMove(ObjectId gameId, ObjectId playerId, float startPos, float endPos) {
@@ -66,6 +79,9 @@ public class Mongo {
 }
 
 final char _MOVE = 'm';
+final char X_SYMBOL = 'X';
+final char O_SYMBOL = 'O';
+
 final float ONE_ONE = 1.1;
 final float ONE_TWO = 1.2;
 final float ONE_THREE = 1.3;
@@ -75,6 +91,10 @@ final float TWO_THREE = 2.3;
 final float THREE_ONE = 3.1;
 final float THREE_TWO = 3.2;
 final float THREE_THREE = 3.3;
+
+final int FIRST_MOVE = 1;
+final int MIN_MOVES = 5;
+final int MAX_MOVES = 9;
 
 //Serial port for communication to/from Arduino
 private Serial com4, com5;
@@ -114,15 +134,15 @@ public void initialisePlayers() {
 
   username = JOptionPane.showInputDialog("Player 1 Name: ");
   do {
-    symbol = JOptionPane.showInputDialog("Player 1 Symbol (Please enter 'X' or 'O'): ").charAt(0);
-  } while (!(symbol == 'X' || symbol == 'x' || symbol == 'O' || symbol == 'o'));
+    symbol = JOptionPane.showInputDialog(username + "'s Symbol (Please enter 'X' or 'O'): ").charAt(0);
+  } while (!(symbol == X_SYMBOL || symbol == 'x' || symbol == O_SYMBOL || symbol == 'o'));
   id = mongo.addUser(username);
   player1 = new Player(id, username, symbol, true);
 
-  if (player1.getPlayerSymbol() == 'X') {
-    symbol = 'O';
+  if (player1.getPlayerSymbol() == X_SYMBOL) {
+    symbol = O_SYMBOL;
   } else {
-    symbol = 'X';
+    symbol = X_SYMBOL;
   }
   username = JOptionPane.showInputDialog("Player 2 Name (symbol '" + symbol + "'): ");
   id = mongo.addUser(username);
@@ -172,6 +192,16 @@ void serialEvent(Serial myPort) {
           mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
           player.setLastKnownPos(updatedPos);
 
+          if (checkWinner(player.getPlayerSymbol())) {
+            txtOutput.setText(player.getUsername() + " is the winner!");
+            mongo.updateGameWinner(gameId, player.getMongoId());
+          } else {
+            if (moveLimitReached()) {
+              txtOutput.setText("The game is a draw!");
+              mongo.updateGameWinner(gameId, null);
+            }
+          }
+
           toggleSlider();
         }
       }
@@ -217,16 +247,10 @@ public Serial getCurrentPort() {
 
 public void toggleSlider() {
   if (moveNo == 0) {
-    System.out.println("player 1 symbol is '" + player1.getPlayerSymbol() + "'");
     if (player1.getPlayerSymbol() == 'O') {
-      System.out.println("'" + player1.getPlayerSymbol() + "' == 'O'");
       sldrTurn.setValue(0.0);
-      System.out.println(sldrTurn.getValueF());
     } else if (player1.getPlayerSymbol() == 'X') {
-      System.out.println("'" + player1.getPlayerSymbol() + "' == 'X'");
       sldrTurn.setValue(1.0);
-      System.out.println("the ting is " + sldrTurn.getValueF());
-      System.out.println(sldrTurn.getValueF());
     }
     sldrTurn.setEnabled(false);
   } else if (moveNo >= 1) {
@@ -247,7 +271,11 @@ public Player getCurrentPlayer() {
 }
 
 public boolean isFirstMove() {
-  return moveNo == 1;
+  return moveNo == FIRST_MOVE;
+}
+
+public boolean moveLimitReached() {
+  return moveNo == MAX_MOVES;
 }
 
 public void updateButtonDisplay(GButton button) {
@@ -261,52 +289,45 @@ public void updateButtonDisplay(GButton button) {
   }
 }
 
-public void checkWinner(char symbol) {
-  String btnText[][] = {
-    {btn1_1.getText(), btn1_2.getText(), btn1_3.getText()}, 
-    {btn2_1.getText(), btn2_2.getText(), btn2_3.getText()}, 
-    {btn3_1.getText(), btn3_2.getText(), btn3_3.getText()}
-  };
+public boolean checkWinner(char symbol) {
+  if (moveNo >= MIN_MOVES) {
+    String btnText[][] = {
+      {btn1_1.getText(), btn1_2.getText(), btn1_3.getText()}, 
+      {btn2_1.getText(), btn2_2.getText(), btn2_3.getText()}, 
+      {btn3_1.getText(), btn3_2.getText(), btn3_3.getText()}
+    };
 
-  char btnChars[][] = new char[3][3];
-  for (int i = 0; i < btnText.size(); i++) {
-    for (int j = 0; j < btnText[i].size(); j++) {
-      if (!btnText[i][j].equals("")) {
-        if (btnText[i][j].charAt(0) == 'X' || btnText[i][j].charAt(0) == 'O') {
-          btnChars[i][j] = btnText[i][j].charAt(0);
-        }
-      }
-    }
-  }
-
-  //diagonals can be checked from hard-coded coordinates, only two possible combinations
-  if ((btnChars[0][0] == symbol && btnChars[1][1] == symbol && btnChars[2][2] == symbol) ||
-    (btnChars[2][0] == symbol && btnChars[1][1] == symbol && btnChars[0][2] == symbol)) {
-    return true;
-  } else {
-    for (int i = 0; i < btnChars.size(); i++) {
-      for (int j = 0; j < btnChars[i].size(); j++) {
-        if (btnChars[i][j] == symbol) {
-          if (i == 0) { //is in left-most column
-            //check the two cells to the right
-            if (btnChars[i][(j + 1)] == symbol) {
-              if (btnChars[i][(j + 2)] == symbol) {
-                return true;
-              }
-            } else if (j == 0) { //is in top row
-              //check the two cells below
-              if (btnChars[(i + 1)][j] == symbol) {
-                if (btnChars[(i + 2)][j] == symbol) {
-                  return true;
-                }
-              }
-            }
+    char btnChars[][] = new char[3][3];
+    for (int i = 0; i < btnText.length; i++) {
+      for (int j = 0; j < btnText[i].length; j++) {
+        if (!btnText[i][j].equals("")) {
+          if (btnText[i][j].charAt(0) == 'X' || btnText[i][j].charAt(0) == 'O') {
+            btnChars[i][j] = btnText[i][j].charAt(0);
           }
-          break;
         }
       }
     }
 
-    //no winning combination found
-    return false;
+    //diagonals can be checked from hard-coded coordinates, only two possible combinations
+    return (horzWin(btnChars, symbol) || vertWin(btnChars, symbol) || diagWin(btnChars, symbol));
   }
+  //cannot be a winner after fewer than 5 moves
+  return false;
+}
+
+private boolean diagWin(char[][] chars, char symbol) {
+  return ((chars[0][0] == symbol && chars[1][1] == symbol && chars[2][2] == symbol)
+    || (chars[2][0] == symbol && chars[1][1] == symbol && chars[0][2] == symbol));
+}
+
+private boolean horzWin(char[][] chars, char symbol) {
+  return ((chars[0][0] == symbol && chars[0][1] == symbol && chars[0][2] == symbol)
+    || (chars[1][0] == symbol && chars[1][1] == symbol && chars[1][2] == symbol)
+    || (chars[2][0] == symbol && chars[2][1] == symbol && chars[2][2] == symbol));
+}
+
+private boolean vertWin(char[][] chars, char symbol) {
+  return ((chars[0][0] == symbol && chars[1][0] == symbol && chars[2][0] == symbol)
+    || (chars[0][1] == symbol && chars[1][1] == symbol && chars[2][1] == symbol)
+    || (chars[0][2] == symbol && chars[1][2] == symbol && chars[2][2] == symbol));
+}
