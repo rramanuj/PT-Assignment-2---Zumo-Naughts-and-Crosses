@@ -260,3 +260,53 @@ public void updateButtonDisplay(GButton button) {
     button.setLocalColorScheme(GCScheme.RED_SCHEME);
   }
 }
+
+public void checkWinner(char symbol) {
+  String btnText[][] = {
+    {btn1_1.getText(), btn1_2.getText(), btn1_3.getText()}, 
+    {btn2_1.getText(), btn2_2.getText(), btn2_3.getText()}, 
+    {btn3_1.getText(), btn3_2.getText(), btn3_3.getText()}
+  };
+
+  char btnChars[][] = new char[3][3];
+  for (int i = 0; i < btnText.size(); i++) {
+    for (int j = 0; j < btnText[i].size(); j++) {
+      if (!btnText[i][j].equals("")) {
+        if (btnText[i][j].charAt(0) == 'X' || btnText[i][j].charAt(0) == 'O') {
+          btnChars[i][j] = btnText[i][j].charAt(0);
+        }
+      }
+    }
+  }
+
+  //diagonals can be checked from hard-coded coordinates, only two possible combinations
+  if ((btnChars[0][0] == symbol && btnChars[1][1] == symbol && btnChars[2][2] == symbol) ||
+    (btnChars[2][0] == symbol && btnChars[1][1] == symbol && btnChars[0][2] == symbol)) {
+    return true;
+  } else {
+    for (int i = 0; i < btnChars.size(); i++) {
+      for (int j = 0; j < btnChars[i].size(); j++) {
+        if (btnChars[i][j] == symbol) {
+          if (i == 0) { //is in left-most column
+            //check the two cells to the right
+            if (btnChars[i][(j + 1)] == symbol) {
+              if (btnChars[i][(j + 2)] == symbol) {
+                return true;
+              }
+            } else if (j == 0) { //is in top row
+              //check the two cells below
+              if (btnChars[(i + 1)][j] == symbol) {
+                if (btnChars[(i + 2)][j] == symbol) {
+                  return true;
+                }
+              }
+            }
+          }
+          break;
+        }
+      }
+    }
+
+    //no winning combination found
+    return false;
+  }
