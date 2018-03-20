@@ -93,7 +93,7 @@ public void setup() {
   customGUI();
   // Place your setup code here
 
-  com4 = new Serial(this, "COM6", 9600);
+  com4 = new Serial(this, "COM8", 9600);
   //com5 = new Serial(this, "COM5", 9601);
   com4.bufferUntil('\n');
   //com5.bufferUntil('\n');
@@ -115,16 +115,20 @@ public void initialisePlayers() {
   username = JOptionPane.showInputDialog("Player 1 Name: ");
   do {
     symbol = JOptionPane.showInputDialog("Player 1 Symbol (Please enter 'X' or 'O'): ").charAt(0);
-  } while (symbol != 'X' || symbol != 'x' || symbol != 'O' || symbol != 'o');
+  } while (!(symbol == 'X' || symbol == 'x' || symbol == 'O' || symbol == 'o'));
   id = mongo.addUser(username);
   player1 = new Player(id, username, symbol, true);
 
-  username = JOptionPane.showInputDialog("Player 2 Name: ");
-  do {
-    symbol = JOptionPane.showInputDialog("Player 2 Symbol (Please enter 'X' or 'O'): ").charAt(0);
-  } while (symbol != 'X' || symbol != 'x' || symbol != 'O' || symbol != 'o');
+  if (player1.getPlayerSymbol() == 'X') {
+    symbol = 'O';
+  } else {
+    symbol = 'X';
+  }
+  username = JOptionPane.showInputDialog("Player 2 Name (symbol '" + symbol + "'): ");
   id = mongo.addUser(username);
   player2 = new Player(id, username, symbol, false);
+
+  toggleSlider();
 }
 
 void serialEvent(Serial myPort) {
@@ -212,14 +216,25 @@ public Serial getCurrentPort() {
 }
 
 public void toggleSlider() {
-  if (sldrTurn.getValueI() == 0) {
-    sldrTurn.setValue(100);
-  } else if (sldrTurn.getValueI() == 100) {
-    sldrTurn.setValue(0);
-  }
-
-  if (isFirstMove()) {
+  if (moveNo == 0) {
+    System.out.println("player 1 symbol is '" + player1.getPlayerSymbol() + "'");
+    if (player1.getPlayerSymbol() == 'O') {
+      System.out.println("'" + player1.getPlayerSymbol() + "' == 'O'");
+      sldrTurn.setValue(0.0);
+      System.out.println(sldrTurn.getValueF());
+    } else if (player1.getPlayerSymbol() == 'X') {
+      System.out.println("'" + player1.getPlayerSymbol() + "' == 'X'");
+      sldrTurn.setValue(1.0);
+      System.out.println("the ting is " + sldrTurn.getValueF());
+      System.out.println(sldrTurn.getValueF());
+    }
     sldrTurn.setEnabled(false);
+  } else if (moveNo >= 1) {
+    if (sldrTurn.getValueF() == 0.0) {
+      sldrTurn.setValue(1.0);
+    } else if (sldrTurn.getValueF() == 1.0) {
+      sldrTurn.setValue(0.0);
+    }
   }
 }
 
@@ -233,4 +248,15 @@ public Player getCurrentPlayer() {
 
 public boolean isFirstMove() {
   return moveNo == 1;
+}
+
+public void updateButtonDisplay(GButton button) {
+  Player player = getCurrentPlayer();
+  char symbol = player.getPlayerSymbol();
+  button.setText(Character.toString(symbol));
+  if (symbol == 'X') {
+    button.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  } else {
+    button.setLocalColorScheme(GCScheme.RED_SCHEME);
+  }
 }

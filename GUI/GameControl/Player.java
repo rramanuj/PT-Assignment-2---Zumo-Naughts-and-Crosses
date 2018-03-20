@@ -1,3 +1,4 @@
+import g4p_controls.*;
 import org.bson.types.*;
 
 public class Player {
@@ -11,11 +12,11 @@ public class Player {
   public Player(ObjectId id, String name, char sym, boolean first) {
     _id = id;
     username = name;
-    symbol = sym;
+    symbol = Character.toString(sym).toUpperCase().charAt(0);
     goesFirst = first;
     lastKnownPos = 0;
   }
-  
+
   public ObjectId getMongoId() {
     return _id;
   }
