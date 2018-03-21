@@ -1,5 +1,5 @@
 <template>
-    <panel title="Projects" class="ml-2">
+    <panel title="Games" class="ml-2">
       <v-btn @click="showAll"
 >Show All</v-btn>
       <div

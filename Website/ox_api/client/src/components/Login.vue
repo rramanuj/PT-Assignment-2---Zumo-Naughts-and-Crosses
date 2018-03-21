@@ -7,12 +7,12 @@
     </v-toolbar>
  
   <div class="pl-4 pr-4 pt-2 pb-2">
-      <v-text-field label="Username"  :rules="[() => username.length > 5 || 'This field is required']" v-model="username"></v-text-field>
+      <v-text-field label="Username"  :rules="[() => username.length > 1 || 'This field is required']" v-model="username"></v-text-field>
    <!-- <input type ="username" name ="username" placeholder="username" v-model="username"/>-->
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
       <v-text-field
-          label="Password" type="password" :rules="[() => password.length > 5 || 'This field is required']" v-model="password"
+          label="Password" type="password" :rules="[() => password.length > 1 || 'This field is required']" v-model="password"
         ></v-text-field>
     <!-- <input type ="password" name ="password" placeholder="password" v-model="password"/>-->
      <br>

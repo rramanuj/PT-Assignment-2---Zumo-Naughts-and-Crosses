@@ -1,6 +1,6 @@
 <template>
     <panel title="Search">
-            <v-text-field label="Search by Project.." v-model="search"></v-text-field>
+            <v-text-field label="Search by Game.." v-model="search"></v-text-field>
     </panel>
 </template>
 <script>
