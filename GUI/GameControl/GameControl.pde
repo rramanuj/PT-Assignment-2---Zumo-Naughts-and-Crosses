@@ -72,7 +72,7 @@ public class Mongo {
       .append("moveNo", moveNo)
       .append("count", 1);
     collection.insertOne(move);
-    System.out.println("move logged");
+    System.out.println("Move logged.");
 
     return (ObjectId) move.get("_id");
   }
