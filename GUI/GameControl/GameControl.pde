@@ -15,7 +15,7 @@ public class Mongo {
     mongoClient = new MongoClient("localhost", 27017);
     database = mongoClient.getDatabase("naughts_and_crosses");
   }
-
+  
   public ObjectId addUser(String username) {
     collection = database.getCollection("users");
     Bson usernameFilter = Filters.eq("username", username);
@@ -37,8 +37,7 @@ public class Mongo {
     collection = database.getCollection("games");
     Document game = new Document()
       .append("player1", player1)
-      .append("player1symbol", symbol1)
-      .append("player2", player2)
+`     .append("player2", player2)
       .append("player2symbol", symbol2)
       .append("completed", false)
       .append("winner", null)
@@ -131,10 +130,12 @@ public void initialisePlayers() {
   char symbol;
 
   username = JOptionPane.showInputDialog("Player 1 Name: ");
+  password = JOptionPane.showInputDialog("Player 1 Password: ");
+
   do {
     symbol = JOptionPane.showInputDialog(username + "'s Symbol (Please enter 'X' or 'O'): ").charAt(0);
   } while (!(symbol == X_SYMBOL || symbol == 'x' || symbol == O_SYMBOL || symbol == 'o'));
-  id = mongo.addUser(username);
+  id = mongo.addUser(username, password);
   player1 = new Player(id, username, symbol, true);
 
   if (player1.getPlayerSymbol() == X_SYMBOL) {
@@ -143,9 +144,10 @@ public void initialisePlayers() {
     symbol = X_SYMBOL;
   }
   username = JOptionPane.showInputDialog("Player 2 Name (symbol '" + symbol + "'): ");
-  id = mongo.addUser(username);
+  password = JOptionPane.showInputDialog("Player 2 Password: ");
+  
+  id = mongo.addUser(username, password);
   player2 = new Player(id, username, symbol, false);
-
   toggleSlider();
 }
 
