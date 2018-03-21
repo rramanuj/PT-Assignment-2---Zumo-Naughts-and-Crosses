@@ -15,7 +15,7 @@ public class Mongo {
     mongoClient = new MongoClient("localhost", 27017);
     database = mongoClient.getDatabase("naughts_and_crosses");
   }
-  
+
   public ObjectId addUser(String username) {
     collection = database.getCollection("users");
     Bson usernameFilter = Filters.eq("username", username);
@@ -37,7 +37,7 @@ public class Mongo {
     collection = database.getCollection("games");
     Document game = new Document()
       .append("player1", player1)
-`     .append("player2", player2)
+      .append("player2", player2)
       .append("player2symbol", symbol2)
       .append("completed", false)
       .append("winner", null)
@@ -113,10 +113,10 @@ public void setup() {
 
   //get user data from keyboard input
   initialisePlayers();
-  player1.setPort(new Serial(this, Serial.list()[0], 9600));
+  player1.setPort(new Serial(this, "COM8", 9600));
   player1.getPort().bufferUntil('\n');
-  //player2.setPort(new Serial(this, Serial.list()[1], 38400));
-  //player2.getArduinoConnection().bufferUntil('\n');
+  player2.setPort(new Serial(this, "COM8", 9600));
+  player2.getPort().bufferUntil('\n');
 }
 
 public void draw() {
@@ -127,6 +127,7 @@ public void initialisePlayers() {
   Mongo mongo = new Mongo();
   ObjectId id;
   String username;
+  String password;
   char symbol;
 
   username = JOptionPane.showInputDialog("Player 1 Name: ");
@@ -135,7 +136,7 @@ public void initialisePlayers() {
   do {
     symbol = JOptionPane.showInputDialog(username + "'s Symbol (Please enter 'X' or 'O'): ").charAt(0);
   } while (!(symbol == X_SYMBOL || symbol == 'x' || symbol == O_SYMBOL || symbol == 'o'));
-  id = mongo.addUser(username, password);
+  id = mongo.addUser(username/*, password*/);
   player1 = new Player(id, username, symbol, true);
 
   if (player1.getPlayerSymbol() == X_SYMBOL) {
@@ -145,8 +146,8 @@ public void initialisePlayers() {
   }
   username = JOptionPane.showInputDialog("Player 2 Name (symbol '" + symbol + "'): ");
   password = JOptionPane.showInputDialog("Player 2 Password: ");
-  
-  id = mongo.addUser(username, password);
+
+  id = mongo.addUser(username/*, password*/);
   player2 = new Player(id, username, symbol, false);
   toggleSlider();
 }
@@ -209,19 +210,19 @@ void serialEvent(Serial myPort) {
           toggleSlider();
         }
       }
-    } /*else if (myPort == com5) {
-     if (!com5Connected) { //executes on first message received
-     if (message.equals("requestcontact")) {
-     myPort.clear();
-     com5Connected = true;
-     myPort.write('t');
-     txtOutput.setText("Connection to Arduino established! (COM5)");
-     }
-     } else { //on all subsequent messages after contact established
-     txtOutput.setText(message);
-     toggleSlider();
-     }*/
-    //}
+    } else if (myPort == player2.getPort()) {
+      if (!player2Connected) { //executes on first message received
+        if (message.equals("requestcontact")) {
+          myPort.clear();
+          player2Connected = true;
+          myPort.write('t');
+          txtOutput.setText("Connection to Arduino established! (COM5)");
+        }
+      } else { //on all subsequent messages after contact established
+        txtOutput.setText(message);
+        //toggleSlider();
+      }
+    }
   }
 }
 
@@ -229,21 +230,6 @@ void serialEvent(Serial myPort) {
 // to customise the GUI controls
 public void customGUI() {
 }
-
-/*public Serial getCurrentPort() {
- if (sldrTurn.getValueI() == 0) {
- if (!switched) {
- return player1Arduino;
- } else {
- return com5;
- }
- } else if (sldrTurn.getValueI() == 100) {
- if (!switched) {
- return com5;
- } else {
- return player1Arduino;
- }
- }*/
 
 public Serial getCurrentPort() {
   return getCurrentPlayer().getPort();
@@ -253,7 +239,7 @@ public void toggleSlider() {
   if (moveNo == 0) {
     if (player1.getPlayerSymbol() == O_SYMBOL) {
       sldrTurn.setValue(0.0);
-    } else if (player1.getPlayerSymbol == X_SYMBOL) {
+    } else if (player1.getPlayerSymbol() == X_SYMBOL) {
       sldrTurn.setValue(1.0);
     }
     sldrTurn.setEnabled(false);
