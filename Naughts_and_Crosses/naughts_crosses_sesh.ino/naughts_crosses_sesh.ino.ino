@@ -85,7 +85,7 @@ void setup()
   //theBigJamie();
 
 
-  bigTing('W', 1.3, 3.2);
+  bigTing('N', 2.3, 1.2);
 } 
 
 
@@ -117,7 +117,6 @@ void theBigJamie()
     moveForward(3);
     rotate(fmod(averageHeading() - 80, 360));
     moveForward(3);
-//<<<<<<< HEAD
     motors.setSpeeds(0, 0);
 }
 
