@@ -46,6 +46,8 @@ Pushbutton button(ZUMO_BUTTON);
 //Created a new version of the code which I've tested with the Arduino that works.
 ZumoMotors motors;
 ZumoReflectanceSensorArray reflectanceSensors(QTR_NO_EMITTER_PIN);
+char endDir1;
+char endDir2;
 unsigned int sensor_values[NUM_SENSORS];
 
 
@@ -82,8 +84,14 @@ void setup()
   //sensor_callibration();
   //theBigJamie();
 
+
+//<<<<<<< HEAD
   bigTing('W', 1.3, 3.2);
-}
+//=======
+  bigTing('N', 1.1, 1.3);
+//>>>>>>> markstuff
+} 
+
 
 void loop()
 {
@@ -107,12 +115,14 @@ void loop()
 }
 void theBigJamie()
 {
-  rotate(fmod(averageHeading() + 100, 360));
-  rotate(fmod(averageHeading() + 90, 360));
-  moveForward(3);
-  rotate(fmod(averageHeading() - 80, 360));
-  moveForward(3);
-  motors.setSpeeds(0, 0);
+
+    rotate(fmod(averageHeading() + 100, 360));
+    rotate(fmod(averageHeading() + 90, 360));
+    moveForward(3);
+    rotate(fmod(averageHeading() - 80, 360));
+    moveForward(3);
+//<<<<<<< HEAD
+    motors.setSpeeds(0, 0);
 }
 
 void moveForward(int destination) {
@@ -127,10 +137,12 @@ void moveForward(int destination) {
     }
     motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
   }
-  motors.setSpeeds(0, 0);
+
+  motors.setSpeeds(0, 0); 
   motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
   delay(250);
   motors.setSpeeds(0, 0);
+
 }
 
 void execute() {
@@ -140,2254 +152,3115 @@ void execute() {
 void bigTing(char direction, float pos, float dest) {
   switch (direction) {
     case 'N': {
-        Serial.println(pos);
-        if (pos == 1.1) {
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          else if (dest == 1.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break; break;
-          }
-          if (dest == 2.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.2) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.3) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.1) {
-          if (dest == 1.1) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.2) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.3) {
-          if (dest == 1.1) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.1) {
-          if (dest == 1.1) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.2) {
-          if (dest == 1.1) {
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.3) {
-          if (dest == 1.1) {
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-      }
-    case 'S': {
-        Serial.println("BREAD IS NICE");
-        if (pos == 1.1) {
-          if (dest ==  1.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.2) {
-          if (dest ==  1.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.3) {
-          if (dest ==  1.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.1) {
-          if (dest ==  1.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.2) {
-          if (dest ==  1.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.3) {
-          if (dest ==  1.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.1) {
-          if (dest ==  1.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.2) {
-          if (dest ==  1.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.3) {
-          if (dest ==  1.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  1.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  2.3) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest ==  3.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-      }
-    case 'E': {
-        if (pos == 1.1) {
-          if (dest == 1.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.2) {
-          if (dest == 1.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            // decCount = 1;
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.3) {
-          if (dest == 1.1) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.1) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.2) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight;
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.3) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.1) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.2) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            Serial.print("IM at HERE");
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.3) {
-          if (dest == 1.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-      }
-    case 'W': {
-        if (pos == 1.1) {
-          if (dest == 1.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.2) {
-          if (dest == 1.1) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 1.3) {
-          if (dest == 1.1) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.1) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.2) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 2.3) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.1) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.2) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-        }
-        if (pos == 3.2) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
 
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.3) {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
+      //northX
+      if (pos == 1.1) {
+        if(dest == 1.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
         }
-        if (pos == 3.3) {
-          if (dest == 1.1) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.2) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 1.3) {
-            rotateRight();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.1) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.2) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            rotateLeft();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 2.3) {
-            rotateRight();
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0); break;
-          }
-          if (dest == 3.1) {
-            moveForward(3);
-            execute();
-            motors.setSpeeds(0, 0);
-            break;
-          }
-          if (dest == 3.2) {
-            moveForward(2);
-            execute();
-            motors.setSpeeds(0, 0);
-            break;
-          }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
         }
-      } //updatePostion(dest);
+        else if (dest == 2.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S'; 
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break;
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S'; 
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
+        }
+      }
+      else if (pos == 1.2) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'W';
+          endDir2 = 'W'; 
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W'; 
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S'; 
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W'; 
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S'; 
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E'; 
+          break; 
+        }
+      }
+      else if (pos == 1.3) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'W';
+          endDir2 = 'W';  
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 2.1) {
+        if(dest == 1.1) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.2) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break;           
+        }
+        else if (dest == 1.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.3) {
+        if(dest == 1.1) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 3.1) {
+        if(dest == 1.1) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+         else if (dest == 3.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.2) {
+        if(dest == 1.1) {
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.3) {
+        if(dest == 1.1) {
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+      }
+    }
+    case 'S': {
+      //southX
+      if (pos == 1.1) {
+        if(dest == 1.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest ==  1.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest ==  2.1) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest ==  2.2) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest ==  2.3) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest ==  3.1) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest ==  3.2) {
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest ==  3.3) {
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 1.2) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 1.3) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.1) {
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 2.1) {
+        if (dest == 1.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.2) {
+        if (dest == 1.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break;           
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+      }
+      else if (pos == 2.3) {
+        if(dest == 1.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.1) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 3.1) {
+        if(dest == 1.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.2) {
+        if (dest == 1.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'W';
+          endDir2 = 'W'; 
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.3) {
+        if(dest == 1.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+      }
+    }
+    case 'E': {
+      //eastX
+      if (pos == 1.1) {
+        if(dest == 1.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 1.2) {
+        if (dest == 1.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 1.3) {
+        if(dest == 1.1) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 2.1) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.2) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break;           
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight;
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.3) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 3.1) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0);
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.2) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.3) {
+        if(dest == 1.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+      }
+    }
+    case 'W': {
+      //westX
+      if (pos == 1.1) {
+        if(dest == 1.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';          
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 1.2) {
+        if(dest == 1.1) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 1.3) {
+        if(dest == 1.1) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 2.1) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.2) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break;           
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 2.3) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'S';
+          endDir2 = 'S';
+          break; 
+        }
+      }
+      else if (pos == 3.1) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.2) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.2) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+        else if (dest == 3.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.3) {
+          rotateRight();
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'E';
+          endDir2 = 'E';
+          break; 
+        }
+      }
+      else if (pos == 3.3) {
+        if(dest == 1.1) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.2) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 1.3) {
+          rotateRight();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 2.1) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.2) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          rotateLeft();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 2.3) {
+          rotateRight();
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'N';
+          endDir2 = 'N';
+          break; 
+        }
+        else if (dest == 3.1) {
+          moveForward(3);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+        else if (dest == 3.2) {
+          moveForward(2);
+          execute();
+          motors.setSpeeds(0, 0); 
+          endDir1 = 'W';
+          endDir2 = 'W';
+          break; 
+        }
+      }
+    } //updatePostion(dest);
   }
 }
 
