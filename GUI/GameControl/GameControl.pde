@@ -97,9 +97,8 @@ final int MIN_MOVES = 5;
 final int MAX_MOVES = 9;
 
 //Serial port for communication to/from Arduino
-private Serial com4, com5;
 private String message;
-private boolean com4Connected, com5Connected;
+private boolean player1Connected, player2Connected;
 private boolean switched = false;
 private int moveNo = 0;
 
@@ -113,13 +112,12 @@ public void setup() {
   customGUI();
   // Place your setup code here
 
-  com4 = new Serial(this, "COM8", 9600);
-  //com5 = new Serial(this, "COM5", 9601);
-  com4.bufferUntil('\n');
-  //com5.bufferUntil('\n');
-
-  //get user data
+  //get user data from keyboard input
   initialisePlayers();
+  player1.setPort(new Serial(this, Serial.list()[0], 9600));
+  player1.getPort().bufferUntil('\n');
+  //player2.setPort(new Serial(this, Serial.list()[1], 38400));
+  //player2.getArduinoConnection().bufferUntil('\n');
 }
 
 public void draw() {
@@ -161,13 +159,13 @@ void serialEvent(Serial myPort) {
     message = trim(message);
     println(message); //TEST
 
-    if (myPort == com4) {
-      if (!com4Connected) { //executes on first message received
+    if (myPort == player1.getPort()) {
+      if (!player1Connected) { //executes on first message received
         if (message.equals("requestcontact")) {
           myPort.clear();
-          com4Connected = true;
+          player1Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (COM4)");
+          txtOutput.setText("Connection to Arduino established! (player1Arduino)");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
@@ -183,7 +181,12 @@ void serialEvent(Serial myPort) {
           Mongo mongo = new Mongo();   
           if (isFirstMove()) {
             //create game record once first move is complete
-            gameId = mongo.createGame(player1.getMongoId(), player1.getPlayerSymbol(), player2.getMongoId(), player2.getPlayerSymbol());
+            gameId = mongo.createGame(
+              player1.getMongoId(), 
+              player1.getPlayerSymbol(), 
+              player2.getMongoId(), 
+              player2.getPlayerSymbol()
+              );
           }
 
           //record the moves on database
@@ -197,11 +200,10 @@ void serialEvent(Serial myPort) {
             mongo.updateGameWinner(gameId, player.getMongoId());
           } else {
             if (moveLimitReached()) {
-              txtOutput.setText("The game is a draw!");
+              txtOutput.setText("The game is a draw! You're both losers");
               mongo.updateGameWinner(gameId, null);
             }
           }
-
           toggleSlider();
         }
       }
@@ -229,7 +231,7 @@ public void customGUI() {
 /*public Serial getCurrentPort() {
  if (sldrTurn.getValueI() == 0) {
  if (!switched) {
- return com4;
+ return player1Arduino;
  } else {
  return com5;
  }
@@ -237,19 +239,19 @@ public void customGUI() {
  if (!switched) {
  return com5;
  } else {
- return com4;
+ return player1Arduino;
  }
  }*/
 
 public Serial getCurrentPort() {
-  return com4;
+  return getCurrentPlayer().getPort();
 }
 
 public void toggleSlider() {
   if (moveNo == 0) {
-    if (player1.getPlayerSymbol() == 'O') {
+    if (player1.getPlayerSymbol() == O_SYMBOL) {
       sldrTurn.setValue(0.0);
-    } else if (player1.getPlayerSymbol() == 'X') {
+    } else if (player1.getPlayerSymbol == X_SYMBOL) {
       sldrTurn.setValue(1.0);
     }
     sldrTurn.setEnabled(false);
@@ -301,7 +303,7 @@ public boolean checkWinner(char symbol) {
     for (int i = 0; i < btnText.length; i++) {
       for (int j = 0; j < btnText[i].length; j++) {
         if (!btnText[i][j].equals("")) {
-          if (btnText[i][j].charAt(0) == 'X' || btnText[i][j].charAt(0) == 'O') {
+          if (btnText[i][j].charAt(0) == X_SYMBOL || btnText[i][j].charAt(0) == O_SYMBOL) {
             btnChars[i][j] = btnText[i][j].charAt(0);
           }
         }
