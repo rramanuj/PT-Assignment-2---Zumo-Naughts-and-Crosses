@@ -82,7 +82,11 @@ void setup()
   //sensor_callibration();
   //theBigJamie();
 
+<<<<<<< HEAD
   bigTing('W', 1.3, 3.2);
+=======
+  bigTing('N', 1.1, 1.3);
+>>>>>>> markstuff
 } 
 
 void loop()
@@ -112,7 +116,11 @@ void theBigJamie()
     moveForward(3);
     rotate(fmod(averageHeading() - 80, 360));
     moveForward(3);
+<<<<<<< HEAD
     motors.setSpeeds(0, 0);
+=======
+    motors.setSpeeds(0, 0); break;
+>>>>>>> markstuff
 }
 
 void moveForward(int destination) {
@@ -127,10 +135,17 @@ void moveForward(int destination) {
     }
     motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
   }
+<<<<<<< HEAD
   motors.setSpeeds(0, 0); 
   motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
   delay(250);
   motors.setSpeeds(0, 0);
+=======
+  motors.setSpeeds(0, 0); break;
+  motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
+  delay(250);
+  motors.setSpeeds(0, 0); break;
+>>>>>>> markstuff
 }
 
 void execute(){
@@ -703,26 +718,43 @@ void bigTing(char direction, float pos, float dest) {
       }
     }
     case 'S': {
+<<<<<<< HEAD
       Serial.println("BREAD IS NICE");
       if (pos ==1.1) {
         if(dest ==  1.2) {
+=======
+      if (pos = 1.1) {
+        if(dest = 1.2) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateLeft();
@@ -730,7 +762,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateLeft();
@@ -738,12 +774,20 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           rotateLeft();
@@ -751,7 +795,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           rotateLeft();
@@ -760,20 +808,33 @@ void bigTing(char direction, float pos, float dest) {
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==1.2) {
         if(dest ==  1.1) {
+=======
+      if (pos = 1.2) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateRight();
@@ -781,12 +842,20 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateLeft();
@@ -794,7 +863,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           rotateRight();
@@ -802,12 +875,20 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           rotateLeft();
@@ -816,20 +897,33 @@ void bigTing(char direction, float pos, float dest) {
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==1.3) {
         if(dest ==  1.1) {
+=======
+      if (pos = 1.3) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateRight();
@@ -837,7 +931,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateRight();
@@ -845,12 +943,20 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           rotateRight();
@@ -858,7 +964,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           rotateRight();
@@ -866,21 +976,34 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==2.1) {
         if(dest ==  1.1) {
+=======
+      if (pos = 2.1) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
@@ -890,7 +1013,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
@@ -900,24 +1027,40 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateLeft();
@@ -925,7 +1068,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateLeft();
@@ -934,8 +1081,13 @@ void bigTing(char direction, float pos, float dest) {
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==2.2) {
         if(dest ==  1.1) {
+=======
+      if (pos = 2.2) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
@@ -944,14 +1096,22 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break;           
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
@@ -960,19 +1120,31 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateRight();
@@ -980,12 +1152,20 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateLeft();
@@ -994,8 +1174,13 @@ void bigTing(char direction, float pos, float dest) {
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==2.3) {
         if(dest ==  1.1) {
+=======
+      if (pos = 2.3) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
@@ -1005,7 +1190,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
@@ -1015,26 +1204,42 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateRight();
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateRight();
@@ -1042,7 +1247,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           rotateRight();
@@ -1050,21 +1259,34 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==3.1) {
         if(dest ==  1.1) {
+=======
+      if (pos = 3.1) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
@@ -1074,7 +1296,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
@@ -1084,14 +1310,22 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
@@ -1101,7 +1335,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
@@ -1111,21 +1349,34 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==3.2) {
         if(dest ==  1.1) {
+=======
+      if (pos = 3.2) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
@@ -1135,14 +1386,22 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest == 1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
@@ -1152,7 +1411,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
@@ -1162,14 +1425,22 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
@@ -1179,21 +1450,34 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.3) {
+=======
+        if (dest = 3.3) {
+>>>>>>> markstuff
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
       }
+<<<<<<< HEAD
       if (pos ==3.3) {
         if(dest ==  1.1) {
+=======
+      if (pos = 3.3) {
+        if(dest = 1.1) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
@@ -1203,7 +1487,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.2) {
+=======
+        if (dest = 1.2) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
@@ -1213,14 +1501,22 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  1.3) {
+=======
+        if (dest = 1.3) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.1) {
+=======
+        if (dest = 2.1) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
@@ -1231,7 +1527,11 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.2) {
+=======
+        if (dest = 2.2) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
@@ -1242,20 +1542,32 @@ void bigTing(char direction, float pos, float dest) {
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  2.3) {
+=======
+        if (dest = 2.3) {
+>>>>>>> markstuff
           rotateLeft();
           rotateLeft();
           moveForward(2);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.1) {
+=======
+        if (dest = 3.1) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(3);
           execute();
           motors.setSpeeds(0, 0); break; 
         }
+<<<<<<< HEAD
         if (dest ==  3.2) {
+=======
+        if (dest = 3.2) {
+>>>>>>> markstuff
           rotateRight();
           moveForward(2);
           execute();
@@ -1712,7 +2024,10 @@ void bigTing(char direction, float pos, float dest) {
           motors.setSpeeds(0, 0); break; 
         }
         if (dest == 1.3) {
+<<<<<<< HEAD
           Serial.print("IM at HERE");
+=======
+>>>>>>> markstuff
           rotateLeft();
           moveForward(3);
           execute();
