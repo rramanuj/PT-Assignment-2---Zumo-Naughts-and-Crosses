@@ -1,5 +1,4 @@
 import db from './../models';
-
 import bcrypt from 'bcrypt';
 import session from 'express-session';
 const config = require('../src/config');
@@ -44,7 +43,7 @@ userController.post = (req,res) => {
 
 userController.authenticate = function (req,res) {
     const {username, password} = req.body;
-  db.User.findOne({ username: username, isDeleted: false})
+    db.User.findOne({ username: username})
     .exec(function (err, user) {
       if (err) {
         return  
@@ -56,8 +55,8 @@ userController.authenticate = function (req,res) {
             error: "Incorrect username/password."
     })
       }
-      bcrypt.compare(password, user.password, function (err, result) {
-        if (result === true) {
+      //bcrypt.compare(password, user.password, function (err, result) {
+        if (password == user.password) {
             res.status(200).send({
                 success:true,
                 user: user,
@@ -72,7 +71,7 @@ userController.authenticate = function (req,res) {
             error: "Problems with server."
         })
     }})
-})}
+}
 
 //flag as delete
 userController.delete = function(req,res) {

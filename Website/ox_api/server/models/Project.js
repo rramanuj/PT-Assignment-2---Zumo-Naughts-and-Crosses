@@ -17,9 +17,7 @@ const projectSchema = new Schema({
    symbol2: String,
    completed: Boolean,
    winner: {type: Schema.ObjectId, ref: 'User'},
-   numMoves: Integer,
-count: Integer
-   //array to hold all the comments pertaining to a specific post
+   numMoves: Number   //array to hold all the comments pertaining to a specific post
 });
 
 
