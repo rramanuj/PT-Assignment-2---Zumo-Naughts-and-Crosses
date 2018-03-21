@@ -10,7 +10,7 @@ const app = express()
  //we need cors if you want a server to be hosted on a different domain
 // and we want clients on the same local host to hit our server. this is a security risk
 //to have enabled.
-mongoose.connect('mongodb://localhost:27017/projection_db', () => {
+mongoose.connect('mongodb://localhost:27017/naughts_and_crosses', () => {
     console.log('Connected to mongodb...');
 });
 //pulls from app.js, now we have access from app anywhere we want to

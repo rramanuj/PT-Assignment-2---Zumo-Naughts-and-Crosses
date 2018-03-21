@@ -6,13 +6,19 @@ mongoose.Promise = global.Promise;
 
 //first instance of our schema, this is for the user accounts.
 const projectSchema = new Schema({
-   title: {type: String, required: true},
-   _team: [ {type: Schema.ObjectId, ref: 'User'}],
-   link: String,
-   text: String,
+
+    /*ObjectId player1, char symbol1, ObjectId player2, char symbol2) {
+    collection = database.getCollectiom*/
    isDeleted: {type: Boolean, default: false},
    createdAt: {type: Date, default: Date.now},  //
-   _creator: {type: Schema.ObjectId, ref: 'User'}, //references to the user
+   _player1: {type: Schema.ObjectId, ref: 'User'},
+   symbol1: String,
+   _player2: {type: Schema.ObjectId, ref: 'User'},
+   symbol2: String,
+   completed: Boolean,
+   winner: {type: Schema.ObjectId, ref: 'User'},
+   numMoves: Integer,
+count: Integer
    //array to hold all the comments pertaining to a specific post
 });
 

@@ -1,20 +1,18 @@
-import g4p_controls.*;
+import processing.serial.*;
 import org.bson.types.*;
 
 public class Player {
 
   ObjectId _id;
   private String username;
-  private char symbol;
   private boolean goesFirst;
-  private float lastKnownPos;
+  private Zumo zumo;
 
   public Player(ObjectId id, String name, char sym, boolean first) {
     _id = id;
     username = name;
-    symbol = Character.toString(sym).toUpperCase().charAt(0);
     goesFirst = first;
-    lastKnownPos = 0;
+    zumo = new Zumo(Character.toString(sym).toUpperCase().charAt(0));
   }
 
   public ObjectId getMongoId() {
@@ -30,19 +28,19 @@ public class Player {
   }
 
   public char getPlayerSymbol() {
-    return symbol;
+    return zumo.symbol;
   }
 
   public void setPlayerSymbol(char sym) {
-    symbol = sym;
+    zumo.symbol = sym;
   }
 
   public float getLastKnownPos() {
-    return lastKnownPos;
+    return zumo.lastKnownPos;
   }
 
   public void setLastKnownPos(float pos) {
-    lastKnownPos = pos;
+    zumo.lastKnownPos = pos;
   }
 
   public boolean isMove(int moveNo) {
@@ -51,5 +49,21 @@ public class Player {
     } else {
       return (moveNo % 2) == 0;
     }
+  }
+  
+  public Serial getPort() {
+    return zumo.connection;
+  }
+  
+  public void setPort(Serial port) {
+    zumo.connection = port;
+  }
+  
+  public char getCurrentDirection() {
+    return zumo.currDirection;
+  }
+  
+  public void setCurrentDirection(char dir) {
+    zumo.currDirection = dir;
   }
 }
