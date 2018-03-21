@@ -85,11 +85,7 @@ void setup()
   //theBigJamie();
 
 
-//<<<<<<< HEAD
   bigTing('W', 1.3, 3.2);
-//=======
-  bigTing('N', 1.1, 1.3);
-//>>>>>>> markstuff
 } 
 
 

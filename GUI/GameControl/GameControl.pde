@@ -16,7 +16,7 @@ public class Mongo {
     database = mongoClient.getDatabase("naughts_and_crosses");
   }
   
-  public ObjectId addUser(String username) {
+  public ObjectId addUser(String username, String password) {
     collection = database.getCollection("users");
     Bson usernameFilter = Filters.eq("username", username);
     Document response = collection.find(usernameFilter).first();
@@ -25,6 +25,7 @@ public class Mongo {
       return null;
     } else {
       Document user = new Document("username", username)
+        .append("password", password)
         .append("count", 1);
       collection.insertOne(user);
       System.out.println("Account registered");
