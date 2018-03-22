@@ -42,6 +42,15 @@ char endDir1;
 unsigned int sensor_values[NUM_SENSORS];
 
 #define _COMPLETE 'c'
+#define ONE_ONE "ONE_ONE"
+#define ONE_TWO "ONE_TWO"
+#define ONE_THREE "ONE_THREE"
+#define TWO_ONE "TWO_ONE"
+#define TWO_TWO "TWO_TWO"
+#define TWO_THREE "TWO_THREE"
+#define THREE_ONE "THREE_ONE"
+#define THREE_TWO "THREE_TWO"
+#define THREE_THREE "THREE_THREE"
 
 // Converts x and y components of a vector to a heading in degrees.
 // This function is used instead of LSM303::heading() because we don't
@@ -105,15 +114,15 @@ void loop()
         String message = Serial.readString();
         char dir = message.substring(0, message.indexOf(",")).charAt(0);
         Serial.println(dir);
-        float pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(",")).toDouble();
+        string pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
         Serial.println(pos);
-        float dest = message.substring(message.lastIndexOf(",") + 1).toDouble();
+        string dest = message.substring(message.lastIndexOf(",") + 1);
         Serial.println(dest);
 
         //        char dir = Serial.read();
         //        Serial.println(dir);
-        //        float pos = 3.1;
-        //        float dest = 1.1;
+        //        float pos = THREE_ONE;
+        //        float dest = ONE_ONE;
         bigTing(dir, pos, dest);
     }
   }
@@ -144,23 +153,16 @@ void execute()
   //placeholder
 }
 
-void bigTing(char dir, double pos, double dest)
+void bigTing(char dir, string pos, string dest)
 {
-  Serial.println(dir);
-
   switch (dir)
   {
     case 'N':
-
       {
-        Serial.println("WE'RE IN THE NORTH");
-        Serial.println(pos);
-        Serial.println(dest);
-
         //northX
-        if (pos == 1.1)
+        if (pos == ONE_ONE)
         {
-          if (dest == 1.2)
+          if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -169,7 +171,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -178,7 +180,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             rotateRight();
@@ -188,7 +190,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             rotateRight();
@@ -201,7 +203,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             rotateRight();
@@ -214,7 +216,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             rotateRight();
@@ -224,7 +226,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -237,7 +239,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -251,9 +253,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.2)
+        else if (pos == ONE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -262,7 +264,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -271,7 +273,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -284,7 +286,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -294,7 +296,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -307,7 +309,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -320,7 +322,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -330,7 +332,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -344,9 +346,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.3)
+        else if (pos == ONE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -355,7 +357,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -364,7 +366,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -377,7 +379,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -390,7 +392,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -400,7 +402,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -413,7 +415,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -426,7 +428,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -437,9 +439,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.1)
+        else if (pos == TWO_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             moveForward(2);
             execute();
@@ -447,7 +449,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(2);
             execute();
@@ -458,7 +460,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(2);
             execute();
@@ -469,7 +471,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -478,7 +480,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -487,7 +489,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             rotateRight();
@@ -497,7 +499,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -510,7 +512,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -524,9 +526,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.2)
+        else if (pos == TWO_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -538,7 +540,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(2);
             execute();
@@ -546,7 +548,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -558,7 +560,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -567,7 +569,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -576,7 +578,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -589,7 +591,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -599,7 +601,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -613,9 +615,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.3)
+        else if (pos == TWO_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             moveForward(2);
             execute();
@@ -626,7 +628,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(2);
             execute();
@@ -637,7 +639,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(2);
             execute();
@@ -645,7 +647,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -654,7 +656,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -663,7 +665,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -676,7 +678,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -689,7 +691,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -700,19 +702,19 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (String(pos) == String(3.10))
+        else if (pos == THREE_ONE)
         {
-          Serial.println("we made it to 3.1");
-          if (String(dest) == String(1.10))
+          Serial.println("we made it to THREE_ONE");
+          if (dest == ONE_ONE)
           {
-            Serial.println("we OFGIOASDJHGIDFSAHFIDSAFHUIAEW it to 3.1");
+            Serial.println("we OFGIOASDJHGIDFSAHFIDSAFHUIAEW it to THREE_ONE");
             moveForward(3);
             execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(3);
             execute();
@@ -723,7 +725,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(3);
             execute();
@@ -734,7 +736,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -742,7 +744,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -753,7 +755,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -764,7 +766,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -773,7 +775,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -783,9 +785,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.2)
+        else if (pos == THREE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             moveForward(3);
             execute();
@@ -796,7 +798,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(3);
             execute();
@@ -804,7 +806,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(3);
             execute();
@@ -815,7 +817,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -826,7 +828,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -834,7 +836,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -845,7 +847,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -854,7 +856,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -864,9 +866,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.3)
+        else if (pos == THREE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             moveForward(3);
             execute();
@@ -877,7 +879,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(3);
             execute();
@@ -888,7 +890,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(3);
             execute();
@@ -896,7 +898,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -907,7 +909,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -918,7 +920,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -926,7 +928,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -935,7 +937,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -949,9 +951,9 @@ void bigTing(char dir, double pos, double dest)
     case 'S':
       {
         //southX
-        if (pos == 1.1)
+        if (pos == ONE_ONE)
         {
-          if (dest == 1.2)
+          if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -960,7 +962,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -969,7 +971,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -977,7 +979,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -988,7 +990,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -999,7 +1001,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(3);
             execute();
@@ -1007,7 +1009,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(3);
             execute();
@@ -1018,7 +1020,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(3);
             execute();
@@ -1030,9 +1032,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.2)
+        else if (pos == ONE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1041,7 +1043,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -1050,7 +1052,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -1061,7 +1063,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -1069,7 +1071,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -1080,7 +1082,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(3);
             execute();
@@ -1091,7 +1093,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(3);
             execute();
@@ -1099,7 +1101,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(3);
             execute();
@@ -1111,9 +1113,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.3)
+        else if (pos == ONE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -1122,7 +1124,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -1131,7 +1133,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -1142,7 +1144,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -1153,7 +1155,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -1161,7 +1163,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(3);
             execute();
@@ -1172,7 +1174,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(3);
             execute();
@@ -1183,7 +1185,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(3);
             execute();
@@ -1192,9 +1194,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.1)
+        else if (pos == TWO_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             rotateRight();
@@ -1204,7 +1206,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -1217,7 +1219,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -1230,7 +1232,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -1239,7 +1241,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -1248,7 +1250,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(2);
             execute();
@@ -1256,7 +1258,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(2);
             execute();
@@ -1267,7 +1269,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(2);
             execute();
@@ -1279,9 +1281,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.2)
+        else if (pos == TWO_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1293,7 +1295,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -1303,7 +1305,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -1315,7 +1317,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1324,7 +1326,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -1333,7 +1335,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(2);
             execute();
@@ -1344,7 +1346,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(2);
             execute();
@@ -1352,7 +1354,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(2);
             execute();
@@ -1364,9 +1366,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.3)
+        else if (pos == TWO_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             rotateRight();
@@ -1379,7 +1381,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -1392,7 +1394,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -1402,7 +1404,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -1411,7 +1413,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -1420,7 +1422,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(2);
             execute();
@@ -1431,7 +1433,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(2);
             execute();
@@ -1442,7 +1444,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(2);
             execute();
@@ -1451,9 +1453,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.1)
+        else if (pos == THREE_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -1463,7 +1465,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -1476,7 +1478,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -1489,7 +1491,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -1499,7 +1501,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -1512,7 +1514,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -1525,7 +1527,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -1534,7 +1536,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -1544,9 +1546,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.2)
+        else if (pos == THREE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -1559,7 +1561,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -1569,7 +1571,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -1582,7 +1584,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -1595,7 +1597,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -1605,7 +1607,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -1618,7 +1620,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1627,7 +1629,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -1637,9 +1639,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.3)
+        else if (pos == THREE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -1652,7 +1654,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -1665,7 +1667,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -1675,7 +1677,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -1688,7 +1690,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -1701,7 +1703,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             rotateLeft();
@@ -1711,7 +1713,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -1720,7 +1722,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -1734,9 +1736,9 @@ void bigTing(char dir, double pos, double dest)
     case 'E':
       {
         //eastX
-        if (pos == 1.1)
+        if (pos == ONE_ONE)
         {
-          if (dest == 1.2)
+          if (dest == ONE_TWO)
           {
             moveForward(2);
             execute();
@@ -1744,7 +1746,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(3);
             execute();
@@ -1752,7 +1754,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1761,7 +1763,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -1773,7 +1775,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -1785,7 +1787,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -1794,7 +1796,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(3);
@@ -1806,7 +1808,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -1819,9 +1821,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.2)
+        else if (pos == ONE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             rotateRight();
@@ -1831,7 +1833,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(2);
             execute();
@@ -1839,7 +1841,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1851,7 +1853,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -1860,7 +1862,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -1872,7 +1874,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -1884,7 +1886,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(3);
@@ -1893,7 +1895,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -1906,9 +1908,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.3)
+        else if (pos == ONE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             rotateRight();
@@ -1918,7 +1920,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -1928,7 +1930,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -1940,7 +1942,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -1952,7 +1954,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -1961,7 +1963,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -1973,7 +1975,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(3);
@@ -1985,7 +1987,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -1995,9 +1997,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.1)
+        else if (pos == TWO_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2006,7 +2008,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2018,7 +2020,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2030,7 +2032,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -2038,7 +2040,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(3);
             execute();
@@ -2046,7 +2048,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -2055,7 +2057,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -2067,7 +2069,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -2080,9 +2082,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.2)
+        else if (pos == TWO_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2094,7 +2096,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2103,7 +2105,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             moveForward(2);
             execute();
@@ -2114,7 +2116,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -2124,7 +2126,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             moveForward(2);
             execute();
@@ -2132,7 +2134,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -2144,7 +2146,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -2153,7 +2155,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight;
             moveForward(2);
@@ -2166,9 +2168,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.3)
+        else if (pos == TWO_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2180,7 +2182,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2192,7 +2194,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2201,7 +2203,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -2211,7 +2213,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -2221,7 +2223,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -2233,7 +2235,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -2245,7 +2247,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -2255,9 +2257,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.1)
+        else if (pos == THREE_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -2266,7 +2268,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(3);
@@ -2278,7 +2280,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -2290,7 +2292,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2299,7 +2301,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2311,7 +2313,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2323,7 +2325,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(2);
             execute();
@@ -2331,7 +2333,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(3);
             execute();
@@ -2340,9 +2342,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.2)
+        else if (pos == THREE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -2354,7 +2356,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(3);
@@ -2363,7 +2365,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -2375,7 +2377,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2387,7 +2389,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2396,7 +2398,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2408,7 +2410,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -2418,7 +2420,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             moveForward(2);
             execute();
@@ -2427,9 +2429,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.3)
+        else if (pos == THREE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -2441,7 +2443,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateLeft();
             moveForward(3);
@@ -2453,7 +2455,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -2462,7 +2464,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2474,7 +2476,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2486,7 +2488,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2495,7 +2497,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             rotateLeft();
@@ -2505,7 +2507,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             rotateLeft();
@@ -2520,9 +2522,9 @@ void bigTing(char dir, double pos, double dest)
     case 'W':
       {
         //westX
-        if (pos == 1.1)
+        if (pos == ONE_ONE)
         {
-          if (dest == 1.2)
+          if (dest == ONE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -2532,7 +2534,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -2542,7 +2544,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2551,7 +2553,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2563,7 +2565,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2575,7 +2577,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -2584,7 +2586,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(3);
@@ -2596,7 +2598,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -2609,9 +2611,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.2)
+        else if (pos == ONE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             moveForward(2);
             execute();
@@ -2619,7 +2621,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -2629,7 +2631,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2641,7 +2643,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2650,7 +2652,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2662,7 +2664,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -2674,7 +2676,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(3);
@@ -2683,7 +2685,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -2696,9 +2698,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 1.3)
+        else if (pos == ONE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             moveForward(3);
             execute();
@@ -2706,7 +2708,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             moveForward(2);
             execute();
@@ -2714,7 +2716,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2726,7 +2728,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2738,7 +2740,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2747,7 +2749,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(3);
@@ -2759,7 +2761,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(3);
@@ -2771,7 +2773,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(3);
@@ -2781,9 +2783,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.1)
+        else if (pos == TWO_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -2792,7 +2794,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -2804,7 +2806,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -2816,7 +2818,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             rotateRight();
@@ -2826,7 +2828,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             rotateRight();
@@ -2836,7 +2838,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2845,7 +2847,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2857,7 +2859,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2870,9 +2872,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.2)
+        else if (pos == TWO_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -2884,7 +2886,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -2893,7 +2895,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -2906,7 +2908,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(2);
             execute();
@@ -2914,7 +2916,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             rotateRight();
@@ -2924,7 +2926,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -2936,7 +2938,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -2945,7 +2947,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'S';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -2958,9 +2960,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 2.3)
+        else if (pos == TWO_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -2972,7 +2974,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -2984,7 +2986,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -2993,7 +2995,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             moveForward(3);
             execute();
@@ -3001,7 +3003,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             moveForward(2);
             execute();
@@ -3009,7 +3011,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateLeft();
             moveForward(2);
@@ -3021,7 +3023,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateLeft();
             moveForward(2);
@@ -3033,7 +3035,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateLeft();
             moveForward(2);
@@ -3043,9 +3045,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.1)
+        else if (pos == THREE_ONE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -3054,7 +3056,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(3);
@@ -3066,7 +3068,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -3078,7 +3080,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -3087,7 +3089,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -3099,7 +3101,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -3111,7 +3113,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             rotateRight();
             rotateRight();
@@ -3121,7 +3123,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -3132,9 +3134,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.2)
+        else if (pos == THREE_TWO)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -3146,7 +3148,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(3);
@@ -3155,7 +3157,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -3167,7 +3169,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -3179,7 +3181,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -3188,7 +3190,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -3200,7 +3202,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'E';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -3209,7 +3211,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.3)
+          else if (dest == THREE_THREE)
           {
             rotateRight();
             rotateRight();
@@ -3220,9 +3222,9 @@ void bigTing(char dir, double pos, double dest)
             break;
           }
         }
-        else if (pos == 3.3)
+        else if (pos == THREE_THREE)
         {
-          if (dest == 1.1)
+          if (dest == ONE_ONE)
           {
             rotateRight();
             moveForward(3);
@@ -3234,7 +3236,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.2)
+          else if (dest == ONE_TWO)
           {
             rotateRight();
             moveForward(3);
@@ -3246,7 +3248,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 1.3)
+          else if (dest == ONE_THREE)
           {
             rotateRight();
             moveForward(3);
@@ -3255,7 +3257,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 2.1)
+          else if (dest == TWO_ONE)
           {
             rotateRight();
             moveForward(2);
@@ -3267,7 +3269,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.2)
+          else if (dest == TWO_TWO)
           {
             rotateRight();
             moveForward(2);
@@ -3279,7 +3281,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 2.3)
+          else if (dest == TWO_THREE)
           {
             rotateRight();
             moveForward(2);
@@ -3288,7 +3290,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'N';
             break;
           }
-          else if (dest == 3.1)
+          else if (dest == THREE_ONE)
           {
             moveForward(3);
             execute();
@@ -3296,7 +3298,7 @@ void bigTing(char dir, double pos, double dest)
             endDir1 = 'W';
             break;
           }
-          else if (dest == 3.2)
+          else if (dest == THREE_TWO)
           {
             moveForward(2);
             execute();
@@ -3310,10 +3312,10 @@ void bigTing(char dir, double pos, double dest)
   }
 }
 
-void updatePosition(char dir, char pos) {
+void updatePosition(char dir, float pos) {
   Serial.println(_COMPLETE);
   Serial.println(dir);
-  Serial.println(String(pos));
+  Serial.println(pos);
 }
 
 String line_detection()
