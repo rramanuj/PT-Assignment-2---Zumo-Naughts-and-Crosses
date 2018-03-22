@@ -49,8 +49,7 @@ unsigned int sensor_values[NUM_SENSORS];
 // tilt compensation that LSM303::heading() performs. This calculation
 // assumes that the Zumo is always level.
 
-template <typename T>
-float heading(LSM303::vector<T> v)
+template <typename T> float heading(LSM303::vector<T> v)
 {
   float x_scaled = 2.0 * (float)(v.x - compass.m_min.x) / (compass.m_max.x - compass.m_min.x) - 1.0;
   float y_scaled = 2.0 * (float)(v.y - compass.m_min.y) / (compass.m_max.y - compass.m_min.y) - 1.0;
@@ -68,42 +67,47 @@ void setup()
 
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(9600);
-  Serial.println("asdasdsada...");
+  //Serial.println("asdasdsada...");
+
 
   initialise_compass();
   button.waitForButton();
+
+  while (Serial.available() <= 0) {
+    Serial.println("requestcontact");
+    delay(300);
+  }
+  Serial.read();
+
+
   //sensor_callibration();
   //theBigJamie();
 
-  bigTing('N', 2.3, 1.2);
 }
 
 void loop()
 {
-  reflectanceSensors.read(sensor_values);
-  Serial.println(String(sensor_values[0]));
+
+  //reflectanceSensors.read(sensor_values);
+  //Serial.println(String(sensor_values[0]));
   char command;
-
-  if (Serial.available() > 0)
-  {
-    command = Serial.read();
-    if (command == 'm')
+  //Serial.println("mary wolsencraft");
+    while (command != 'C')
     {
-      while (Serial.available() <= 0)
-      {
-        char dir = Serial.read();
-      }
-      while (Serial.available() <= 0)
-      {
-        delay(300);
-      }
-      float pos = Serial.readString().toFloat();
-      while (Serial.available() <= 0)
-      {
-        delay(300);
-      }
-      float dest = Serial.readString().toFloat();
 
+      if (Serial.available() > 0)
+      {
+        command = Serial.read();
+      }
+      
+   Serial.println(command);
+   switch (command)
+      {
+        case 'm': case 'M': 
+      char dir = Serial.read().toChar();
+      float pos = Serial.readString().toFloat();
+      float dest = Serial.readString().toFloat();
+      Serial.println(dir,pos,dest);
       bigTing(dir, pos, dest);
     }
   }
@@ -3300,10 +3304,10 @@ void bigTing(char dir, float pos, float dest)
   }
 }
 
-void updatePosition(char dir, pos) {
-  Serial.write(_COMPLETE);
-  Serial.write(dir);
-  Serial.write(String(pos));
+void updatePosition(char dir, char pos) {
+  Serial.println(_COMPLETE);
+  Serial.println(dir);
+  Serial.println(String(pos));
 }
 
 String line_detection()

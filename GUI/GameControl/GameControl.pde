@@ -174,14 +174,14 @@ void serialEvent(Serial myPort) {
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        if (message.equals(_COMPLETE) {
+        if (message.equals(_COMPLETE)) {
           
           char updatedDir;
           while (myPort.available() <= 0) {
             delay(500);
             System.out.println("awaiting direction");
           }
-          updatedDir = myPort.read();
+          updatedDir = (char)myPort.read();
           
           float updatedPos = 0;
           while (myPort.available() <= 0) {

@@ -11,5 +11,6 @@ public class Zumo {
     symbol = sym;
     lastKnownPos = 0;
     connection = null;
+    currDirection = 'N';
   }
 }
