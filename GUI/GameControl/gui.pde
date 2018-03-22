@@ -20,6 +20,8 @@ public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(ONE_ONE));
 
     updateButtonDisplay(source);
@@ -32,6 +34,8 @@ public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(TWO_TWO));
 
     updateButtonDisplay(source);
@@ -44,6 +48,8 @@ public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(TWO_ONE));
 
     updateButtonDisplay(source);
@@ -56,6 +62,8 @@ public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(ONE_THREE));
 
     updateButtonDisplay(source);
@@ -68,6 +76,8 @@ public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(ONE_TWO));
 
     updateButtonDisplay(source);
@@ -80,6 +90,8 @@ public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(TWO_THREE));
 
     updateButtonDisplay(source);
@@ -92,6 +104,8 @@ public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(THREE_THREE));
 
     updateButtonDisplay(source);
@@ -104,6 +118,8 @@ public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(THREE_TWO));
 
     updateButtonDisplay(source);
@@ -116,6 +132,8 @@ public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294
 
     Serial currentPort = getCurrentPort();
     currentPort.write(_MOVE);
+    currentPort.write(getCurrentPlayer().getDirection());
+    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
     currentPort.write(str(THREE_ONE));
 
     updateButtonDisplay(source);

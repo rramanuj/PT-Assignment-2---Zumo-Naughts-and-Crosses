@@ -79,6 +79,7 @@ public class Mongo {
 }
 
 final char _MOVE = 'm';
+final char _COMPLETE = 'c';
 final char X_SYMBOL = 'X';
 final char O_SYMBOL = 'O';
 
@@ -173,11 +174,19 @@ void serialEvent(Serial myPort) {
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        if (message.equals("movecomplete")) {
-          float updatedPos = 0;
-          while (myPort.available() < 0) {
+        if (message.equals(_COMPLETE) {
+          
+          char updatedDir;
+          while (myPort.available() <= 0) {
             delay(500);
-            System.out.println("awaiting coordinate");
+            System.out.println("awaiting direction");
+          }
+          updatedDir = myPort.read();
+          
+          float updatedPos = 0;
+          while (myPort.available() <= 0) {
+            delay(500);
+            System.out.println("awaiting position");
           }
           updatedPos = Float.parseFloat(myPort.readString());
 
@@ -197,6 +206,7 @@ void serialEvent(Serial myPort) {
           //need to get updated position back from Arduino
           Player player = getCurrentPlayer();
           mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+          player.setDirection(updatedDir);
           player.setLastKnownPos(updatedPos);
 
           if (checkWinner(player.getPlayerSymbol())) {

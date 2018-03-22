@@ -59,11 +59,11 @@ public class Player {
     zumo.connection = port;
   }
   
-  public char getCurrentDirection() {
+  public char getDirection() {
     return zumo.currDirection;
   }
   
-  public void setCurrentDirection(char dir) {
+  public void setDirection(char dir) {
     zumo.currDirection = dir;
   }
 }
