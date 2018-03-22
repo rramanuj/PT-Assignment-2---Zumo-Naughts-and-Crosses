@@ -70,7 +70,7 @@ void setup()
   //Serial.println("asdasdsada...");
 
 
-  initialise_compass();
+//  initialise_compass();
   button.waitForButton();
 
   while (Serial.available() <= 0) {
@@ -91,23 +91,24 @@ void loop()
   //reflectanceSensors.read(sensor_values);
   //Serial.println(String(sensor_values[0]));
   char command;
-  //Serial.println("mary wolsencraft");
-    while (command != 'C')
+ // Serial.println("mary wolsencraft");
+    while (command != 'x')
     {
 
       if (Serial.available() > 0)
       {
         command = Serial.read();
       }
-      
-   Serial.println(command);
+   //Serial.println(command);
    switch (command)
       {
         case 'm': case 'M': 
-      char dir = Serial.read().toChar();
+      char dir = Serial.read();
       float pos = Serial.readString().toFloat();
       float dest = Serial.readString().toFloat();
-      Serial.println(dir,pos,dest);
+      Serial.println(dir);
+      Serial.println(pos);
+      Serial.println(dest);
       bigTing(dir, pos, dest);
     }
   }
