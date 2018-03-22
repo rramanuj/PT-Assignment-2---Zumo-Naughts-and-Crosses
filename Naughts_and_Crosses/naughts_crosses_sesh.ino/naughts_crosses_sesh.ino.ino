@@ -103,14 +103,17 @@ void loop()
     {
       case 'm': case 'M':
         String message = Serial.readString();
-        char dir = message.substring(0, message.indexOf(","));
-        float pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
-        float dest = message.substring(message.lastIndexOf(","));
-        
-//        char dir = Serial.read();
-//        Serial.println(dir);
-//        float pos = 3.1;
-//        float dest = 1.1;
+        char dir = message.substring(0, message.indexOf(",")).charAt(0);
+        Serial.println(dir);
+        float pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(",")).toDouble();
+        Serial.println(pos);
+        float dest = message.substring(message.lastIndexOf(",") + 1).toDouble();
+        Serial.println(dest);
+
+        //        char dir = Serial.read();
+        //        Serial.println(dir);
+        //        float pos = 3.1;
+        //        float dest = 1.1;
         bigTing(dir, pos, dest);
     }
   }
@@ -135,17 +138,25 @@ void moveForward(int destination)
   motors.setSpeeds(0, 0);
 }
 
+
 void execute()
 {
   //placeholder
 }
 
-void bigTing(char dir, float pos, float dest)
+void bigTing(char dir, double pos, double dest)
 {
+  Serial.println(dir);
+
   switch (dir)
   {
     case 'N':
+
       {
+        Serial.println("WE'RE IN THE NORTH");
+        Serial.println(pos);
+        Serial.println(dest);
+
         //northX
         if (pos == 1.1)
         {
@@ -689,10 +700,12 @@ void bigTing(char dir, float pos, float dest)
             break;
           }
         }
-        else if (pos == 3.1)
+        else if (String(pos) == String(3.10))
         {
-          if (dest == 1.1)
+          Serial.println("we made it to 3.1");
+          if (String(dest) == String(1.10))
           {
+            Serial.println("we OFGIOASDJHGIDFSAHFIDSAFHUIAEW it to 3.1");
             moveForward(3);
             execute();
             motors.setSpeeds(0, 0);

@@ -23,6 +23,7 @@ public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182
     currentPort.write(_MOVE);
     System.out.println("move: " + _MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
+    System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
     //currentPort.write(getCurrentPlayer().getDirection());
     //System.out.println("direction: " + str(getCurrentPlayer().getDirection()));
 
