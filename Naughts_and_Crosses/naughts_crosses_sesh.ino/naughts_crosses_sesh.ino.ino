@@ -73,28 +73,27 @@ void setup()
   //  initialise_compass();
   button.waitForButton();
 
+  establishContact();
+
+  //sensor_callibration();
+}
+
+void establishContact() {
   while (Serial.available() <= 0) {
     Serial.println("requestcontact");
     delay(300);
   }
   Serial.read();
-
-
-  //sensor_callibration();
-  //theBigJamie();
-
 }
 
 void loop()
 {
-
   //reflectanceSensors.read(sensor_values);
   //Serial.println(String(sensor_values[0]));
   char command;
   // Serial.println("mary wolsencraft");
   while (command != 'x')
   {
-
     if (Serial.available() > 0)
     {
       command = Serial.read();
@@ -103,24 +102,19 @@ void loop()
     switch (command)
     {
       case 'm': case 'M':
-       char dir = Serial.read();
-       Serial.println(dir);
-       float pos = 3.1;
-       float dest = 1.1;
-       bigTing(dir, pos, dest);
+        String message = Serial.readString();
+        char dir = message.substring(0, message.indexOf(","));
+        float pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
+        float dest = message.substring(message.lastIndexOf(","));
+        
+//        char dir = Serial.read();
+//        Serial.println(dir);
+//        float pos = 3.1;
+//        float dest = 1.1;
+        bigTing(dir, pos, dest);
     }
   }
 }
-void theBigJamie()
-{
-  rotate(fmod(averageHeading() + 100, 360));
-  rotate(fmod(averageHeading() + 90, 360));
-  moveForward(3);
-  rotate(fmod(averageHeading() - 80, 360));
-  moveForward(3);
-  motors.setSpeeds(0, 0);
-}
-
 void moveForward(int destination)
 {
   //destination refers to the amount of grey lines the zumo needs to cross before

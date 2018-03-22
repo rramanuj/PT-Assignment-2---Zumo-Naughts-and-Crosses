@@ -9,7 +9,7 @@ public class Zumo {
   
   public Zumo(char sym) {
     symbol = sym;
-    lastKnownPos = 0;
+    lastKnownPos = 3.1;
     connection = null;
     currDirection = 'N';
   }

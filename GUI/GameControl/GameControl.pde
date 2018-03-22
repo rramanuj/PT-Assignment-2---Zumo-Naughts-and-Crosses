@@ -15,7 +15,7 @@ public class Mongo {
     mongoClient = new MongoClient("localhost", 27017);
     database = mongoClient.getDatabase("naughts_and_crosses");
   }
-  
+
   public ObjectId addUser(String username, String password) { 
     collection = database.getCollection("users");
     Bson usernameFilter = Filters.eq("username", username);
@@ -175,14 +175,14 @@ void serialEvent(Serial myPort) {
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
         if (message.equals(_COMPLETE)) {
-          
+
           char updatedDir;
           while (myPort.available() <= 0) {
             delay(500);
             System.out.println("awaiting direction");
           }
           updatedDir = (char)myPort.read();
-          
+
           float updatedPos = 0;
           while (myPort.available() <= 0) {
             delay(500);
