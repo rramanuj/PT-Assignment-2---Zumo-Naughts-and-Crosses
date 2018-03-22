@@ -21,15 +21,15 @@ public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182
     Serial currentPort = getCurrentPort();
     
     currentPort.write(_MOVE);
-        System.out.println("move: " + _MOVE);
+    System.out.println("move: " + _MOVE);
 
     currentPort.write(getCurrentPlayer().getDirection());
-      System.out.println("direction: " + str(getCurrentPlayer().getDirection()));
+    System.out.println("direction: " + str(getCurrentPlayer().getDirection()));
 
-    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
-    System.out.println("last pos: " + str(getCurrentPlayer().getLastKnownPos()));
-    currentPort.write(str(ONE_ONE));
-    System.out.println("dest: " + ONE_ONE);
+//    currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
+  //  System.out.println("last pos: " + str(getCurrentPlayer().getLastKnownPos()));
+    //currentPort.write(str(ONE_ONE));
+    //System.out.println("dest: " + ONE_ONE);
    
     updateButtonDisplay(source);
   }
