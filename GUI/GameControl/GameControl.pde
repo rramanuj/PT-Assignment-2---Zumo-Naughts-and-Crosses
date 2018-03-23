@@ -99,6 +99,7 @@ final int MAX_MOVES = 9;
 
 //Serial port for communication to/from Arduino
 private String message;
+private Serial port;
 private boolean player1Connected, player2Connected;
 private int moveNo = 0;
 private boolean gameEnded = false;
@@ -108,6 +109,8 @@ private ObjectId gameId;
 private Player player1, player2;
 
 public void setup() {
+
+  printArray(Serial.list());
   size(480, 320, JAVA2D);
   createGUI();
   customGUI();
@@ -115,10 +118,11 @@ public void setup() {
 
   //get user data from keyboard input
   initialisePlayers();
-  //player1.setPort(new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600));
-  //player1.getPort().bufferUntil('\n');
-  ////player2.setPort(new Serial(this, "COM8", 9600));
-  ////player2.getPort().bufferUntil('\n');
+  port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
+  port.bufferUntil('\n');
+  
+  player1.setPort(port);
+  player2.setPort(port);
 }
 
 public void draw() {
@@ -290,7 +294,7 @@ public void customGUI() {
 }
 
 public Serial getCurrentPort() {
-  return getCurrentPlayer().getPort();
+  return port;
 }
 
 public void toggleSlider() {
