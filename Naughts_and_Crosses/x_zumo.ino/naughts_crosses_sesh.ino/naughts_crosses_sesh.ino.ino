@@ -114,10 +114,11 @@ void loop()
         String message = Serial.readString();
         char dir = message.substring(0, message.indexOf(",")).charAt(0);
         Serial.println(dir);
-        String pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
+        String pos = message.substring(message.indexOf(",") + 1, message.indexOf(",,"));
         Serial.println(pos);
-        String dest = message.substring(message.lastIndexOf(",") + 1);
+        String dest = message.substring(message.indexOf(",,") + 1, message.lastIndexOf(",,") + 1);
         Serial.println(dest);
+        String occupied = message.substring(message.lastIndexOf(",,") + 1);
 
         //        char dir = Serial.read();
         //        Serial.println(dir);
@@ -3314,8 +3315,7 @@ void bigTing(char dir, String pos, String dest)
 
 void updatePosition(char dir, String pos) {
   Serial.println(_COMPLETE);
-  Serial.println(dir);
-  Serial.println(pos);
+  Serial.println(dir + "," + pos);
 }
 
 String line_detection()

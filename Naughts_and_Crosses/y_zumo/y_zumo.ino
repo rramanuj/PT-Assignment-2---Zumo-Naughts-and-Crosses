@@ -3311,8 +3311,7 @@ void bigTing(char dir, String pos, String dest)
 
 void updatePosition(char dir, String pos) {
   Serial.println(_COMPLETE);
-  Serial.println(dir);
-  Serial.println(pos);
+  Serial.println(dir + "," + pos);
 }
 
 String line_detection()

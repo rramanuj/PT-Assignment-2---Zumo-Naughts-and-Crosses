@@ -182,20 +182,12 @@ void serialEvent(Serial myPort) {
         txtOutput.setText(message);
         if (message.equals(_COMPLETE)) {
           moveNo++;
-
           char updatedDir;
-          while (myPort.available() <= 0) {
-            delay(500);
-            System.out.println("awaiting direction");
-          }
-          updatedDir = (char)myPort.read();
+          float updatedPos;
 
-          float updatedPos = 0;
-          while (myPort.available() <= 0) {
-            delay(500);
-            System.out.println("awaiting position");
-          }
-          updatedPos = Float.parseFloat(myPort.readString());
+          String updatedState = myPort.readString();
+          updatedDir = updatedState.substring(0, updatedState.indexOf(",")).charAt(0);
+          updatedPos = Float.parseFloat(updatedState.substring(updatedState.indexOf(","), updatedState.lastIndexOf(",")));
 
           //database connection instance
           Mongo mongo = new Mongo();   
@@ -207,25 +199,25 @@ void serialEvent(Serial myPort) {
               player2.getMongoId(), 
               player2.getPlayerSymbol()
               );
-          }
 
-          //record the moves on database
-          //need to get updated position back from Arduino
-          Player player = getCurrentPlayer();
-          mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
-          player.setDirection(updatedDir);
-          player.setLastKnownPos(updatedPos);
+            //record the moves on database
+            //need to get updated position back from Arduino
+            Player player = getCurrentPlayer();
+            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+            player.setDirection(updatedDir);
+            player.setLastKnownPos(updatedPos);
 
-          if (checkWinner(player.getPlayerSymbol())) {
-            txtOutput.setText(player.getUsername() + " is the winner!");
-            mongo.updateGameWinner(gameId, player.getMongoId());
-          } else {
-            if (moveLimitReached()) {
-              txtOutput.setText("The game is a draw! You're both losers.");
-              mongo.updateGameWinner(gameId, null);
+            if (checkWinner(player.getPlayerSymbol())) {
+              txtOutput.setText(player.getUsername() + " is the winner!");
+              mongo.updateGameWinner(gameId, player.getMongoId());
+            } else {
+              if (moveLimitReached()) {
+                txtOutput.setText("The game is a draw! You're both losers.");
+                mongo.updateGameWinner(gameId, null);
+              }
             }
+            toggleSlider();
           }
-          toggleSlider();
         }
       }
     } else if (myPort == player2.getPort()) {
@@ -240,20 +232,12 @@ void serialEvent(Serial myPort) {
         txtOutput.setText(message);
         if (message.equals(_COMPLETE)) {
           moveNo++;
-
           char updatedDir;
-          while (myPort.available() <= 0) {
-            delay(500);
-            System.out.println("awaiting direction");
-          }
-          updatedDir = (char)myPort.read();
+          float updatedPos;
 
-          float updatedPos = 0;
-          while (myPort.available() <= 0) {
-            delay(500);
-            System.out.println("awaiting position");
-          }
-          updatedPos = Float.parseFloat(myPort.readString());
+          String updatedState = myPort.readString();
+          updatedDir = updatedState.substring(0, updatedState.indexOf(",")).charAt(0);
+          updatedPos = Float.parseFloat(updatedState.substring(updatedState.indexOf(","), updatedState.lastIndexOf(",")));
 
           //database connection instance
           Mongo mongo = new Mongo();   
@@ -265,25 +249,25 @@ void serialEvent(Serial myPort) {
               player2.getMongoId(), 
               player2.getPlayerSymbol()
               );
-          }
 
-          //record the moves on database
-          //need to get updated position back from Arduino
-          Player player = getCurrentPlayer();
-          mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
-          player.setDirection(updatedDir);
-          player.setLastKnownPos(updatedPos);
+            //record the moves on database
+            //need to get updated position back from Arduino
+            Player player = getCurrentPlayer();
+            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+            player.setDirection(updatedDir);
+            player.setLastKnownPos(updatedPos);
 
-          if (checkWinner(player.getPlayerSymbol())) {
-            txtOutput.setText(player.getUsername() + " is the winner!");
-            mongo.updateGameWinner(gameId, player.getMongoId());
-          } else {
-            if (moveLimitReached()) {
-              txtOutput.setText("The game is a draw! You're both losers");
-              mongo.updateGameWinner(gameId, null);
+            if (checkWinner(player.getPlayerSymbol())) {
+              txtOutput.setText(player.getUsername() + " is the winner!");
+              mongo.updateGameWinner(gameId, player.getMongoId());
+            } else {
+              if (moveLimitReached()) {
+                txtOutput.setText("The game is a draw! You're both losers.");
+                mongo.updateGameWinner(gameId, null);
+              }
             }
+            toggleSlider();
           }
-          toggleSlider();
         }
       }
     }
