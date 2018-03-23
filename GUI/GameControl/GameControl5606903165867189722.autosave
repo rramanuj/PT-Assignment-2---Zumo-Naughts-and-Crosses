@@ -78,8 +78,6 @@ public class Mongo {
   }
 }
 
-final char P1_IND = 'x';
-final char P2_IND = 'y';
 final char _MOVE = 'm';
 final char _COMPLETE = 'c';
 final char X_SYMBOL = 'X';
@@ -103,8 +101,8 @@ final int MAX_MOVES = 9;
 private String message;
 private Serial port;
 private boolean player1Connected, player2Connected;
+private boolean switched = false;
 private int moveNo = 0;
-private boolean gameEnded = false;
 
 //object id values for mongo database
 private ObjectId gameId;
@@ -122,7 +120,7 @@ public void setup() {
   initialisePlayers();
   port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
   port.bufferUntil('\n');
-
+  
   player1.setPort(port);
   player2.setPort(port);
 }
@@ -176,18 +174,25 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           player1Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (player 1)");
+          txtOutput.setText("Connection to Arduino established! (player1Arduino)");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
-          moveNo++;
-          char updatedDir;
-          float updatedPos;
+        if (message.equals(_COMPLETE)) {
 
-          System.out.println(message);
-          updatedDir = message.substring(message.indexOf(","), message.lastIndexOf(",")).charAt(0);
-          updatedPos = Float.parseFloat(message.substring(message.lastIndexOf(",")));
+          char updatedDir;
+          while (myPort.available() <= 0) {
+            delay(500);
+            System.out.println("awaiting direction");
+          }
+          updatedDir = (char)myPort.read();
+
+          float updatedPos = 0;
+          while (myPort.available() <= 0) {
+            delay(500);
+            System.out.println("awaiting position");
+          }
+          updatedPos = Float.parseFloat(myPort.readString());
 
           //database connection instance
           Mongo mongo = new Mongo();   
@@ -199,25 +204,25 @@ void serialEvent(Serial myPort) {
               player2.getMongoId(), 
               player2.getPlayerSymbol()
               );
-
-            //record the moves on database
-            //need to get updated position back from Arduino
-            Player player = getCurrentPlayer();
-            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
-            player.setDirection(updatedDir);
-            player.setLastKnownPos(updatedPos);
-
-            if (checkWinner(player.getPlayerSymbol())) {
-              txtOutput.setText(player.getUsername() + " is the winner!");
-              mongo.updateGameWinner(gameId, player.getMongoId());
-            } else {
-              if (moveLimitReached()) {
-                txtOutput.setText("The game is a draw! You're both losers.");
-                mongo.updateGameWinner(gameId, null);
-              }
-            }
-            toggleSlider();
           }
+
+          //record the moves on database
+          //need to get updated position back from Arduino
+          Player player = getCurrentPlayer();
+          mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+          player.setDirection(updatedDir);
+          player.setLastKnownPos(updatedPos);
+
+          if (checkWinner(player.getPlayerSymbol())) {
+            txtOutput.setText(player.getUsername() + " is the winner!");
+            mongo.updateGameWinner(gameId, player.getMongoId());
+          } else {
+            if (moveLimitReached()) {
+              txtOutput.setText("The game is a draw! You're both losers");
+              mongo.updateGameWinner(gameId, null);
+            }
+          }
+          toggleSlider();
         }
       }
     } else if (myPort == player2.getPort()) {
@@ -226,49 +231,11 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           player2Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (player 2)");
+          txtOutput.setText("Connection to Arduino established! (COM5)");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
-        if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
-          moveNo++;
-          char updatedDir;
-          float updatedPos;
-
-          System.out.println(message);
-          updatedDir = message.substring(message.indexOf(","), message.lastIndexOf(",")).charAt(0);
-          updatedPos = Float.parseFloat(message.substring(message.lastIndexOf(",")));
-
-          //database connection instance
-          Mongo mongo = new Mongo();   
-          if (isFirstMove()) {
-            //create game record once first move is complete
-            gameId = mongo.createGame(
-              player1.getMongoId(), 
-              player1.getPlayerSymbol(), 
-              player2.getMongoId(), 
-              player2.getPlayerSymbol()
-              );
-
-            //record the moves on database
-            //need to get updated position back from Arduino
-            Player player = getCurrentPlayer();
-            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
-            player.setDirection(updatedDir);
-            player.setLastKnownPos(updatedPos);
-
-            if (checkWinner(player.getPlayerSymbol())) {
-              txtOutput.setText(player.getUsername() + " is the winner!");
-              mongo.updateGameWinner(gameId, player.getMongoId());
-            } else {
-              if (moveLimitReached()) {
-                txtOutput.setText("The game is a draw! You're both losers.");
-                mongo.updateGameWinner(gameId, null);
-              }
-            }
-            toggleSlider();
-          }
-        }
+        //toggleSlider();
       }
     }
   }
@@ -313,12 +280,7 @@ public boolean isFirstMove() {
 }
 
 public boolean moveLimitReached() {
-  if (moveNo == MAX_MOVES) {
-    gameEnded = true;
-    return true;
-  }
-
-  return false;
+  return moveNo == MAX_MOVES;
 }
 
 public void updateButtonDisplay(GButton button) {
@@ -330,10 +292,6 @@ public void updateButtonDisplay(GButton button) {
   } else {
     button.setLocalColorScheme(GCScheme.RED_SCHEME);
   }
-}
-
-public boolean moveAllowed(GButton button) {
-  return !gameEnded && button.getText().equals("");
 }
 
 public boolean checkWinner(char symbol) {
@@ -356,10 +314,10 @@ public boolean checkWinner(char symbol) {
     }
 
     //diagonals can be checked from hard-coded coordinates, only two possible combinations
-    gameEnded = (horzWin(btnChars, symbol) || vertWin(btnChars, symbol) || diagWin(btnChars, symbol));
+    return (horzWin(btnChars, symbol) || vertWin(btnChars, symbol) || diagWin(btnChars, symbol));
   }
   //cannot be a winner after fewer than 5 moves
-  return gameEnded;
+  return false;
 }
 
 private boolean diagWin(char[][] chars, char symbol) {

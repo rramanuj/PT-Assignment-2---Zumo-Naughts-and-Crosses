@@ -103,7 +103,7 @@ void establishContact() {
     delay(DELAY_CONTACT);
   }
   Serial.read();
-}}
+}
 
 void loop() {
   // put your main code here, to run repeatedly:

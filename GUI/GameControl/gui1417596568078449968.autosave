@@ -15,36 +15,38 @@
  */
 
 public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182:
-  if (moveAllowed(source)) {
-    
-    
+  if (!moveLimitReached()) {
     moveNo++;
-    Serial currentPort = getCurrentPort();
 
+    Serial currentPort = getCurrentPort();
+    
+    char indicator;
     if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
+      indicator = 'x';
     } else {
-      currentPort.write(P2_IND);
+      indicator = 'y';
     }
+    currentPort.write(indicator);
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
+    //currentPort.write(getCurrentPlayer().getDirection());
+    //System.out.println("direction: " + str(getCurrentPlayer().getDirection()));
 
+    //currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
+    //System.out.println("last pos: " + str(getCurrentPlayer().getLastKnownPos()));
+    //currentPort.write(str(ONE_ONE));
+    //System.out.println("dest: " + ONE_ONE);
+   
     updateButtonDisplay(source);
   }
 } //_CODE_:btn1_1:211182:
 
 public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_TWO));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_TWO));
@@ -54,16 +56,10 @@ public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107
 } //_CODE_:btn2_2:245107:
 
 public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_ONE));
@@ -73,16 +69,10 @@ public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140
 } //_CODE_:btn2_1:905140:
 
 public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_THREE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_THREE));
@@ -92,16 +82,10 @@ public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172
 } //_CODE_:btn1_3:798172:
 
 public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_TWO));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_TWO));
@@ -111,16 +95,10 @@ public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950
 } //_CODE_:btn1_2:745950:
 
 public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_THREE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_THREE));
@@ -130,16 +108,10 @@ public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356
 } //_CODE_:btn2_3:704356:
 
 public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_THREE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_THREE));
@@ -149,16 +121,10 @@ public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460
 } //_CODE_:btn3_3:284460:
 
 public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_TWO));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_TWO));
@@ -167,16 +133,10 @@ public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922
 } //_CODE_:btn3_2:320922:
 
 public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294:
-  if (moveAllowed(source)) {
+  if (!moveLimitReached()) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-
-    if (getCurrentPlayer() == player1) {
-      currentPort.write(P1_IND);
-    } else {
-      currentPort.write(P2_IND);
-    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_ONE));

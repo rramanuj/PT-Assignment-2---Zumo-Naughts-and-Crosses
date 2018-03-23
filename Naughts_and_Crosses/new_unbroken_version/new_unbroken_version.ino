@@ -38,27 +38,17 @@ Pushbutton button(ZUMO_BUTTON);
 //Created a new version of the code which I've tested with the Arduino that works.
 ZumoMotors motors;
 ZumoReflectanceSensorArray reflectanceSensors(QTR_NO_EMITTER_PIN);
-char endDir1, dir;
-String dest, pos;
+char endDir1;
 unsigned int sensor_values[NUM_SENSORS];
 
-/*#define _COMPLETE 'c';
-#define ONE_ONE "1.1"
-#define ONE_TWO "1.2"
-#define ONE_THREE "1.3"
-#define TWO_ONE "2.1"
-#define TWO_TWO "2.2"
-#define TWO_THREE "2.3"
-#define THREE_ONE "3.1"
-#define THREE_TWO "3.2"
-#define THREE_THREE "3.3"*/
+#define _COMPLETE 'c'
 
 // Converts x and y components of a vector to a heading in degrees.
 // This function is used instead of LSM303::heading() because we don't
 // want the acceleration of the Zumo to factor spuriously into the
 // tilt compensation that LSM303::heading() performs. This calculation
 // assumes that the Zumo is always level.
-//
+
 template <typename T> float heading(LSM303::vector<T> v)
 {
   float x_scaled = 2.0 * (float)(v.x - compass.m_min.x) / (compass.m_max.x - compass.m_min.x) - 1.0;
@@ -79,59 +69,54 @@ void setup()
   Serial.begin(9600);
   Serial.println("asdasdsada...");
 
-  //  initialise_compass();
+  initialise_compass();
   button.waitForButton();
-
-
- // establishContact();
-
   //sensor_callibration();
-}
+  //theBigJamie();
 
-void establishContact() {
-  while (Serial.available() <= 0) {
-    Serial.println("requestcontact");
-    delay(300);
-  }
-  Serial.read();
+  bigTing('N', 1.1, 1.2);
 }
 
 void loop()
 {
-  //reflectanceSensors.read(sensor_values);
-  //Serial.println(String(sensor_values[0]));
- /* char command = Serial.read();
-  while (command == 'x')
+  reflectanceSensors.read(sensor_values);
+  Serial.println(String(sensor_values[0]));
+  char command;
+
+  if (Serial.available() > 0)
   {
-    if (Serial.available() > 0)
+    command = Serial.read();
+    if (command == 'm' || command == 'M')
     {
-      command = Serial.read();
+      char dir;
+      while (Serial.available() <= 0)
+      {
+        dir = Serial.read();
+      }
+      while (Serial.available() <= 0)
+      {
+        delay(300);
+      }
+      double pos = Serial.readString().toDouble();
+      while (Serial.available() <= 0)
+      {
+        delay(300);
+      }
+      double dest = Serial.readString().toDouble();
+
+      bigTing(dir, pos, dest);
     }
-    //Serial.println(command);
-    switch (command)
-    {
-      case 'm': case 'M':
-        String message = Serial.readString();
-        dir = message.substring(0, message.indexOf(",")).charAt(0);
-        Serial.println(dir);
-        pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
-        Serial.println(pos);
-        dest = message.substring(message.lastIndexOf(",") + 1);
-        Serial.println(dest);
-*/
-
-    bigTing('N', "ONE_THREE", "THREE_TWO");
-
-        //        char dir = Serial.read();
-        //        Serial.println(dir);
-        //        float pos = THREE_ONE;
-        //        float dest = ONE_ONE;
-        //  bigTing(dir, pos, dest);
-
-
-
-    }
-  
+  }
+}
+void theBigJamie()
+{
+  rotate(fmod(averageHeading() + 100, 360));
+  rotate(fmod(averageHeading() + 90, 360));
+  moveForward(3);
+  rotate(fmod(averageHeading() - 80, 360));
+  moveForward(3);
+  motors.setSpeeds(0, 0);
+}
 
 void moveForward(int destination)
 {
@@ -155,3181 +140,3178 @@ void moveForward(int destination)
 
 
 
-
-void bigTing(char dir, String pos, String dest)
+void Bread(char flex, double dagga) {
+  Serial.println("WATSITS");
+  Serial.println(flex);
+  Serial.println(dagga);
+}
+void execute()
 {
-char endDir1; 
-char _COMPLETE = 'c';
-String ONE_ONE = "1.1";
-String ONE_TWO = "1.2";
-String ONE_THREE = "1.3";
-String TWO_ONE=  "2.1";
-String TWO_TWO = "2.2";
-String TWO_THREE =  "2.3";
-String THREE_ONE = "3.1";
-String THREE_TWO = "3.2";
-String THREE_THREE = "3.3";
+  //placeholder
+}
+
+void bigTing(char dir, double pos, double dest)
+{
   switch (dir)
   {
-
     case 'N':
       {
         //northX
-        if (pos == ONE_THREE)
+        if (pos == 1.1)
         {
-          if (dest == ONE_TWO)
+          if (dest == 1.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_THREE)
-          {
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_ONE)
-          {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'S';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_TWO)
-          {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_THREE)
-          {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_ONE)
-          {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'S';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_TWO)
-          {
-            rotateRight();
-            rotateRight();
-            moveForward(3);
-            rotateLeft();
-            moveForward(2);
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            updatePosition('E', dest);
+            Bread('E', dest);
             break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 1.3)
           {
-            rotateRight();
             rotateRight();
             moveForward(3);
-
-            rotateLeft();
-            moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-        }
-        else if (pos == ONE_TWO)
-        {
-          if (dest == ONE_ONE)
-          {
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_THREE)
+          else if (dest == 2.1)
           {
             rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_ONE)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
             rotateRight();
             moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_TWO)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.2)
           {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_ONE)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(3);
-
+            rotateRight();
             rotateRight();
             moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_TWO)
-          {
+            execute();
             rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 2.3)
+          {
+            rotateRight();
+            rotateRight();
+            moveForward(2);
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 3.1)
+          {
+            rotateRight();
+            rotateRight();
+            moveForward(3);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.2)
           {
-            rotateLeft();
-            rotateLeft();
+            rotateRight();
+            rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateRight();
+            rotateRight();
+            moveForward(3);
+            execute();
+            rotateLeft();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
           }
         }
-        else if (pos == ONE_THREE)
+        else if (pos == 1.2)
         {
-          if (dest == ONE_ONE)
-          {
-            rotateLeft();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_TWO)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 1.3)
           {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_TWO)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
+            endDir1 = 'E';
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 2.2)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             rotateLeft();
-            moveForward(3);
-
-            rotateRight();
-            moveForward(3);
-
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
+            endDir1 = 'E';
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(3);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
           }
         }
-        else if (pos == TWO_ONE)
+        else if (pos == 1.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
-            moveForward(2);
-
+            rotateLeft();
+            moveForward(3);
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'N';
-            execute(endDir1);            break;
+            endDir1 = 'W';
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
+            rotateLeft();
             moveForward(2);
-
-            rotateRight();
-            moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
+            endDir1 = 'W';
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 2.1)
           {
+            rotateLeft();
+            rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
+            endDir1 = 'W';
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
+            endDir1 = 'W';
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_ONE)
-          {
-            rotateRight();
-            rotateRight();
+            rotateLeft();
+            rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.1)
           {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-
             rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_THREE)
-          {
-            rotateRight();
-            rotateRight();
-            moveForward(2);
-
             rotateLeft();
             moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-        }
-        else if (pos == TWO_TWO)
-        {
-          if (dest == ONE_ONE)
-          {
-            rotateLeft();
-            moveForward(2);
-
+            execute();
             rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'N';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_TWO)
-          {
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'N';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_THREE)
-          {
-            rotateRight();
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'N';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_ONE)
-          {
-            rotateLeft();
-            moveForward(2);
-
+            moveForward(3);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
-          {
-            rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.2)
           {
             rotateLeft();
             rotateLeft();
-            moveForward(2);
-
+            moveForward(3);
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.3)
           {
             rotateLeft();
             rotateLeft();
-            moveForward(2);
-
+            moveForward(3);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_THREE)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_THREE)
+        else if (pos == 2.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             moveForward(2);
-
-            rotateLeft();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_TWO)
-          {
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_THREE)
-          {
-            moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 1.2)
           {
-            rotateLeft();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_TWO)
-          {
-            rotateLeft();
             moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_ONE)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_TWO)
-          {
-            rotateLeft();
-            rotateLeft();
-            moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
+            endDir1 = 'E';
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 1.3)
           {
-            rotateLeft();
-            rotateLeft();
             moveForward(2);
-
+            execute();
+            rotateRight();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 2.2)
+          {
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 2.3)
+          {
+            rotateRight();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 3.1)
+          {
+            rotateRight();
+            rotateRight();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
+          }
+          else if (dest == 3.2)
+          {
+            rotateRight();
+            rotateRight();
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateRight();
+            rotateRight();
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
           }
         }
-        else if (pos == THREE_ONE)
+        else if (pos == 2.2)
         {
-          Serial.println("we made it to THREE_ONE");
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
-            Serial.println("we OFGIOASDJHGIDFSAHFIDSAFHUIAEW it to THREE_ONE");
-            moveForward(3);
-
+            rotateLeft();
+            moveForward(2);
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
-          {
-            moveForward(3);
-
-            rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_THREE)
-          {
-            moveForward(3);
-
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_ONE)
+          else if (dest == 1.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
-          {
-            moveForward(2);
-
-            rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_THREE)
-          {
-            moveForward(2);
-
-            rotateRight();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_TWO)
+          else if (dest == 1.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
+            endDir1 = 'N';
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 2.1)
+          {
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 2.3)
           {
             rotateRight();
-            moveForward(3);
-
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
+          }
+          else if (dest == 3.1)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 3.2)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'S';
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
           }
         }
-        else if (pos == THREE_TWO)
+        else if (pos == 2.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
-            moveForward(3);
-
-            rotateLeft();
             moveForward(2);
-
+            execute();
+            rotateLeft();
+            moveForward(3);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
-            moveForward(3);
-
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 1.3)
+          {
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 2.1)
           {
+            rotateLeft();
             moveForward(3);
-
-            rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_ONE)
-          {
-            moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
-          {
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'N';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_THREE)
-          {
-            moveForward(2);
-
-            rotateRight();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
-          }
-          else if (dest == THREE_ONE)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.1)
           {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            rotateRight();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 3.2)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'E';
-            execute(endDir1);            break;
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateLeft();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'S';
+            break;
           }
         }
-        else if (pos == THREE_THREE)
+        else if (pos == 3.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             moveForward(3);
-
-            rotateLeft();
-            moveForward(3);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_TWO)
-          {
-            moveForward(3);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == ONE_THREE)
-          {
-            moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 1.2)
           {
-            moveForward(2);
-
-            rotateLeft();
             moveForward(3);
-
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
+            endDir1 = 'E';
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 1.3)
+          {
+            moveForward(3);
+            execute();
+            rotateRight();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 2.1)
           {
             moveForward(2);
-
-            rotateLeft();
-            moveForward(2);
-
-            motors.setSpeeds(0, 0);
-            endDir1 = 'W';
-            execute(endDir1);            break;
-          }
-          else if (dest == TWO_THREE)
-          {
-            moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 2.2)
           {
-            rotateLeft();
+            moveForward(2);
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 2.3)
+          {
+            moveForward(2);
+            execute();
+            rotateRight();
             moveForward(3);
-
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 3.2)
+          {
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateRight();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+        }
+        else if (pos == 3.2)
+        {
+          if (dest == 1.1)
+          {
+            moveForward(3);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 1.2)
+          {
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'N';
+            break;
+          }
+          else if (dest == 1.3)
+          {
+            moveForward(3);
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 2.1)
+          {
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 2.2)
+          {
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'N';
+            break;
+          }
+          else if (dest == 2.3)
+          {
+            moveForward(2);
+            execute();
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
+          }
+          else if (dest == 3.3)
+          {
+            rotateRight();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'E';
+            break;
+          }
+        }
+        else if (pos == 3.3)
+        {
+          if (dest == 1.1)
+          {
+            moveForward(3);
+            execute();
+            rotateLeft();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 1.2)
+          {
+            moveForward(3);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 1.3)
+          {
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'N';
+            break;
+          }
+          else if (dest == 2.1)
+          {
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 2.2)
+          {
+            moveForward(2);
+            execute();
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 2.3)
+          {
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'N';
+            break;
+          }
+          else if (dest == 3.1)
+          {
+            rotateLeft();
+            moveForward(3);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
+          }
+          else if (dest == 3.2)
+          {
+            rotateLeft();
+            moveForward(2);
+            execute();
+            motors.setSpeeds(0, 0);
+            endDir1 = 'W';
+            break;
           }
         }
       }
     case 'S':
       {
         //southX
-        if (pos == ONE_ONE)
+        if (pos == 1.1)
         {
-          if (dest == ONE_TWO)
+          if (dest == 1.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == ONE_TWO)
+        else if (pos == 1.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == ONE_THREE)
+        else if (pos == 1.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_ONE)
+        else if (pos == 2.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_TWO)
+        else if (pos == 2.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_THREE)
+        else if (pos == 2.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_ONE)
+        else if (pos == 3.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_TWO)
+        else if (pos == 3.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_THREE)
+        else if (pos == 3.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
         }
       }
     case 'E':
       {
         //eastX
-        if (pos == ONE_ONE)
+        if (pos == 1.1)
         {
-          if (dest == ONE_TWO)
+          if (dest == 1.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == ONE_TWO)
+        else if (pos == 1.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == ONE_THREE)
+        else if (pos == 1.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_ONE)
+        else if (pos == 2.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_TWO)
+        else if (pos == 2.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight;
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_THREE)
+        else if (pos == 2.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_ONE)
+        else if (pos == 3.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_TWO)
+        else if (pos == 3.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_THREE)
+        else if (pos == 3.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
         }
       }
     case 'W':
       {
         //westX
-        if (pos == ONE_ONE)
+        if (pos == 1.1)
         {
-          if (dest == ONE_TWO)
+          if (dest == 1.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == ONE_TWO)
+        else if (pos == 1.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == ONE_THREE)
+        else if (pos == 1.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_ONE)
+        else if (pos == 2.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_TWO)
+        else if (pos == 2.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == TWO_THREE)
+        else if (pos == 2.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'S';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_ONE)
+        else if (pos == 3.1)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_TWO)
+        else if (pos == 3.2)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_THREE)
+          else if (dest == 3.3)
           {
             rotateRight();
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            execute(endDir1);            break;
+            break;
           }
         }
-        else if (pos == THREE_THREE)
+        else if (pos == 3.3)
         {
-          if (dest == ONE_ONE)
+          if (dest == 1.1)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_TWO)
+          else if (dest == 1.2)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == ONE_THREE)
+          else if (dest == 1.3)
           {
             rotateRight();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_ONE)
+          else if (dest == 2.1)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_TWO)
+          else if (dest == 2.2)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             rotateLeft();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == TWO_THREE)
+          else if (dest == 2.3)
           {
             rotateRight();
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'N';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_ONE)
+          else if (dest == 3.1)
           {
             moveForward(3);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
-          else if (dest == THREE_TWO)
+          else if (dest == 3.2)
           {
             moveForward(2);
-
+            execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'W';
-            execute(endDir1);            break;
+            break;
           }
         }
       }
+      updatePosition(endDir1, dest);
   }
-
 }
 
-void updatePosition(char dir, String pos) {
-  //Serial.println(_COMPLETE);
-
-  Serial.print("c," + String(dir) + "," + pos);
+void updatePosition(char dir, double pos) {
+  //Serial.write(_COMPLETE);
+  //erial.write(dir);
+  //Serial.write(String(pos));
 }
 
 String line_detection()
@@ -3381,13 +3363,6 @@ bool check_for_wall()
     // }
   }
   return false;
-}
-
-void execute(char x)
-{
-  Serial.println("RED");
-  Serial.print(x);
-  endDir1 = x;
 }
 
 void sensor_callibration()
