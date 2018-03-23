@@ -15,7 +15,7 @@
  */
 
 public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
@@ -24,23 +24,17 @@ public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182
     System.out.println("move: " + _MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
-    //currentPort.write(getCurrentPlayer().getDirection());
-    //System.out.println("direction: " + str(getCurrentPlayer().getDirection()));
 
-    //currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
-    //System.out.println("last pos: " + str(getCurrentPlayer().getLastKnownPos()));
-    //currentPort.write(str(ONE_ONE));
-    //System.out.println("dest: " + ONE_ONE);
-   
     updateButtonDisplay(source);
   }
 } //_CODE_:btn1_1:211182:
 
 public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -51,10 +45,11 @@ public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107
 } //_CODE_:btn2_2:245107:
 
 public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -65,10 +60,11 @@ public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140
 } //_CODE_:btn2_1:905140:
 
 public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -79,10 +75,11 @@ public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172
 } //_CODE_:btn1_3:798172:
 
 public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -93,10 +90,11 @@ public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950
 } //_CODE_:btn1_2:745950:
 
 public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -107,10 +105,11 @@ public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356
 } //_CODE_:btn2_3:704356:
 
 public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -121,10 +120,11 @@ public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460
 } //_CODE_:btn3_3:284460:
 
 public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));
@@ -135,10 +135,11 @@ public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922
 } //_CODE_:btn3_2:320922:
 
 public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294:
-  if (!moveLimitReached()) {
+  if (!gameEnded) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
+    
     currentPort.write(_MOVE);
     currentPort.write(getCurrentPlayer().getDirection());
     currentPort.write(str(getCurrentPlayer().getLastKnownPos()));

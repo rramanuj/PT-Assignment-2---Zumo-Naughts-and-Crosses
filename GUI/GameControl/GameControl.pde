@@ -100,8 +100,8 @@ final int MAX_MOVES = 9;
 //Serial port for communication to/from Arduino
 private String message;
 private boolean player1Connected, player2Connected;
-private boolean switched = false;
 private int moveNo = 0;
+private boolean gameEnded = false;
 
 //object id values for mongo database
 private ObjectId gameId;
@@ -170,11 +170,70 @@ void serialEvent(Serial myPort) {
           myPort.clear();
           player1Connected = true;
           myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (player1Arduino)");
+          txtOutput.setText("Connection to Arduino established! (player 1)");
         }
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
         if (message.equals(_COMPLETE)) {
+          moveNo++;
+
+          char updatedDir;
+          while (myPort.available() <= 0) {
+            delay(500);
+            System.out.println("awaiting direction");
+          }
+          updatedDir = (char)myPort.read();
+
+          float updatedPos = 0;
+          while (myPort.available() <= 0) {
+            delay(500);
+            System.out.println("awaiting position");
+          }
+          updatedPos = Float.parseFloat(myPort.readString());
+
+          //database connection instance
+          Mongo mongo = new Mongo();   
+          if (isFirstMove()) {
+            //create game record once first move is complete
+            gameId = mongo.createGame(
+              player1.getMongoId(), 
+              player1.getPlayerSymbol(), 
+              player2.getMongoId(), 
+              player2.getPlayerSymbol()
+              );
+          }
+
+          //record the moves on database
+          //need to get updated position back from Arduino
+          Player player = getCurrentPlayer();
+          mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+          player.setDirection(updatedDir);
+          player.setLastKnownPos(updatedPos);
+
+          if (checkWinner(player.getPlayerSymbol())) {
+            txtOutput.setText(player.getUsername() + " is the winner!");
+            mongo.updateGameWinner(gameId, player.getMongoId());
+          } else {
+            if (moveLimitReached()) {
+              txtOutput.setText("The game is a draw! You're both losers.");
+              mongo.updateGameWinner(gameId, null);
+            }
+          }
+          toggleSlider();
+        }
+      }
+    } else if (myPort == player2.getPort()) {
+      if (!player2Connected) { //executes on first message received
+        if (message.equals("requestcontact")) {
+          myPort.clear();
+          player2Connected = true;
+          myPort.write('t');
+          txtOutput.setText("Connection to Arduino established! (player 2)");
+        }
+      } else { //on all subsequent messages after contact established
+        txtOutput.setText(message);
+        if (message.equals(_COMPLETE)) {
+          moveNo++;
 
           char updatedDir;
           while (myPort.available() <= 0) {
@@ -221,18 +280,6 @@ void serialEvent(Serial myPort) {
           toggleSlider();
         }
       }
-    } else if (myPort == player2.getPort()) {
-      if (!player2Connected) { //executes on first message received
-        if (message.equals("requestcontact")) {
-          myPort.clear();
-          player2Connected = true;
-          myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (COM5)");
-        }
-      } else { //on all subsequent messages after contact established
-        txtOutput.setText(message);
-        //toggleSlider();
-      }
     }
   }
 }
@@ -276,19 +323,23 @@ public boolean isFirstMove() {
 }
 
 public boolean moveLimitReached() {
-  return moveNo == MAX_MOVES;
-}
-
-public void updateButtonDisplay(GButton button) {
-  Player player = getCurrentPlayer();
-  char symbol = player.getPlayerSymbol();
-  button.setText(Character.toString(symbol));
-  if (symbol == 'X') {
-    button.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  } else {
-    button.setLocalColorScheme(GCScheme.RED_SCHEME);
+  if (moveNo == MAX_MOVES) {
+    gameEnded = true;
+    return true;
   }
-}
+  
+  return false;
+
+  public void updateButtonDisplay(GButton button) {
+    Player player = getCurrentPlayer();
+    char symbol = player.getPlayerSymbol();
+    button.setText(Character.toString(symbol));
+    if (symbol == 'X') {
+      button.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+    } else {
+      button.setLocalColorScheme(GCScheme.RED_SCHEME);
+    }
+  }
 
 public boolean checkWinner(char symbol) {
   if (moveNo >= MIN_MOVES) {
@@ -310,10 +361,10 @@ public boolean checkWinner(char symbol) {
     }
 
     //diagonals can be checked from hard-coded coordinates, only two possible combinations
-    return (horzWin(btnChars, symbol) || vertWin(btnChars, symbol) || diagWin(btnChars, symbol));
+    gameEnded = (horzWin(btnChars, symbol) || vertWin(btnChars, symbol) || diagWin(btnChars, symbol));
   }
   //cannot be a winner after fewer than 5 moves
-  return false;
+  return gameEnded;
 }
 
 private boolean diagWin(char[][] chars, char symbol) {
