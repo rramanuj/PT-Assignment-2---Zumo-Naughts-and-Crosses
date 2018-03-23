@@ -78,6 +78,8 @@ public class Mongo {
   }
 }
 
+final char P1_IND = 'x';
+final char P2_IND = 'y';
 final char _MOVE = 'm';
 final char _COMPLETE = 'c';
 final char X_SYMBOL = 'X';
@@ -120,7 +122,7 @@ public void setup() {
   initialisePlayers();
   port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
   port.bufferUntil('\n');
-  
+
   player1.setPort(port);
   player2.setPort(port);
 }
@@ -331,19 +333,24 @@ public boolean moveLimitReached() {
     gameEnded = true;
     return true;
   }
-  
-  return false;
 
-  public void updateButtonDisplay(GButton button) {
-    Player player = getCurrentPlayer();
-    char symbol = player.getPlayerSymbol();
-    button.setText(Character.toString(symbol));
-    if (symbol == 'X') {
-      button.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-    } else {
-      button.setLocalColorScheme(GCScheme.RED_SCHEME);
-    }
+  return false;
+}
+
+public void updateButtonDisplay(GButton button) {
+  Player player = getCurrentPlayer();
+  char symbol = player.getPlayerSymbol();
+  button.setText(Character.toString(symbol));
+  if (symbol == 'X') {
+    button.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  } else {
+    button.setLocalColorScheme(GCScheme.RED_SCHEME);
   }
+}
+
+public boolean moveAllowed(GButton button) {
+  return !gameEnded && button.getText().equals("");
+}
 
 public boolean checkWinner(char symbol) {
   if (moveNo >= MIN_MOVES) {

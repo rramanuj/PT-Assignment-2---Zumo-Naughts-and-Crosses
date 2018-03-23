@@ -5,9 +5,9 @@
  * designer and care should be taken when editing this file.
  * Only add/edit code inside the event handlers i.e. only
  * use lines between the matching comment tags. e.g.
-
+ 
  void myBtnEvents(GButton button) { //_CODE_:button1:12356:
-     // It is safe to enter your event code here  
+ // It is safe to enter your event code here  
  } //_CODE_:button1:12356:
  
  * Do not rename this tab!
@@ -15,18 +15,16 @@
  */
 
 public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
-    char indicator;
-    if (getCurrentPlayer == player1) {
-      indicator = 'x';
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
     } else {
-      indicator = 'y';
+      currentPort.write(P2_IND);
     }
-    currentPort.write(indicator);
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_ONE));
@@ -36,11 +34,16 @@ public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182
 } //_CODE_:btn1_1:211182:
 
 public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_TWO));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_TWO));
@@ -50,11 +53,16 @@ public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107
 } //_CODE_:btn2_2:245107:
 
 public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_ONE));
@@ -64,11 +72,16 @@ public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140
 } //_CODE_:btn2_1:905140:
 
 public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_THREE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_THREE));
@@ -78,11 +91,16 @@ public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172
 } //_CODE_:btn1_3:798172:
 
 public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_TWO));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(ONE_TWO));
@@ -92,11 +110,16 @@ public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950
 } //_CODE_:btn1_2:745950:
 
 public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_THREE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(TWO_THREE));
@@ -106,11 +129,16 @@ public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356
 } //_CODE_:btn2_3:704356:
 
 public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_THREE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_THREE));
@@ -120,11 +148,16 @@ public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460
 } //_CODE_:btn3_3:284460:
 
 public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_TWO));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_TWO));
@@ -133,11 +166,16 @@ public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922
 } //_CODE_:btn3_2:320922:
 
 public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294:
-  if (!gameEnded) {
+  if (moveAllowed(source)) {
     moveNo++;
 
     Serial currentPort = getCurrentPort();
-    
+
+    if (getCurrentPlayer() == player1) {
+      currentPort.write(P1_IND);
+    } else {
+      currentPort.write(P2_IND);
+    }
     currentPort.write(_MOVE);
     currentPort.write(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_ONE));
     System.out.println(str(getCurrentPlayer().getDirection()) + "," + str(getCurrentPlayer().getLastKnownPos()) + "," + str(THREE_ONE));
@@ -164,7 +202,7 @@ public void sldrTurn_change1(GSlider source, GEvent event) { //_CODE_:sldrTurn:2
 
 // Create all the GUI controls. 
 // autogenerated do not edit
-public void createGUI(){
+public void createGUI() {
   G4P.messagesEnabled(false);
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setCursor(ARROW);
