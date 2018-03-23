@@ -57,7 +57,7 @@ unsigned int sensor_values[NUM_SENSORS];
 // want the acceleration of the Zumo to factor spuriously into the
 // tilt compensation that LSM303::heading() performs. This calculation
 // assumes that the Zumo is always level.
-
+//
 template <typename T> float heading(LSM303::vector<T> v)
 {
   float x_scaled = 2.0 * (float)(v.x - compass.m_min.x) / (compass.m_max.x - compass.m_min.x) - 1.0;
@@ -76,9 +76,9 @@ void setup()
 
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(9600);
+ // Serial.begin(38400);
   //Serial.println("asdasdsada...");
-
-
+  
   //  initialise_compass();
   button.waitForButton();
 
@@ -99,9 +99,9 @@ void loop()
 {
   //reflectanceSensors.read(sensor_values);
   //Serial.println(String(sensor_values[0]));
-  char command;
+  char command = Serial.read();
   // Serial.println("mary wolsencraft");
-  while (command != 'x')
+  while (command == 'x')
   {
     if (Serial.available() > 0)
     {
@@ -114,9 +114,9 @@ void loop()
         String message = Serial.readString();
         char dir = message.substring(0, message.indexOf(",")).charAt(0);
         Serial.println(dir);
-        string pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
+        String pos = message.substring(message.indexOf(",") + 1, message.lastIndexOf(","));
         Serial.println(pos);
-        string dest = message.substring(message.lastIndexOf(",") + 1);
+        String dest = message.substring(message.lastIndexOf(",") + 1);
         Serial.println(dest);
 
         //        char dir = Serial.read();
@@ -153,7 +153,7 @@ void execute()
   //placeholder
 }
 
-void bigTing(char dir, string pos, string dest)
+void bigTing(char dir, String pos, String dest)
 {
   switch (dir)
   {
@@ -3312,7 +3312,7 @@ void bigTing(char dir, string pos, string dest)
   }
 }
 
-void updatePosition(char dir, float pos) {
+void updatePosition(char dir, String pos) {
   Serial.println(_COMPLETE);
   Serial.println(dir);
   Serial.println(pos);
