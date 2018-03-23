@@ -115,10 +115,10 @@ public void setup() {
 
   //get user data from keyboard input
   initialisePlayers();
-  player1.setPort(new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600));
-  player1.getPort().bufferUntil('\n');
-  //player2.setPort(new Serial(this, "COM8", 9600));
-  //player2.getPort().bufferUntil('\n');
+  //player1.setPort(new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600));
+  //player1.getPort().bufferUntil('\n');
+  ////player2.setPort(new Serial(this, "COM8", 9600));
+  ////player2.getPort().bufferUntil('\n');
 }
 
 public void draw() {

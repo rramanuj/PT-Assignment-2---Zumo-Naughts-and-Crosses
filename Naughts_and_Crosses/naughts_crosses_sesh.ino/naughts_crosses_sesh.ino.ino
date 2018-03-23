@@ -42,15 +42,15 @@ char endDir1;
 unsigned int sensor_values[NUM_SENSORS];
 
 #define _COMPLETE 'c'
-#define ONE_ONE "ONE_ONE"
-#define ONE_TWO "ONE_TWO"
-#define ONE_THREE "ONE_THREE"
-#define TWO_ONE "TWO_ONE"
-#define TWO_TWO "TWO_TWO"
-#define TWO_THREE "TWO_THREE"
-#define THREE_ONE "THREE_ONE"
-#define THREE_TWO "THREE_TWO"
-#define THREE_THREE "THREE_THREE"
+#define ONE_ONE "1.1"
+#define ONE_TWO "1.2"
+#define ONE_THREE "1.3"
+#define TWO_ONE "2.1"
+#define TWO_TWO "2.2"
+#define TWO_THREE "2.3"
+#define THREE_ONE "3.1"
+#define THREE_TWO "3.2"
+#define THREE_THREE "3.3"
 
 // Converts x and y components of a vector to a heading in degrees.
 // This function is used instead of LSM303::heading() because we don't
