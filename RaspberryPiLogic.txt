@@ -1,0 +1,24 @@
+import sys
+from pymongo import MongoClient
+from twython import Twython
+
+client = MongoClient("mongodb://localhost")
+db = client.tweets
+collection = db.tweets
+
+tweetStr = collection.find({}, {"day": 0, "_id": 0}).limit(1).sort([("_id", -1)])
+
+CONSUMER_KEY = 'Fr4E6lZNq9GoFYWbA4dFmuWOL'
+CONSUMER_SECRET = 'nT59mqjvLEvtaCre0STNayTOOB7Nha5ocDFiZVVwZcBJ1MhLrX'
+ACCESS_TOKEN = '976529789875097602-3htFSMqTADKO75usnPN4oPQS5rSx1iN'
+ACCESS_SECRET = 's3UvDPhvUliIeNxCwmuoEjMxQ0cOSmJk7niXikskthVHW'
+
+api = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_TOKEN,ACCESS_SECRET)
+
+x = []
+
+for doc in tweetStr:
+        x.append(doc)
+        print(x)
+
+api.update_status(status=x)
