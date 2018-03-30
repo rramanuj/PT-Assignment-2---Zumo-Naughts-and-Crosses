@@ -181,7 +181,6 @@ void serialEvent(Serial myPort) {
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
         if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
-          moveNo++;
           char updatedDir;
           float updatedPos;
 
@@ -231,7 +230,6 @@ void serialEvent(Serial myPort) {
       } else { //on all subsequent messages after contact established
         txtOutput.setText(message);
         if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
-          moveNo++;
           char updatedDir;
           float updatedPos;
 
@@ -279,6 +277,39 @@ void serialEvent(Serial myPort) {
 public void customGUI() {
 }
 
+public void updateGameState(char newDir, double newPos) {
+  //database connection instance
+  Mongo mongo = new Mongo();   
+  if (isFirstMove()) {
+    //create game record once first move is complete
+    gameId = mongo.createGame(
+      player1.getMongoId(), 
+      player1.getPlayerSymbol(), 
+      player2.getMongoId(), 
+      player2.getPlayerSymbol()
+      );
+  }
+
+  //record the moves on database
+  //need to get updated position back from Arduino
+  Player player = getCurrentPlayer();
+  mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), newPos);
+  player.setDirection(newDir);
+  player.setLastKnownPos(newPos);
+
+  if (checkWinner(player.getPlayerSymbol())) {
+    txtOutput.setText(player.getUsername() + " is the winner!");
+    mongo.updateGameWinner(gameId, player.getMongoId());
+  } else {
+    if (moveLimitReached()) {
+      txtOutput.setText("The game is a draw! You're both losers.");
+      mongo.updateGameWinner(gameId, null);
+    }
+  }
+
+  toggleSlider();
+}
+
 public Serial getCurrentPort() {
   return port;
 }
@@ -319,6 +350,21 @@ public boolean moveLimitReached() {
   }
 
   return false;
+}
+
+public void sendMoveData(GButton button) {
+  moveNo++;
+
+  Serial currentPort = getCurrentPort();
+  if (getCurrentPlayer() == player1) {
+    currentPort.write(P1_IND);
+  } else {
+    currentPort.write(P2_IND);
+  }
+
+  currentPort.write(moveNo);
+
+  updateButtonDisplay(button);
 }
 
 public void updateButtonDisplay(GButton button) {
