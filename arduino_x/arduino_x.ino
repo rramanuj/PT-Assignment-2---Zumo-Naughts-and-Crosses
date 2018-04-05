@@ -71,7 +71,6 @@ void setup()
   initialise_compass();
   button.waitForButton();
   Serial.println("Zumo 1 Connected!...");
-
 }
 
 void loop()
@@ -83,7 +82,8 @@ void loop()
   if (Serial.available() > 0)
   {
     command = Serial.read();
-    if (command == 'x' || command == 'X')
+    if (command == 
+    'x' || command == 'X')
     {
       Serial.println("command received");
       while (Serial.available() <= 0)
@@ -101,13 +101,13 @@ void loop()
         bigTing('N', 3.1, 1.2);
       }
       else if (command == '3') {
-        bigTing('S', 2.1, 3.3);
+        bigTing('N', 2.1, 3.3);
       }
       else if (command == '4') {
         bigTing('E', 1.2, 3.2);
       }
       else if (command == '5') {
-        bigTing('W', 3.3, 3.1);
+        bigTing('E', 3.3, 3.1);
       }
       else if (command == '6') {
         bigTing('S', 3.2, 2.2);

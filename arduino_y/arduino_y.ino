@@ -71,7 +71,6 @@ void setup()
   //initialise_compass();
   button.waitForButton();
   Serial.println("Zumo 2 Connected!...");
-
 }
 
 void loop()
@@ -1621,7 +1620,10 @@ void bigTing(char dir, double pos, double dest)
           }
           else if (dest == 2.2)
           {
+            //MARK: 2.2
             rotateLeft();
+            motors.setSpeeds(0, 0);
+            delay(200);
             rotateLeft();
             moveForward(2);
             execute();
@@ -3507,16 +3509,16 @@ float relativeHeading(float heading_from, float heading_to)
 
 void rotateRight()
 {
-  motors.setLeftSpeed(-SPEED);
-  motors.setRightSpeed(SPEED);
-  delay(200);
+  motors.setLeftSpeed(125);
+  motors.setRightSpeed(-125);
+  delay(1000);
 }
 
 void rotateLeft()
 {
-  motors.setLeftSpeed(SPEED);
-  motors.setRightSpeed(-SPEED);
-  delay(200);
+  motors.setLeftSpeed(-125);
+  motors.setRightSpeed(125);
+  delay(1000);
  }
 
 //this function rotates the zumo based on degrees passed in by the user (i.e. 90)
