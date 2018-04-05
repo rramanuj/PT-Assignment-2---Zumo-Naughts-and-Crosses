@@ -94,49 +94,49 @@ void loop()
       Serial.println(String(command));
 
       if (command == '1') {
-        bigTing('N', 3.1, 2.1);
+        moveZumo('N', 3.1, 2.1);
       }
       else if (command == '2') {
-        bigTing('N', 3.1, 1.2);
+        moveZumo('N', 3.1, 1.2);
       }
       else if (command == '3') {
-        bigTing('S', 2.1, 3.3);
+        moveZumo('S', 2.1, 3.3);
       }
       else if (command == '4') {
-        bigTing('E', 1.2, 3.2);
+        moveZumo('E', 1.2, 3.2);
       }
       else if (command == '5') {
-        bigTing('W', 3.3, 3.1);
+        moveZumo('W', 3.3, 3.1);
       }
       else if (command == '6') {
-        bigTing('S', 3.2, 2.2);
+        moveZumo('S', 3.2, 2.2);
       }
       else if (command == '7') {
-        bigTing('N', 3.1, 1.1);
+        moveZumo('N', 3.1, 1.1);
       }
       else if (command == '8') {
-        bigTing('N', 3.1, 2.2);
+        moveZumo('N', 3.1, 2.2);
       }
       else if (command == '9') {
-        bigTing('N', 1.1, 3.1);
+        moveZumo('N', 1.1, 3.1);
       }
       else if (command == 'A') {
-        bigTing('E', 2.2, 2.1);
+        moveZumo('E', 2.2, 2.1);
       }
       else if (command == 'B') {
-        bigTing('S', 3.1, 2.3);
+        moveZumo('S', 3.1, 2.3);
       }
       else if (command == 'C') {
-        bigTing('W', 2.1, 1.2);
+        moveZumo('W', 2.1, 1.2);
       }
       else if (command == 'D') {
-        bigTing('E', 2.3, 3.2);
+        moveZumo('E', 2.3, 3.2);
       }
       else if (command == 'E') {
-        bigTing('E', 1.2, 3.3);
+        moveZumo('E', 1.2, 3.3);
       }
 
-      //bigTing(dir, pos, dest);
+      //moveZumo(dir, pos, dest);
     }
   }
 }
@@ -176,7 +176,7 @@ void execute()
   //placeholder
 }
 
-void bigTing(char dir, double pos, double dest)
+void moveZumo(char dir, double pos, double dest)
 {
   switch (dir)
   {
@@ -2143,6 +2143,8 @@ void bigTing(char dir, double pos, double dest)
           else if (dest == 2.1)
           {
             rotateLeft();
+            motors.setSpeeds(0, 0);
+            delay(200)
             rotateLeft();
             moveForward(2);
             execute();
