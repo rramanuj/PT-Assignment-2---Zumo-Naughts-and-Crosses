@@ -71,10 +71,25 @@ void setup()
 
   initialise_compass();
   button.waitForButton();
-  //sensor_callibration();
-  //theBigJamie();
 
-  bigTing('N', 1.1, 1.2);
+//  //game 1 - win for O
+//  bigTing('N', 3.1, 2.1); //X
+//  bigTing('N', 3.1, 1.2); //O
+//  bigTing('S', 2.1, 3.3); //X
+//  bigTing('E', 1.2, 3.2); //O
+//  bigTing('W', 1.2, 3.1); //X
+//  bigTing('S', 3.2, 2.2); //O
+//
+//  //game 2 - draw
+//  bigTing('N', 3.1, 1.1); //X
+//  bigTing('N', 3.1, 2.2); //O
+//  bigTing('N', 1.1, 3.1); //X
+//  bigTing('E', 2.2, 2.1); //O
+//  bigTing('S', 3.1, 2.3); //X
+//  bigTing('W', 2.1, 1.2); //O
+//  bigTing('E', 2.3, 3.2); //X
+//  bigTing('E', 1.2, 3.3); //O
+//  bigTing('W', 3.2, 1.3); //X
 }
 
 void loop()
@@ -86,28 +101,22 @@ void loop()
   if (Serial.available() > 0)
   {
     command = Serial.read();
-    if (command == 'm' || command == 'M')
+    if (command == 'x' || command == 'X')
     {
-      char dir;
       while (Serial.available() <= 0)
       {
-        dir = Serial.read();
+        command = Serial.read();
       }
-      while (Serial.available() <= 0)
-      {
-        delay(300);
-      }
-      double pos = Serial.readString().toDouble();
-      while (Serial.available() <= 0)
-      {
-        delay(300);
-      }
-      double dest = Serial.readString().toDouble();
 
-      bigTing(dir, pos, dest);
+      if (command == '7') {
+        bigTing('N', 3.1, 1.1);
+      }
+
+      //bigTing(dir, pos, dest);
     }
   }
 }
+
 void theBigJamie()
 {
   rotate(fmod(averageHeading() + 100, 360));
@@ -138,13 +147,6 @@ void moveForward(int destination)
   motors.setSpeeds(0, 0);
 }
 
-
-
-void Bread(char flex, double dagga) {
-  Serial.println("WATSITS");
-  Serial.println(flex);
-  Serial.println(dagga);
-}
 void execute()
 {
   //placeholder
@@ -166,7 +168,6 @@ void bigTing(char dir, double pos, double dest)
             execute();
             motors.setSpeeds(0, 0);
             endDir1 = 'E';
-            Bread('E', dest);
             break;
           }
           else if (dest == 1.3)
