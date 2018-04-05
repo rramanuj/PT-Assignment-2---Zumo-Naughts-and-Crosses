@@ -72,30 +72,30 @@ void setup()
   initialise_compass();
   button.waitForButton();
 
-//  //game 1 - win for O
-//  bigTing('N', 3.1, 2.1); //X
-//  bigTing('N', 3.1, 1.2); //O
-//  bigTing('S', 2.1, 3.3); //X
-//  bigTing('E', 1.2, 3.2); //O
-//  bigTing('W', 1.2, 3.1); //X
-//  bigTing('S', 3.2, 2.2); //O
-//
-//  //game 2 - draw
-//  bigTing('N', 3.1, 1.1); //X
-//  bigTing('N', 3.1, 2.2); //O
-//  bigTing('N', 1.1, 3.1); //X
-//  bigTing('E', 2.2, 2.1); //O
-//  bigTing('S', 3.1, 2.3); //X
-//  bigTing('W', 2.1, 1.2); //O
-//  bigTing('E', 2.3, 3.2); //X
-//  bigTing('E', 1.2, 3.3); //O
-//  bigTing('W', 3.2, 1.3); //X
+  //  //game 1 - win for O
+  //  bigTing('N', 3.1, 2.1); //X
+  //  bigTing('N', 3.1, 1.2); //O
+  //  bigTing('S', 2.1, 3.3); //X
+  //  bigTing('E', 1.2, 3.2); //O
+  //  bigTing('W', 3.3, 3.1); //X
+  //  bigTing('S', 3.2, 2.2); //O
+  //
+  //  //game 2 - draw
+  //  bigTing('N', 3.1, 1.1); //X
+  //  bigTing('N', 3.1, 2.2); //O
+  //  bigTing('N', 1.1, 3.1); //X
+  //  bigTing('E', 2.2, 2.1); //O
+  //  bigTing('S', 3.1, 2.3); //X
+  //  bigTing('W', 2.1, 1.2); //O
+  //  bigTing('E', 2.3, 3.2); //X
+  //  bigTing('E', 1.2, 3.3); //O
+  //  bigTing('W', 3.2, 1.3); //X
 }
 
 void loop()
 {
   reflectanceSensors.read(sensor_values);
-  Serial.println(String(sensor_values[0]));
+  //Serial.println(String(sensor_values[0]));
   char command;
 
   if (Serial.available() > 0)
@@ -103,13 +103,59 @@ void loop()
     command = Serial.read();
     if (command == 'x' || command == 'X')
     {
+      Serial.println("command received");
       while (Serial.available() <= 0)
       {
-        command = Serial.read();
+        delay(300);
       }
+      command = Serial.read();
 
-      if (command == '7') {
+      Serial.println(String(command));
+
+      if (command == '1') {
+        bigTing('N', 3.1, 2.1);
+      }
+      else if (command == '2') {
+        bigTing('N', 3.1, 1.2);
+      }
+      else if (command == '3') {
+        bigTing('S', 2.1, 3.3);
+      }
+      else if (command == '4') {
+        bigTing('E', 1.2, 3.2);
+      }
+      else if (command == '5') {
+        bigTing('W', 3.3, 3.1);
+      }
+      else if (command == '6') {
+        bigTing('S', 3.2, 2.2);
+      }
+      else if (command == '7') {
         bigTing('N', 3.1, 1.1);
+      }
+      else if (command == '8') {
+        bigTing('N', 3.1, 2.2);
+      }
+      else if (command == '9') {
+        bigTing('N', 1.1, 3.1);
+      }
+      else if (command == 'A') {
+        bigTing('E', 2.2, 2.1);
+      }
+      else if (command == 'B') {
+        bigTing('S', 3.1, 2.3);
+      }
+      else if (command == 'C') {
+        bigTing('W', 2.1, 1.2);
+      }
+      else if (command == 'D') {
+        bigTing('E', 2.3, 3.2);
+      }
+      else if (command == 'E') {
+        bigTing('E', 1.2, 3.3);
+      }
+      else if (command == 'F') {
+        bigTing('W', 3.2, 1.3);
       }
 
       //bigTing(dir, pos, dest);
