@@ -36,6 +36,8 @@ public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107
     //update player object and log moves in database
     if (isDrawGame) {
       updateGameState('E', 2.2);
+    } else {
+      updateGameState('N', 2.2);
     }
   }
 } //_CODE_:btn2_2:245107:
@@ -49,6 +51,8 @@ public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140
     //update player object and log moves in database
     if (isDrawGame) {
       updateGameState('W', 2.1);
+    } else {
+      updateGameState('N', 2.1);
     }
   }
 } //_CODE_:btn2_1:905140:
@@ -74,6 +78,8 @@ public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950
 
     //update player object and log moves in database
     if (isDrawGame) {
+      updateGameState('E', 1.2);
+    } else {
       updateGameState('E', 1.2);
     }
   }
@@ -101,6 +107,8 @@ public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460
     //update player object and log moves in database
     if (isDrawGame) {
       updateGameState('E', 3.3);
+    } else {
+      updateGameState('E', 3.3);
     }
   }
 } //_CODE_:btn3_3:284460:
@@ -114,6 +122,8 @@ public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922
     //update player object and log moves in database
     if (isDrawGame) {
       updateGameState('W', 3.2);
+    } else {
+      updateGameState('S', 3.2);
     }
   }
 } //_CODE_:btn3_2:320922:
@@ -127,6 +137,8 @@ public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294
     //update player object and log moves in database
     if (isDrawGame) {
       updateGameState('S', 3.1);
+    } else {
+      updateGameState('W', 3.1);
     }
   }
 } //_CODE_:btn3_1:231294:
