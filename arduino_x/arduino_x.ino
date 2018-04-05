@@ -67,35 +67,17 @@ void setup()
 
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(9600);
-  Serial.println("asdasdsada...");
 
   initialise_compass();
   button.waitForButton();
+  Serial.println("Zumo 1 Connected!...");
 
-  //  //game 1 - win for O
-  //  navigateZumo('N', 3.1, 2.1); //X
-  //  navigateZumo('N', 3.1, 1.2); //O
-  //  navigateZumo('S', 2.1, 3.3); //X
-  //  navigateZumo('E', 1.2, 3.2); //O
-  //  navigateZumo('W', 1.2, 3.1); //X
-  //  navigateZumo('S', 3.2, 2.2); //O
-  //
-  //  //game 2 - draw
-  //  navigateZumo('N', 3.1, 1.1); //X
-  //  navigateZumo('N', 3.1, 2.2); //O
-  //  navigateZumo('N', 1.1, 3.1); //X
-  //  navigateZumo('E', 2.2, 2.1); //O
-  //  navigateZumo('S', 3.1, 2.3); //X
-  //  navigateZumo('W', 2.1, 1.2); //O
-  //  navigateZumo('E', 2.3, 3.2); //X
-  //  navigateZumo('E', 1.2, 3.3); //O
-  //  navigateZumo('W', 3.2, 1.3); //X
 }
 
 void loop()
 {
   reflectanceSensors.read(sensor_values);
-  Serial.println(String(sensor_values[0]));
+  //Serial.println(String(sensor_values[0]));
   char command;
 
   if (Serial.available() > 0)
@@ -103,56 +85,62 @@ void loop()
     command = Serial.read();
     if (command == 'x' || command == 'X')
     {
+      Serial.println("command received");
       while (Serial.available() <= 0)
       {
-        command = Serial.read();
+        delay(300);
       }
+      command = Serial.read();
+
+      Serial.println(String(command));
 
       if (command == '1') {
-        navigateZumo('N', 3.1, 2.1);
+        bigTing('N', 3.1, 2.1);
       }
       else if (command == '2') {
-        navigateZumo('N', 3.1, 1.2);
+        bigTing('N', 3.1, 1.2);
       }
       else if (command == '3') {
-        navigateZumo('S', 2.1, 3.3);
+        bigTing('S', 2.1, 3.3);
       }
       else if (command == '4') {
-        navigateZumo('E', 1.2, 3.2);
+        bigTing('E', 1.2, 3.2);
       }
       else if (command == '5') {
-        navigateZumo('W', 3.3, 3.1);
+        bigTing('W', 3.3, 3.1);
       }
       else if (command == '6') {
-        navigateZumo('S', 3.2, 2.2);
+        bigTing('S', 3.2, 2.2);
       }
       else if (command == '7') {
-        navigateZumo('N', 3.1, 1.1);
+        bigTing('N', 3.1, 1.1);
       }
       else if (command == '8') {
-        navigateZumo('N', 3.1, 2.2);
+        bigTing('N', 3.1, 2.2);
       }
       else if (command == '9') {
-        navigateZumo('N', 1.1, 3.1);
+        bigTing('N', 1.1, 3.1);
       }
       else if (command == 'A') {
-        navigateZumo('E', 2.2, 2.1);
+        bigTing('E', 2.2, 2.1);
       }
       else if (command == 'B') {
-        navigateZumo('S', 3.1, 2.3);
+        bigTing('S', 3.1, 2.3);
       }
       else if (command == 'C') {
-        navigateZumo('W', 2.1, 1.2);
+        bigTing('W', 2.1, 1.2);
       }
       else if (command == 'D') {
-        navigateZumo('E', 2.3, 3.2);
+        bigTing('E', 2.3, 3.2);
       }
       else if (command == 'E') {
-        navigateZumo('E', 1.2, 3.3);
+        bigTing('E', 1.2, 3.3);
       }
       else if (command == 'F') {
-        navigateZumo('W', 3.2, 1.3);
+        bigTing('W', 3.2, 1.3);
       }
+
+      //bigTing(dir, pos, dest);
     }
   }
 }
@@ -187,7 +175,12 @@ void moveForward(int destination)
   motors.setSpeeds(0, 0);
 }
 
-void navigateZumo(char dir, double pos, double dest)
+void execute()
+{
+  //placeholder
+}
+
+void bigTing(char dir, double pos, double dest)
 {
   switch (dir)
   {
@@ -3340,7 +3333,14 @@ void navigateZumo(char dir, double pos, double dest)
           }
         }
       }
+      updatePosition(endDir1, dest);
   }
+}
+
+void updatePosition(char dir, double pos) {
+  //Serial.write(_COMPLETE);
+  //erial.write(dir);
+  //Serial.write(String(pos));
 }
 
 String line_detection()
@@ -3349,6 +3349,27 @@ String line_detection()
   {
     return "LINE";
   }
+
+  /*  if (sensor_values[0] > QTR_THRESHOLD)
+    {
+      // if leftmost sensor detects line, reverse and turn to the right
+      motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
+      delay(REVERSE_DURATION);
+      motors.setSpeeds(TURN_SPEED, -TURN_SPEED);
+      delay(TURN_DURATION);
+      motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
+      return "L";
+    }
+    else if (sensor_values[5] > QTR_THRESHOLD)
+    {
+      // if rightmost sensor detects line, reverse and turn to the left
+      motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
+      delay(REVERSE_DURATION);
+      motors.setSpeeds(-TURN_SPEED, TURN_SPEED);
+      delay(TURN_DURATION);
+      motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
+      return "R";
+    }*/
 
   return "N/A";
 }

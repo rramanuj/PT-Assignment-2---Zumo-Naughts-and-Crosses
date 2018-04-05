@@ -127,6 +127,8 @@ public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294
     //update player object and log moves in database
     if (isDrawGame) {
       updateGameState('S', 3.1);
+    } else {
+      updateGameState('S', 3.1);
     }
   }
 } //_CODE_:btn3_1:231294:
