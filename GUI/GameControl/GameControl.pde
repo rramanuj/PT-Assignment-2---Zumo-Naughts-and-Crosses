@@ -169,11 +169,11 @@ public void initialisePlayers() {
   
   toggleSlider();
 
-  //port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
-  //port.bufferUntil('\n');
+  port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
+  port.bufferUntil('\n');
 
-  //player1.setPort(port);
-  //player2.setPort(port);
+  player1.setPort(port);
+  player2.setPort(port);
 }
 
 //void serialEvent(Serial myPort) {
@@ -371,14 +371,14 @@ public boolean moveLimitReached() {
 public void sendMoveData(GButton button) {
   moveNo++;
 
-  //Serial currentPort = getCurrentPort();
-  //if (getCurrentPlayer() == player1) {
-  //  currentPort.write(P1_IND);
-  //} else {
-  //  currentPort.write(P2_IND);
-  //}
+  Serial currentPort = getCurrentPort();
+  if (getCurrentPlayer() == player1) {
+    currentPort.write(P1_IND);
+  } else {
+    currentPort.write(P2_IND);
+  }
 
-  //currentPort.write(moveNo);
+  currentPort.write(moveNo);
 
   updateButtonDisplay(button);
 }
