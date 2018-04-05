@@ -19,9 +19,11 @@ public void btn1_1_click1(GButton source, GEvent event) { //_CODE_:btn1_1:211182
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('N', 1.1);
+    if (isDrawGame) {
+      updateGameState('N', 1.1);
+    }
   }
 } //_CODE_:btn1_1:211182:
 
@@ -30,9 +32,11 @@ public void btn2_2_click1(GButton source, GEvent event) { //_CODE_:btn2_2:245107
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('E', 2.2);
+    if (isDrawGame) {
+      updateGameState('E', 2.2);
+    }
   }
 } //_CODE_:btn2_2:245107:
 
@@ -41,9 +45,11 @@ public void btn2_1_click1(GButton source, GEvent event) { //_CODE_:btn2_1:905140
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('W', 2.1);
+    if (isDrawGame) {
+      updateGameState('W', 2.1);
+    }
   }
 } //_CODE_:btn2_1:905140:
 
@@ -52,9 +58,11 @@ public void btn1_3_click1(GButton source, GEvent event) { //_CODE_:btn1_3:798172
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('E', 1.3);
+    if (isDrawGame) {
+      updateGameState('E', 1.3);
+    }
   }
 } //_CODE_:btn1_3:798172:
 
@@ -63,9 +71,11 @@ public void btn1_2_click1(GButton source, GEvent event) { //_CODE_:btn1_2:745950
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('E', 1.2);
+    if (isDrawGame) {
+      updateGameState('E', 1.2);
+    }
   }
 } //_CODE_:btn1_2:745950:
 
@@ -74,9 +84,11 @@ public void btn2_3_click1(GButton source, GEvent event) { //_CODE_:btn2_3:704356
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('E', 2.3);
+    if (isDrawGame) {
+      updateGameState('E', 2.3);
+    }
   }
 } //_CODE_:btn2_3:704356:
 
@@ -85,9 +97,11 @@ public void btn3_3_click1(GButton source, GEvent event) { //_CODE_:btn3_3:284460
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('E', 3.3);
+    if (isDrawGame) {
+      updateGameState('E', 3.3);
+    }
   }
 } //_CODE_:btn3_3:284460:
 
@@ -96,9 +110,11 @@ public void btn3_2_click1(GButton source, GEvent event) { //_CODE_:btn3_2:320922
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('W', 3.2);
+    if (isDrawGame) {
+      updateGameState('W', 3.2);
+    }
   }
 } //_CODE_:btn3_2:320922:
 
@@ -107,9 +123,11 @@ public void btn3_1_click1(GButton source, GEvent event) { //_CODE_:btn3_1:231294
     //send the data to the arduino
     //moving zumo to the coordinates of the button
     sendMoveData(source);
-    
+
     //update player object and log moves in database
-    updateGameState('S', 3.1);
+    if (isDrawGame) {
+      updateGameState('S', 3.1);
+    }
   }
 } //_CODE_:btn3_1:231294:
 

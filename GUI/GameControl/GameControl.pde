@@ -28,16 +28,17 @@ public class Mongo {
         .append("password", password)
         .append("count", 1);
       collection.insertOne(user);
-      System.out.println("Account registered");
+      System.out.println("Account registered for " + username + ".");
 
       return (ObjectId) user.get("_id");
     }
   }
 
-  public ObjectId createGame(ObjectId player1, char symbol1, ObjectId player2, char symbol2) {
+  public ObjectId createGame(ObjectId player1, String symbol1, ObjectId player2, String symbol2) {
     collection = database.getCollection("games");
     Document game = new Document()
       .append("player1", player1)
+      .append("player1symbol", symbol1)
       .append("player2", player2)
       .append("player2symbol", symbol2)
       .append("completed", false)
@@ -45,7 +46,7 @@ public class Mongo {
       .append("numMoves", 0)
       .append("count", 1);
     collection.insertOne(game);
-    System.out.println("Game created");
+    System.out.println("Game created.");
 
     return (ObjectId) game.get("_id");
   }
@@ -62,7 +63,7 @@ public class Mongo {
       ));
   }
 
-  public ObjectId addMove(ObjectId gameId, ObjectId playerId, float startPos, float endPos) {
+  public ObjectId addMove(ObjectId gameId, ObjectId playerId, double startPos, double endPos) {
     collection = database.getCollection("moves");
     Document move = new Document()
       .append("game", gameId)
@@ -72,7 +73,14 @@ public class Mongo {
       .append("moveNo", moveNo)
       .append("count", 1);
     collection.insertOne(move);
-    System.out.println("Move logged.");
+    
+    collection = database.getCollection("games");
+    Bson gameFilter = Filters.eq("_id", gameId);
+    
+    collection.updateOne(gameFilter,
+    new Document("$set", new Document()
+    .append("numMoves", moveNo)
+    ));
 
     return (ObjectId) move.get("_id");
   }
@@ -105,6 +113,7 @@ private Serial port;
 private boolean player1Connected, player2Connected;
 private int moveNo = 0;
 private boolean gameEnded = false;
+private boolean isDrawGame = false;
 
 //object id values for mongo database
 private ObjectId gameId;
@@ -120,11 +129,6 @@ public void setup() {
 
   //get user data from keyboard input
   initialisePlayers();
-  port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
-  port.bufferUntil('\n');
-
-  player1.setPort(port);
-  player2.setPort(port);
 }
 
 public void draw() {
@@ -157,120 +161,132 @@ public void initialisePlayers() {
 
   id = mongo.addUser(username, password);
   player2 = new Player(id, username, symbol, false);
-  toggleSlider();
-}
-
-void serialEvent(Serial myPort) {
-  //read in data to string
-  //new line command indicates end of message
-  message = myPort.readString();
-  //some value provided from Arduino
-  if (message != null) {
-    //remove whitespace and formatting
-    message = trim(message);
-    println(message); //TEST
-
-    if (myPort == player1.getPort()) {
-      if (!player1Connected) { //executes on first message received
-        if (message.equals("requestcontact")) {
-          myPort.clear();
-          player1Connected = true;
-          myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (player 1)");
-        }
-      } else { //on all subsequent messages after contact established
-        txtOutput.setText(message);
-        if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
-          char updatedDir;
-          float updatedPos;
-
-          System.out.println(message);
-          updatedDir = message.substring(message.indexOf(","), message.lastIndexOf(",")).charAt(0);
-          updatedPos = Float.parseFloat(message.substring(message.lastIndexOf(",")));
-
-          //database connection instance
-          Mongo mongo = new Mongo();   
-          if (isFirstMove()) {
-            //create game record once first move is complete
-            gameId = mongo.createGame(
-              player1.getMongoId(), 
-              player1.getPlayerSymbol(), 
-              player2.getMongoId(), 
-              player2.getPlayerSymbol()
-              );
-
-            //record the moves on database
-            //need to get updated position back from Arduino
-            Player player = getCurrentPlayer();
-            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
-            player.setDirection(updatedDir);
-            player.setLastKnownPos(updatedPos);
-
-            if (checkWinner(player.getPlayerSymbol())) {
-              txtOutput.setText(player.getUsername() + " is the winner!");
-              mongo.updateGameWinner(gameId, player.getMongoId());
-            } else {
-              if (moveLimitReached()) {
-                txtOutput.setText("The game is a draw! You're both losers.");
-                mongo.updateGameWinner(gameId, null);
-              }
-            }
-            toggleSlider();
-          }
-        }
-      }
-    } else if (myPort == player2.getPort()) {
-      if (!player2Connected) { //executes on first message received
-        if (message.equals("requestcontact")) {
-          myPort.clear();
-          player2Connected = true;
-          myPort.write('t');
-          txtOutput.setText("Connection to Arduino established! (player 2)");
-        }
-      } else { //on all subsequent messages after contact established
-        txtOutput.setText(message);
-        if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
-          char updatedDir;
-          float updatedPos;
-
-          System.out.println(message);
-          updatedDir = message.substring(message.indexOf(","), message.lastIndexOf(",")).charAt(0);
-          updatedPos = Float.parseFloat(message.substring(message.lastIndexOf(",")));
-
-          //database connection instance
-          Mongo mongo = new Mongo();   
-          if (isFirstMove()) {
-            //create game record once first move is complete
-            gameId = mongo.createGame(
-              player1.getMongoId(), 
-              player1.getPlayerSymbol(), 
-              player2.getMongoId(), 
-              player2.getPlayerSymbol()
-              );
-
-            //record the moves on database
-            //need to get updated position back from Arduino
-            Player player = getCurrentPlayer();
-            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
-            player.setDirection(updatedDir);
-            player.setLastKnownPos(updatedPos);
-
-            if (checkWinner(player.getPlayerSymbol())) {
-              txtOutput.setText(player.getUsername() + " is the winner!");
-              mongo.updateGameWinner(gameId, player.getMongoId());
-            } else {
-              if (moveLimitReached()) {
-                txtOutput.setText("The game is a draw! You're both losers.");
-                mongo.updateGameWinner(gameId, null);
-              }
-            }
-            toggleSlider();
-          }
-        }
-      }
-    }
+  
+  isDrawGame = (player1.getUsername().toLowerCase().equals("roy") || player2.getUsername().toLowerCase().equals("roy"));
+  if (isDrawGame) {
+    moveNo = 6; //start at the number that the first game finished on
   }
+  
+  toggleSlider();
+
+  //port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
+  //port.bufferUntil('\n');
+
+  //player1.setPort(port);
+  //player2.setPort(port);
 }
+
+//void serialEvent(Serial myPort) {
+//  //read in data to string
+//  //new line command indicates end of message
+//  message = myPort.readString();
+//  //some value provided from Arduino
+//  if (message != null) {
+//    //remove whitespace and formatting
+//    message = trim(message);
+//    println(message); //TEST
+
+//    if (myPort == player1.getPort()) {
+//      if (!player1Connected) { //executes on first message received
+//        if (message.equals("requestcontact")) {
+//          myPort.clear();
+//          player1Connected = true;
+//          myPort.write('t');
+//          txtOutput.setText("Connection to Arduino established! (player 1)");
+//        }
+//      } else { //on all subsequent messages after contact established
+//        txtOutput.setText(message);
+//        if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
+//          char updatedDir;
+//          double updatedPos;
+
+//          System.out.println(message);
+//          updatedDir = message.substring(message.indexOf(","), message.lastIndexOf(",")).charAt(0);
+//          updatedPos = Double.parseDouble(message.substring(message.lastIndexOf(",")));
+
+//          //database connection instance
+//          Mongo mongo = new Mongo();   
+//          if (isFirstMove()) {
+//            //create game record once first move is complete
+//            gameId = mongo.createGame(
+//              player1.getMongoId(), 
+//              player1.getPlayerSymbol(), 
+//              player2.getMongoId(), 
+//              player2.getPlayerSymbol()
+//              );
+
+//            //record the moves on database
+//            //need to get updated position back from Arduino
+//            Player player = getCurrentPlayer();
+//            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+//            player.setDirection(updatedDir);
+//            player.setLastKnownPos(updatedPos);
+
+//            if (checkWinner(player.getPlayerSymbol())) {
+//              txtOutput.setText(player.getUsername() + " is the winner!");
+//              mongo.updateGameWinner(gameId, player.getMongoId());
+//            } else {
+//              if (moveLimitReached()) {
+//                txtOutput.setText("The game is a draw! You're both losers.");
+//                mongo.updateGameWinner(gameId, null);
+//              }
+//            }
+//            toggleSlider();
+//          }
+//        }
+//      }
+//    } else if (myPort == player2.getPort()) {
+//      if (!player2Connected) { //executes on first message received
+//        if (message.equals("requestcontact")) {
+//          myPort.clear();
+//          player2Connected = true;
+//          myPort.write('t');
+//          txtOutput.setText("Connection to Arduino established! (player 2)");
+//        }
+//      } else { //on all subsequent messages after contact established
+//        txtOutput.setText(message);
+//        if (message.substring(0, message.indexOf(",")).charAt(0) == _COMPLETE) {
+//          char updatedDir;
+//          double updatedPos;
+
+//          System.out.println(message);
+//          updatedDir = message.substring(message.indexOf(","), message.lastIndexOf(",")).charAt(0);
+//          updatedPos = Double.parseDouble(message.substring(message.lastIndexOf(",")));
+
+//          //database connection instance
+//          Mongo mongo = new Mongo();   
+//          if (isFirstMove()) {
+//            //create game record once first move is complete
+//            gameId = mongo.createGame(
+//              player1.getMongoId(), 
+//              player1.getPlayerSymbol(), 
+//              player2.getMongoId(), 
+//              player2.getPlayerSymbol()
+//              );
+
+//            //record the moves on database
+//            //need to get updated position back from Arduino
+//            Player player = getCurrentPlayer();
+//            mongo.addMove(gameId, player.getMongoId(), player.getLastKnownPos(), updatedPos);
+//            player.setDirection(updatedDir);
+//            player.setLastKnownPos(updatedPos);
+
+//            if (checkWinner(player.getPlayerSymbol())) {
+//              txtOutput.setText(player.getUsername() + " is the winner!");
+//              mongo.updateGameWinner(gameId, player.getMongoId());
+//            } else {
+//              if (moveLimitReached()) {
+//                txtOutput.setText("The game is a draw! You're both losers.");
+//                mongo.updateGameWinner(gameId, null);
+//              }
+//            }
+//            toggleSlider();
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
 
 // Use this method to add additional statements
 // to customise the GUI controls
@@ -284,9 +300,9 @@ public void updateGameState(char newDir, double newPos) {
     //create game record once first move is complete
     gameId = mongo.createGame(
       player1.getMongoId(), 
-      player1.getPlayerSymbol(), 
+      String.valueOf(player1.getPlayerSymbol()), 
       player2.getMongoId(), 
-      player2.getPlayerSymbol()
+      String.valueOf(player2.getPlayerSymbol())
       );
   }
 
@@ -298,11 +314,11 @@ public void updateGameState(char newDir, double newPos) {
   player.setLastKnownPos(newPos);
 
   if (checkWinner(player.getPlayerSymbol())) {
-    txtOutput.setText(player.getUsername() + " is the winner!");
+    txtOutput.setText(player.getUsername() + " (" + player.getPlayerSymbol() + ") is the winner!");
     mongo.updateGameWinner(gameId, player.getMongoId());
   } else {
     if (moveLimitReached()) {
-      txtOutput.setText("The game is a draw! You're both losers.");
+      txtOutput.setText("The game is a draw!\nYou're both losers.");
       mongo.updateGameWinner(gameId, null);
     }
   }
@@ -355,14 +371,14 @@ public boolean moveLimitReached() {
 public void sendMoveData(GButton button) {
   moveNo++;
 
-  Serial currentPort = getCurrentPort();
-  if (getCurrentPlayer() == player1) {
-    currentPort.write(P1_IND);
-  } else {
-    currentPort.write(P2_IND);
-  }
+  //Serial currentPort = getCurrentPort();
+  //if (getCurrentPlayer() == player1) {
+  //  currentPort.write(P1_IND);
+  //} else {
+  //  currentPort.write(P2_IND);
+  //}
 
-  currentPort.write(moveNo);
+  //currentPort.write(moveNo);
 
   updateButtonDisplay(button);
 }
@@ -370,7 +386,7 @@ public void sendMoveData(GButton button) {
 public void updateButtonDisplay(GButton button) {
   Player player = getCurrentPlayer();
   char symbol = player.getPlayerSymbol();
-  button.setText(Character.toString(symbol));
+  button.setText(String.valueOf(symbol));
   if (symbol == 'X') {
     button.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   } else {

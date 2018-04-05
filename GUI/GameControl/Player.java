@@ -7,9 +7,6 @@ public class Player {
   private String username;
   private boolean goesFirst;
   private Zumo zumo;
-  public float lastKnownPos;
-  public char currDirection;
-  
   
   public Player(ObjectId id, String name, char sym, boolean first) {
     _id = id;
@@ -38,12 +35,12 @@ public class Player {
     zumo.symbol = sym;
   }
 
-  public float getLastKnownPos() {
-    return lastKnownPos;
+  public double getLastKnownPos() {
+    return zumo.lastKnownPos;
   }
 
-  public void setLastKnownPos(float pos) {
-     lastKnownPos = pos;
+  public void setLastKnownPos(double pos) {
+     zumo.lastKnownPos = pos;
   }
 
   public boolean isMove(int moveNo) {
@@ -63,10 +60,10 @@ public class Player {
   }
   
   public char getDirection() {
-    return currDirection;
+    return zumo.currDirection;
   }
   
   public void setDirection(char dir) {
-    currDirection = dir;
+    zumo.currDirection = dir;
   }
 }

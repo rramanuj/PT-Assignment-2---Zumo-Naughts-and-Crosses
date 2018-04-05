@@ -3,7 +3,7 @@ import processing.serial.*;
 public class Zumo {
   
   public char symbol;
-  public float lastKnownPos;
+  public double lastKnownPos;
   public Serial connection;
   public char currDirection;
   
