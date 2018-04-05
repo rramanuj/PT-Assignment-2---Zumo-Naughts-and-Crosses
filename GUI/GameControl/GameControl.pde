@@ -73,14 +73,14 @@ public class Mongo {
       .append("moveNo", moveNo)
       .append("count", 1);
     collection.insertOne(move);
-    
+
     collection = database.getCollection("games");
     Bson gameFilter = Filters.eq("_id", gameId);
-    
-    collection.updateOne(gameFilter,
-    new Document("$set", new Document()
-    .append("numMoves", moveNo)
-    ));
+
+    collection.updateOne(gameFilter, 
+      new Document("$set", new Document()
+      .append("numMoves", moveNo)
+      ));
 
     return (ObjectId) move.get("_id");
   }
@@ -105,7 +105,8 @@ final float THREE_THREE = 3.3;
 
 final int FIRST_MOVE = 1;
 final int MIN_MOVES = 5;
-final int MAX_MOVES = 9;
+final int MAX_MOVES_G1 = 6;
+final int MAX_MOVES_G2 = 15;
 
 //Serial port for communication to/from Arduino
 private String message;
@@ -161,12 +162,12 @@ public void initialisePlayers() {
 
   id = mongo.addUser(username, password);
   player2 = new Player(id, username, symbol, false);
-  
+
   isDrawGame = (player1.getUsername().toLowerCase().equals("roy") || player2.getUsername().toLowerCase().equals("roy"));
   if (isDrawGame) {
     moveNo = 6; //start at the number that the first game finished on
   }
-  
+
   toggleSlider();
 
   port = new Serial(this, "/dev/cu.usbserial-AL1L30FO", 9600);
@@ -286,7 +287,7 @@ void serialEvent(Serial myPort) {
   //    }
   //  }
   //}
-  
+
   String message = myPort.readString();
   System.out.println("received message from arduino: '" + message + "'");
   txtOutput.setText(message);
@@ -364,9 +365,16 @@ public boolean isFirstMove() {
 }
 
 public boolean moveLimitReached() {
-  if (moveNo == MAX_MOVES) {
-    gameEnded = true;
-    return true;
+  if (!isDrawGame) {
+    if (moveNo == MAX_MOVES_G1) {
+      gameEnded = true;
+      return true;
+    }
+  } else {
+    if (moveNo == MAX_MOVES_G2) {
+      gameEnded = true;
+      return true;
+    }
   }
 
   return false;
@@ -382,7 +390,7 @@ public void sendMoveData(GButton button) {
   } else {
     currentPort.write(P2_IND);
   }
-  
+
   if (moveNo == 1) {
     currentPort.write('1');
   } else if (moveNo == 2) {
