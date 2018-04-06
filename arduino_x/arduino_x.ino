@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file arduino_x.ino
+ * @author Jamie Pounds, Mark Scholefield, Rasesh Ramanuj
+ * @date 2018-03-29
+ */
+
 #include <ZumoReflectanceSensorArray.h>
 
 #include <Wire.h>
